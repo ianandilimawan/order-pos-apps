@@ -55,6 +55,12 @@ class FileUtil
         return $template;
     }
 
+    public static function replaceStub(string $stubName, array $replacements): string
+    {
+        $template = self::getStubContents($stubName);
+        return self::replaceTemplate($template, $replacements);
+    }
+
     public static function getModelPath(string $modelName): string
     {
         return app_path("Models/{$modelName}.php");

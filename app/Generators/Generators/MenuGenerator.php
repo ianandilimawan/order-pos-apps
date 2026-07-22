@@ -29,7 +29,7 @@ class MenuGenerator extends BaseGenerator
         $routeName = 'admin.' . $this->commandData->modelNameSnakePlural . '.index';
         $menuName = $this->getReadableMenuName($this->commandData->modelNamePlural);
         $sectionTitle = $this->commandData->sectionTitle ?? $this->autoDetectSectionTitle();
-        $permissionName = $this->commandData->modelNameSnakePlural . '.view';
+        $permissionName = 'view-' . $this->commandData->modelNameSnake;
 
         return [
             'name' => $menuName,

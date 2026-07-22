@@ -24,9 +24,16 @@
     // Listen for custom Alpine.js / Livewire events
     window.addEventListener('notify', (e) => {
         if(window.Toast) {
+            let detail = e.detail;
+            if (Array.isArray(detail) && detail.length > 0) {
+                detail = detail[0]; // Handle Livewire 3 array dispatch
+            } else if (detail && detail.type !== undefined === false && detail[0] !== undefined) {
+                detail = detail[0]; // Sometimes it's passed weirdly
+            }
+            
             window.Toast.fire({
-                icon: e.detail.type || 'success',
-                title: e.detail.message
+                icon: detail.type || 'success',
+                title: detail.message || ''
             });
         }
     });

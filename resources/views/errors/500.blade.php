@@ -55,10 +55,10 @@
                 Server Error
             </h2>
             <p class="text-lg text-gray-600 dark:text-gray-400 mb-2">
-                Maaf, terjadi kesalahan pada server.
+                Sorry, an error occurred on the server.
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-500">
-                Tim kami telah diberitahu dan sedang memperbaiki masalah ini.
+                Our team has been notified and is fixing this issue.
             </p>
         </div>
 

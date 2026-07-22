@@ -21,7 +21,9 @@ class PermissionTable extends PowerGridComponent
 
     public function setUp(): array
     {
-        $this->showCheckBox();
+        if (auth()->user() && auth()->user()->hasPermission('delete-permission')) {
+            $this->showCheckBox();
+        }
 
         return [
             PowerGrid::exportable('export_permissions_' . now()->format('Ymd_His'))

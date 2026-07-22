@@ -12,9 +12,12 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\MemberController;
 
 // Public routes
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Customer QR Menu Route
+Route::get('/menu', \App\Livewire\Customer\QrMenu::class)->name('customer.menu');
 
 // Admin Authentication routes
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -22,7 +25,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-        
+
         // OTP routes
         Route::get('/login/otp', [AuthController::class, 'showOtpForm'])->name('login.otp');
         Route::post('/login/otp', [AuthController::class, 'verifyOtp'])->name('login.otp.post');
@@ -38,6 +41,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', PermissionController::class);
+
+        // POS Kasir Route
+        Route::get('/pos', \App\Livewire\Admin\Pos::class)->name('pos');
+        Route::get('/pos/{order}/print', [\App\Http\Controllers\AdminController::class, 'printPos'])->name('pos.print');
 
         // Activity Logs routes
         Route::resource('activity-logs', ActivityLogController::class)->only(['index', 'show']);
@@ -69,4 +76,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
             })->name('test.error');
         }
     });
+});
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'web'])->group(function () {
+    // Category routes
+    Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+    // Product routes
+    Route::resource('products', \App\Http\Controllers\ProductController::class);
+    // Charge Setting routes
+    Route::resource('charge_settings', \App\Http\Controllers\ChargeSettingController::class);
+    // Order routes
+    Route::resource('orders', \App\Http\Controllers\OrderController::class);
+    // Order Item routes
+    Route::resource('order_items', \App\Http\Controllers\OrderItemController::class);
+    // Order Charge routes
+    Route::resource('order_charges', \App\Http\Controllers\OrderChargeController::class);
+    // Dining Table routes
+    Route::resource('dining_tables', \App\Http\Controllers\DiningTableController::class);
+    // [ADMIN_ROUTES_MARKER]
 });

@@ -54,10 +54,10 @@
                 Access Forbidden
             </h2>
             <p class="text-lg text-gray-600 dark:text-gray-400 mb-2">
-                Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.
+                Sorry, you do not have permission to access this page.
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-500">
-                Silakan hubungi administrator jika Anda merasa ini adalah kesalahan.
+                Please contact the administrator if you believe this is an error.
             </p>
         </div>
 

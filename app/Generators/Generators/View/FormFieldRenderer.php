@@ -153,7 +153,7 @@ class FormFieldRenderer
             $enumClass = $field->enumData['class'];
             $scriptsAndStyles[] = ['type' => 'select', 'id' => $fieldName];
             $optionsCode = "collect(\App\Enums\\{$enumClass}::cases())->mapWithKeys(fn(\$enum) => [\$enum->value => ucfirst(\$enum->value)])->toArray()";
-            return \App\Generators\Utils\FileUtil::replaceTemplate('fields/select.stub', [
+            return \App\Generators\Utils\FileUtil::replaceStub('fields/select', [
                 '{{ name }}' => $fieldName,
                 '{{ label }}' => $fieldLabel,
                 '{{ value }}' => "{{ \${$modelVar}->{$fieldName} ?? '' }}",
@@ -172,7 +172,7 @@ class FormFieldRenderer
             }
             $varName = \Illuminate\Support\Str::camel(\Illuminate\Support\Str::plural($relatedModel));
 
-            return \App\Generators\Utils\FileUtil::replaceTemplate('fields/select.stub', [
+            return \App\Generators\Utils\FileUtil::replaceStub('fields/select', [
                 '{{ name }}' => $fieldName,
                 '{{ label }}' => $fieldLabel,
                 '{{ value }}' => "{{ \${$modelVar}->{$fieldName} ?? '' }}",
@@ -183,7 +183,7 @@ class FormFieldRenderer
         switch ($field->htmlType) {
             case 'textarea':
                 $scriptsAndStyles[] = ['type' => 'textarea', 'id' => $fieldName];
-                return \App\Generators\Utils\FileUtil::replaceTemplate('fields/textarea.stub', [
+                return \App\Generators\Utils\FileUtil::replaceStub('fields/textarea', [
                     '{{ name }}' => $fieldName,
                     '{{ label }}' => $fieldLabel,
                     '{{ value }}' => "{{ \${$modelVar}->{$fieldName} ?? '' }}"
@@ -199,7 +199,7 @@ class FormFieldRenderer
                 }
                 $optionsArrayString .= "]";
 
-                return \App\Generators\Utils\FileUtil::replaceTemplate('fields/select.stub', [
+                return \App\Generators\Utils\FileUtil::replaceStub('fields/select', [
                     '{{ name }}' => $fieldName,
                     '{{ label }}' => $fieldLabel,
                     '{{ value }}' => "{{ \${$modelVar}->{$fieldName} ?? '' }}",
@@ -207,7 +207,7 @@ class FormFieldRenderer
                 ]);
 
             case 'checkbox':
-                return \App\Generators\Utils\FileUtil::replaceTemplate('fields/checkbox.stub', [
+                return \App\Generators\Utils\FileUtil::replaceStub('fields/checkbox', [
                     '{{ name }}' => $fieldName,
                     '{{ label }}' => $fieldLabel,
                     '{{ checked }}' => "\${$modelVar}->{$fieldName} ?? false"
@@ -250,14 +250,14 @@ class FormFieldRenderer
                 }
 
                 if (in_array($field->htmlType, ['datetime', 'timestamp'])) {
-                    return \App\Generators\Utils\FileUtil::replaceTemplate('fields/datetime.stub', [
+                    return \App\Generators\Utils\FileUtil::replaceStub('fields/datetime', [
                         '{{ name }}' => $fieldName,
                         '{{ label }}' => $fieldLabel,
                         '{{ value }}' => "{{ \${$modelVar}->{$fieldName} ?? '' }}"
                     ]);
                 }
 
-                return \App\Generators\Utils\FileUtil::replaceTemplate('fields/text.stub', [
+                return \App\Generators\Utils\FileUtil::replaceStub('fields/text', [
                     '{{ type }}' => $type,
                     '{{ name }}' => $fieldName,
                     '{{ label }}' => $fieldLabel,

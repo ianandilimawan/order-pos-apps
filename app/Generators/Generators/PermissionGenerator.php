@@ -58,7 +58,7 @@ class PermissionGenerator extends BaseGenerator
         return [
             [
                 'display_name' => "View {$this->commandData->modelNamePlural}",
-                'name' => "{$this->commandData->modelNameSnakePlural}.view",
+                'name' => "view-{$this->commandData->modelNameSnake}",
                 'description' => "Can view {$this->commandData->modelNameLowerPlural} list",
                 'module' => $module,
                 'guard_name' => 'web',
@@ -66,23 +66,23 @@ class PermissionGenerator extends BaseGenerator
             ],
             [
                 'display_name' => "Create {$this->commandData->modelNamePlural}",
-                'name' => "{$this->commandData->modelNameSnakePlural}.create",
+                'name' => "create-{$this->commandData->modelNameSnake}",
                 'description' => "Can create new {$this->commandData->modelNameLower}",
                 'module' => $module,
                 'guard_name' => 'web',
                 'is_active' => true
             ],
             [
-                'display_name' => "Edit {$this->commandData->modelNamePlural}",
-                'name' => "{$this->commandData->modelNameSnakePlural}.edit",
-                'description' => "Can edit {$this->commandData->modelNameLower}",
+                'display_name' => "Update {$this->commandData->modelNamePlural}",
+                'name' => "update-{$this->commandData->modelNameSnake}",
+                'description' => "Can update {$this->commandData->modelNameLower}",
                 'module' => $module,
                 'guard_name' => 'web',
                 'is_active' => true
             ],
             [
                 'display_name' => "Delete {$this->commandData->modelNamePlural}",
-                'name' => "{$this->commandData->modelNameSnakePlural}.delete",
+                'name' => "delete-{$this->commandData->modelNameSnake}",
                 'description' => "Can delete {$this->commandData->modelNameLower}",
                 'module' => $module,
                 'guard_name' => 'web',

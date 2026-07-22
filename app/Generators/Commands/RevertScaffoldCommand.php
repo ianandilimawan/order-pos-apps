@@ -258,6 +258,7 @@ class RevertScaffoldCommand extends Command
         $configPath = base_path('config/menu.php');
         if (!file_exists($configPath)) return;
 
+        $content = file_get_contents($configPath);
         $modelName = trim($this->argument('model'));
         $routeName = 'admin.' . Str::snake(Str::plural($modelName)) . '.index';
         

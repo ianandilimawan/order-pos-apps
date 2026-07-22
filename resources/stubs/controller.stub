@@ -16,10 +16,10 @@ class {{CONTROLLER_NAME}} extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:{{MODEL_NAME_SNAKE_PLURAL}}.view')->only(['index', 'show']);
-        $this->middleware('permission:{{MODEL_NAME_SNAKE_PLURAL}}.create')->only(['create', 'store'{{IMPORT_PERMISSIONS}}]);
-        $this->middleware('permission:{{MODEL_NAME_SNAKE_PLURAL}}.edit')->only(['edit', 'update']);
-        $this->middleware('permission:{{MODEL_NAME_SNAKE_PLURAL}}.delete')->only('destroy');
+        $this->middleware('permission:view-{{MODEL_NAME_SNAKE}}')->only(['index', 'show']);
+        $this->middleware('permission:create-{{MODEL_NAME_SNAKE}}')->only(['create', 'store'{{IMPORT_PERMISSIONS}}]);
+        $this->middleware('permission:update-{{MODEL_NAME_SNAKE}}')->only(['edit', 'update']);
+        $this->middleware('permission:delete-{{MODEL_NAME_SNAKE}}')->only('destroy');
     }
 
     public function index()

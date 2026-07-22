@@ -4,6 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Order POS">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ isset($settings) ? $settings->app_name : config('app.name', 'Laravel') }} - Admin</title>
 
@@ -152,7 +158,7 @@
                         ${icons[type] || icons.info}
                     </div>
                     <div class="flex-1">
-                        ${messageLines.map(line => `<p class="text-sm font-semibold ${type === 'info' ? 'text-blue-900 dark:text-blue-200' : type === 'success' ? 'text-green-900 dark:text-green-200' : type === 'error' ? 'text-red-900 dark:text-red-200' : 'text-yellow-900 dark:text-yellow-200'}">${line}</p>`).join('')}
+                        ${messageLines.map(line => `<p class="text-sm font-semibold text-zinc-900 dark:text-white">${line}</p>`).join('')}
                     </div>
                     <button onclick="closeToast('${toastId}')" class="ml-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -305,6 +311,16 @@
 
         if (overlay) {
             overlay.addEventListener('click', closeMobileSidebar);
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
         }
     </script>
     <x-toast />

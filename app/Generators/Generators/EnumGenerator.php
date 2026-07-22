@@ -23,7 +23,7 @@ class EnumGenerator extends BaseGenerator
             }
         }
 
-        return $hasEnums; // Return true if we actually generated something, or false if not (but it's not a failure)
+        return true; // Return true to indicate successful execution, even if no enums were generated
     }
 
     public function rollback(): bool

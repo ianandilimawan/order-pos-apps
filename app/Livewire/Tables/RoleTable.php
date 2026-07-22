@@ -21,7 +21,9 @@ class RoleTable extends PowerGridComponent
 
     public function setUp(): array
     {
-        $this->showCheckBox();
+        if (auth()->user() && auth()->user()->hasPermission('delete-role')) {
+            $this->showCheckBox();
+        }
 
         return [
             PowerGrid::exportable('export_roles_' . now()->format('Ymd_His'))

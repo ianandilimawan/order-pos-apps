@@ -54,10 +54,10 @@
                 Service Unavailable
             </h2>
             <p class="text-lg text-gray-600 dark:text-gray-400 mb-2">
-                Layanan sedang dalam pemeliharaan.
+                Service is under maintenance.
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-500">
-                Kami sedang melakukan update atau perbaikan. Silakan coba lagi dalam beberapa saat.
+                We are currently performing updates or maintenance. Please try again in a few moments.
             </p>
         </div>
 

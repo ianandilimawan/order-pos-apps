@@ -76,6 +76,49 @@ return [
 
     'Content Management' => [],
 
-    'App Settings' => [
+    'App Settings' => [],
+
+    'Master Data' => [
+
+        [
+            'name' => ' Tables',
+            'route' => 'admin.dining_tables.index',
+            'icon' => 'circle',
+            'permission' => 'view-dining_tables',
+        ],
+
+        [
+            'name' => 'Charge  Settings',
+            'route' => 'admin.charge_settings.index',
+            'icon' => 'circle',
+            'permission' => 'view-charge_settings',
+        ],
+
+        [
+            'name' => 'Products',
+            'route' => 'admin.products.index',
+            'icon' => 'shopping-cart',
+            'permission' => 'view-products',
+        ],
+        [
+            'name' => 'Categories',
+            'route' => 'admin.categories.index',
+            'icon' => 'folder',
+            'permission' => 'view-categories',
+        ],
+    ],
+
+    'Transaksi' => [
+        [
+            'name' => 'POS Kasir',
+            'route' => 'admin.pos',
+            'icon' => 'desktop-computer',
+        ],
+        [
+            'name' => 'Orders',
+            'route' => 'admin.orders.index',
+            'icon' => 'shopping-bag',
+            'permission' => 'view-orders',
+        ],
     ],
 ];

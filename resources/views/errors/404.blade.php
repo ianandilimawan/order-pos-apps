@@ -54,10 +54,10 @@
                 Page Not Found
             </h2>
             <p class="text-lg text-gray-600 dark:text-gray-400 mb-2">
-                Maaf, halaman yang Anda cari tidak ditemukan.
+                Sorry, the page you are looking for could not be found.
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-500">
-                URL mungkin telah diubah, dihapus, atau tidak pernah ada.
+                The URL may have been changed, deleted, or never existed.
             </p>
         </div>
 

@@ -23,7 +23,9 @@ class UserTable extends PowerGridComponent
 
     public function setUp(): array
     {
-        $this->showCheckBox();
+        if (auth()->user() && auth()->user()->hasPermission('delete-user')) {
+            $this->showCheckBox();
+        }
 
         return [
             PowerGrid::exportable('export_users_' . now()->format('Ymd_His'))
