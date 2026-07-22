@@ -51,4 +51,17 @@ return Application::configure(basePath: dirname(__DIR__))
             // Untuk route non-admin, kembalikan response default
             return null;
         });
+
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpException $e, Request $request) {
+            if ($e->getStatusCode() === 403) {
+                \Log::error('403 Forbidden Triggered:', [
+                    'url' => $request->fullUrl(),
+                    'method' => $request->method(),
+                    'user_id' => Auth::id(),
+                    'message' => $e->getMessage(),
+                    'exception' => get_class($e),
+                ]);
+            }
+            return null;
+        });
     })->create();

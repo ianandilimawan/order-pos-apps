@@ -32,7 +32,7 @@
 
                 <!-- Slug -->
                 <div class="mb-6">
-                    <x-input-floating type="text" name="slug" label="Slug" value="{{ old('slug', $permission->slug) }}" required="true" />
+                    <x-input-floating type="text" name="slug" label="Slug" value="{{ old('slug', $permission->slug) }}" />
                     <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Lowercase with hyphens (e.g., view-users)</p>
                 </div>
 

@@ -91,5 +91,22 @@ class DiningTableController extends Controller
         return redirect()->route('admin.dining_tables.index')->with('success', 'DiningTable deleted successfully.');
     }
 
+    public function printQr(DiningTable $diningTable)
+    {
+        return view('admin.dining_tables.print-qr', compact('diningTable'));
+    }
+
+    public function printAllQr(\Illuminate\Http\Request $request)
+    {
+        $query = DiningTable::orderBy('number');
+        
+        if ($request->has('ids') && !empty($request->ids)) {
+            $ids = explode(',', $request->ids);
+            $query->whereIn('id', $ids);
+        }
+
+        $diningTables = $query->get();
+        return view('admin.dining_tables.print-all-qr', compact('diningTables'));
+    }
 
 }

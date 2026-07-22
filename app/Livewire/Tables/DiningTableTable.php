@@ -33,7 +33,7 @@ class DiningTableTable extends PowerGridComponent
             PowerGrid::header()
                 ->showSearchInput()
                 ->showToggleColumns()
-                ->includeViewOnTop('components.admin.bulk-action-button'),
+                ->includeViewOnTop('admin.dining_tables.bulk-actions'),
             PowerGrid::footer()
                 ->showPerPage(10, [10, 25, 50, 100])
                 ->showRecordCount(),
@@ -166,7 +166,6 @@ class DiningTableTable extends PowerGridComponent
     #[\Livewire\Attributes\On('bulkDeleteConfirmed')]
     public function bulkDeleteConfirmed($ids, $model): void
     {
-        // TODO: Ensure user has permission
         // if (!auth()->user()->hasPermission('delete-{{modelName}}')) return;
 
         try {
@@ -178,5 +177,21 @@ class DiningTableTable extends PowerGridComponent
         } catch (\Exception $e) {
             $this->dispatch('notify', type: 'error', message: 'Failed to delete {{modelName}}s.');
         }
+    }
+
+    #[\Livewire\Attributes\On('triggerBulkPrintQr')]
+    public function triggerBulkPrintQr(?array $ids = null): void
+    {
+        if (!$ids) {
+            $ids = $this->checkboxValues;
+        }
+
+        if (empty($ids)) return;
+
+        $idsString = implode(',', $ids);
+        $url = route('admin.dining_tables.print_all_qr', ['ids' => $idsString]);
+        
+        $this->js("window.open('{$url}', '_blank')");
+        $this->js('window.pgBulkActions.clearAll()');
     }
 }

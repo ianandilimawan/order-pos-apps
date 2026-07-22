@@ -40,8 +40,7 @@
                     <label for="file" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                         File (CSV or Excel)
                     </label>
-                    <input type="file" name="file" id="file" accept=".csv,.txt,.xlsx,.xls" required
-                        class="dropify" data-height="200" data-allowed-file-extensions="csv txt xlsx xls">
+                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file" type="file" name="file" accept=".csv,.txt,.xlsx,.xls" required>
                     <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                         Upload a CSV or Excel file (.csv, .xlsx, .xls) with the following columns:
                     </p>
@@ -126,43 +125,34 @@ Sample Value,123,Sample Value,Sample Value,Sample Value,Sample Value,123,123,Sam
 
     @push('scripts')
         <script>
-            $(document).ready(function() {
-                // Initialize Dropify
-                $('#file').dropify({
-                    messages: {
-                        'default': 'Drag and drop a file here or click',
-                        'replace': 'Drag and drop or click to replace',
-                        'remove': 'Remove',
-                        'error': 'Ooops, something wrong happened.'
-                    },
-                    error: {
-                        'fileSize': 'The file size is too big ({{ config('filesystems.max_file_size', '2M') }} max).',
-                        'fileExtension': 'The file extension is not allowed. Allowed extensions: .csv, .txt, .xlsx, .xls'
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.querySelector('form');
+                if (!form) return;
+
+                const submitBtn = document.getElementById('submit-btn');
+                const submitText = document.getElementById('submit-text');
+                const submitLoader = document.getElementById('submit-loader');
+
+                form.addEventListener('submit', function(e) {
+                    if (!form.checkValidity()) {
+                        return;
                     }
-                });
 
-                // Handle form submission with loading state
-                const form = $('form');
-                const submitBtn = $('#submit-btn');
-                const submitText = $('#submit-text');
-                const submitLoader = $('#submit-loader');
-
-                form.on('submit', function(e) {
                     // Disable submit button and show loader
-                    submitBtn.prop('disabled', true);
-                    submitText.addClass('hidden');
-                    submitLoader.removeClass('hidden');
+                    if (submitBtn) submitBtn.disabled = true;
+                    if (submitText) submitText.classList.add('hidden');
+                    if (submitLoader) submitLoader.classList.remove('hidden');
 
                     // Show processing message
-                    const fileInput = $('#file');
-                    const file = fileInput[0].files[0];
+                    const fileInput = document.getElementById('file');
+                    const file = fileInput.files[0];
                     if (file) {
                         const fileName = file.name;
                         const fileSize = (file.size / 1024 / 1024).toFixed(2);
-
-                        // Show processing toast
-                        const message = `Processing file: ${fileName} (${fileSize} MB)\nPlease wait, data is being processed in batches of 100 rows per batch...`;
-                        showToast(message, 'info', 0); // 0 = don't auto dismiss
+                        if (submitText) {
+                            submitText.innerHTML = `Uploading ${fileName} (${fileSize} MB)...`;
+                            submitText.classList.remove('hidden');
+                        }
                     }
                 });
             });

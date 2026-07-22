@@ -63,23 +63,30 @@
 
     @push('scripts')
         <script>
-            $(document).ready(function() {
-                const form = $('form');
-                const submitBtn = $('#submit-btn');
-                const submitText = $('#submit-text');
-                const submitLoader = $('#submit-loader');
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.querySelector('form');
+                if (!form) return;
 
-                form.on('submit', function(e) {
+                const submitBtn = document.getElementById('submit-btn');
+                const submitText = document.getElementById('submit-text');
+                const submitLoader = document.getElementById('submit-loader');
+
+                form.addEventListener('submit', function(e) {
                     e.preventDefault(); // Prevent immediate submission to show the spinner
 
+                    if (!form.checkValidity()) {
+                        form.reportValidity();
+                        return;
+                    }
+
                     // Disable submit button and show loader
-                    submitBtn.prop('disabled', true);
-                    submitText.addClass('hidden');
-                    submitLoader.removeClass('hidden');
+                    if (submitBtn) submitBtn.disabled = true;
+                    if (submitText) submitText.classList.add('hidden');
+                    if (submitLoader) submitLoader.classList.remove('hidden');
 
                     // Add a slight delay before actual submission
                     setTimeout(() => {
-                        this.submit();
+                        form.submit();
                     }, 800);
                 });
             });

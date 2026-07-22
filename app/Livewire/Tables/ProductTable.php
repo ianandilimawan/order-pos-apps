@@ -23,7 +23,7 @@ class ProductTable extends PowerGridComponent
 
     public function setUp(): array
     {
-        if (auth()->user() && auth()->user()->hasPermission('delete-product')) {
+        if (auth()->user() && (auth()->user()->hasPermission('delete-product') || auth()->user()->hasPermission('edit-product'))) {
             $this->showCheckBox();
         }
 
@@ -33,7 +33,7 @@ class ProductTable extends PowerGridComponent
             PowerGrid::header()
                 ->showSearchInput()
                 ->showToggleColumns()
-                ->includeViewOnTop('components.admin.bulk-action-button'),
+                ->includeViewOnTop('admin.products.bulk-actions'),
             PowerGrid::footer()
                 ->showPerPage(10, [10, 25, 50, 100])
                 ->showRecordCount(),
@@ -134,9 +134,9 @@ class ProductTable extends PowerGridComponent
         if (!$ids) {
             $ids = $this->checkboxValues;
         }
-        
+
         if (empty($ids)) return;
-        
+
         // Ensure user has permission
         // if (!auth()->user()->hasPermission('delete-{{modelName}}')) {
         //     $this->dispatch('notify', type: 'error', message: 'You do not have permission to delete {{modelName}}s.');
@@ -149,21 +149,61 @@ class ProductTable extends PowerGridComponent
             'refreshRoute' => 'refreshDatatable'
         ]);
     }
-    
+
     #[\Livewire\Attributes\On('bulkDeleteConfirmed')]
     public function bulkDeleteConfirmed($ids, $model): void
     {
         // TODO: Ensure user has permission
         // if (!auth()->user()->hasPermission('delete-{{modelName}}')) return;
-        
+
         try {
             Product::whereIn('id', $ids)->delete();
             ActivityLogService::logBulkDelete(Product::class, count($ids), $ids);
-            
+
             $this->js('window.pgBulkActions.clearAll()');
             $this->dispatch('notify', type: 'success', message: count($ids) . ' {{modelName}}s have been deleted.');
         } catch (\Exception $e) {
             $this->dispatch('notify', type: 'error', message: 'Failed to delete {{modelName}}s.');
+        }
+    }
+
+    #[\Livewire\Attributes\On('triggerBulkSetAvailable')]
+    public function triggerBulkSetAvailable(?array $ids = null): void
+    {
+        if (!$ids) {
+            $ids = $this->checkboxValues;
+        }
+
+        if (empty($ids)) return;
+
+        try {
+            Product::whereIn('id', $ids)->update(['is_available' => true]);
+
+            $this->js('window.pgBulkActions.clearAll()');
+            $this->dispatch('refreshDatatable');
+            $this->dispatch('notify', type: 'success', message: count($ids) . ' products marked as available.');
+        } catch (\Exception $e) {
+            $this->dispatch('notify', type: 'error', message: 'Failed to update products.');
+        }
+    }
+
+    #[\Livewire\Attributes\On('triggerBulkSetUnavailable')]
+    public function triggerBulkSetUnavailable(?array $ids = null): void
+    {
+        if (!$ids) {
+            $ids = $this->checkboxValues;
+        }
+
+        if (empty($ids)) return;
+
+        try {
+            Product::whereIn('id', $ids)->update(['is_available' => false]);
+
+            $this->js('window.pgBulkActions.clearAll()');
+            $this->dispatch('refreshDatatable');
+            $this->dispatch('notify', type: 'success', message: count($ids) . ' products marked as out of stock.');
+        } catch (\Exception $e) {
+            $this->dispatch('notify', type: 'error', message: 'Failed to update products.');
         }
     }
 }

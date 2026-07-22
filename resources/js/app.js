@@ -10,6 +10,7 @@ const Toast = Swal.mixin({
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
+    color: 'inherit',
     customClass: {
         popup: 'bg-white dark:bg-zinc-800 border dark:border-zinc-700 shadow-lg',
         title: 'text-zinc-900 dark:text-white text-sm font-semibold',

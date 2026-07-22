@@ -43,8 +43,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('permissions', PermissionController::class);
 
         // POS Kasir Route
-        Route::get('/pos', \App\Livewire\Admin\Pos::class)->name('pos');
-        Route::get('/pos/{order}/print', [\App\Http\Controllers\AdminController::class, 'printPos'])->name('pos.print');
+        Route::middleware(['permission:view-pos'])->group(function () {
+            Route::get('/pos', \App\Livewire\Admin\Pos::class)->name('pos');
+            Route::get('/pos/{order}/print', [\App\Http\Controllers\AdminController::class, 'printPos'])->name('pos.print');
+        });
 
         // Activity Logs routes
         Route::resource('activity-logs', ActivityLogController::class)->only(['index', 'show']);
@@ -92,6 +94,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'web'])->group(funct
     // Order Charge routes
     Route::resource('order_charges', \App\Http\Controllers\OrderChargeController::class);
     // Dining Table routes
+    Route::get('dining_tables/print-all-qr', [\App\Http\Controllers\DiningTableController::class, 'printAllQr'])->name('dining_tables.print_all_qr');
     Route::resource('dining_tables', \App\Http\Controllers\DiningTableController::class);
-    // [ADMIN_ROUTES_MARKER]
+    Route::get('dining_tables/{dining_table}/print-qr', [\App\Http\Controllers\DiningTableController::class, 'printQr'])->name('dining_tables.print_qr');
+    // Cash Opname routes
+        Route::resource('cash_opnames', \App\Http\Controllers\CashOpnameController::class);
+        // [ADMIN_ROUTES_MARKER]
 });

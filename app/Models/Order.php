@@ -16,6 +16,7 @@ class Order extends Model
     const UPDATED_AT = 'updated_at';
 
     protected $fillable = [
+        'user_id',
         'order_number',
         'dining_table_id',
         'order_type',
@@ -38,6 +39,10 @@ class Order extends Model
         'deleted_at'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
 
     public function diningTable()
     {

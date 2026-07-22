@@ -76,8 +76,6 @@ return [
 
     'Content Management' => [],
 
-    'App Settings' => [],
-
     'Master Data' => [
 
         [
@@ -110,15 +108,25 @@ return [
 
     'Transaksi' => [
         [
-            'name' => 'POS Kasir',
+            'name' => 'Cashier',
             'route' => 'admin.pos',
-            'icon' => 'desktop-computer',
+            'icon' => 'fas fa-cash-register',
+            'permission' => 'view-pos',
         ],
         [
             'name' => 'Orders',
             'route' => 'admin.orders.index',
             'icon' => 'shopping-bag',
             'permission' => 'view-orders',
+        ],
+    ],
+
+    'Laporan' => [
+        [
+            'name' => 'Cash Opnames',
+            'route' => 'admin.cash_opnames.index',
+            'icon' => 'circle',
+            'permission' => 'view-cash_opname',
         ],
     ],
 ];

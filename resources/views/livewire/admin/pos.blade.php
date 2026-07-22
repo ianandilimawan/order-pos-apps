@@ -1,17 +1,23 @@
-<div wire:poll.10s="loadOrders" class="h-[calc(100vh-80px)] flex flex-col lg:flex-row gap-4">
+<div wire:poll.3s="loadOrders" class="h-[calc(100vh-80px)] flex flex-col lg:flex-row gap-4">
     {{-- ============================== --}}
     {{-- LEFT: ORDER LIST --}}
     {{-- ============================== --}}
     <div class="w-full lg:w-[380px] flex-shrink-0 flex flex-col bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         {{-- Header --}}
-        <div class="p-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+        <div class="p-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-gray-800/30">
             <div class="flex items-center gap-3">
                 <h2 class="font-bold text-gray-900 dark:text-white text-base">Pesanan Aktif</h2>
                 <span class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-bold px-2.5 py-0.5 rounded-full">{{ count($orders) }}</span>
             </div>
-            <button wire:click="loadOrders" class="p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" title="Refresh">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            </button>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('admin.cash_opnames.create') }}" class="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm" title="Tutup Shift (Cash Opname)">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    Tutup Shift
+                </a>
+                <button wire:click="loadOrders" class="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors bg-white dark:bg-gray-900 shadow-sm" title="Refresh">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+            </div>
         </div>
 
         {{-- Order Cards --}}

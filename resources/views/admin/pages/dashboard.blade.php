@@ -17,7 +17,7 @@
         </div>
 
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in-up delay-100">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 animate-fade-in-up delay-100">
             <!-- Stat Card 1 -->
             <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 p-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
                 <div class="flex items-center justify-between">
@@ -42,6 +42,21 @@
                     </div>
                     <div class="p-3 bg-green-50 dark:bg-green-900/40 rounded-xl group-hover:bg-green-100 dark:group-hover:bg-green-900/60 transition-colors">
                         <svg class="w-7 h-7 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stat Card 5 (New Daily) -->
+            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 p-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Daily Revenue</p>
+                        <p class="mt-2 text-xl font-bold tracking-tight tracking-tight text-zinc-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">Rp {{ number_format($dailyRevenue ?? 0, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="p-3 bg-teal-50 dark:bg-teal-900/40 rounded-xl group-hover:bg-teal-100 dark:group-hover:bg-teal-900/60 transition-colors">
+                        <svg class="w-7 h-7 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
@@ -80,9 +95,9 @@
         </div>
 
         <!-- Tables Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in-up delay-200">
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 animate-fade-in-up delay-200">
             <!-- Recent Orders -->
-            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 lg:col-span-3">
+            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700">
                 <div class="p-6 border-b border-zinc-100 dark:border-zinc-700 flex justify-between items-center">
                     <h2 class="text-base font-semibold tracking-tight text-zinc-900 dark:text-white">Recent Orders</h2>
                     <a href="{{ route('admin.orders.index') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">View All</a>
@@ -92,11 +107,8 @@
                         <thead class="bg-zinc-50 dark:bg-zinc-700">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">Order No</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">Type / Table</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">Payment</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">Total</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">Date</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
@@ -104,12 +116,6 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-zinc-900 dark:text-white">
                                     {{ $order->order_number }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
-                                    {{ $order->order_type == 'dine_in' ? 'Dine In' : 'Take Away' }}
-                                    @if($order->diningTable)
-                                        <br><span class="text-xs">Table {{ $order->diningTable->number }}</span>
-                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -121,24 +127,64 @@
                                         {{ ucfirst($order->status) }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                        {{ $order->payment_status == 'paid' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}
-                                        ">
-                                        {{ ucfirst($order->payment_status) }}
-                                    </span>
-                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-zinc-900 dark:text-white">
                                     Rp {{ number_format($order->total, 0, ',', '.') }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
-                                    {{ $order->created_at->diffForHumans() }}
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-8 text-center text-zinc-500 dark:text-zinc-400 text-sm">
+                                <td colspan="3" class="px-6 py-8 text-center text-zinc-500 dark:text-zinc-400 text-sm">
                                     No orders yet.
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Cash Opnames -->
+            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700">
+                <div class="p-6 border-b border-zinc-100 dark:border-zinc-700 flex justify-between items-center">
+                    <h2 class="text-base font-semibold tracking-tight text-zinc-900 dark:text-white">Recent Cash Opnames</h2>
+                    <a href="{{ route('admin.cash_opnames.index') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">View All</a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-zinc-50 dark:bg-zinc-700">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">User</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">Diff</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
+                            @forelse($cashOpnames ?? [] as $opname)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-white">
+                                    {{ $opname->opname_date->format('Y-m-d') }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-white">
+                                    {{ $opname->user->name ?? '-' }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                        {{ $opname->status->value == 'matched' ? 'bg-green-100 text-green-800' : '' }}
+                                        {{ $opname->status->value == 'shortage' ? 'bg-red-100 text-red-800' : '' }}
+                                        {{ $opname->status->value == 'overage' ? 'bg-yellow-100 text-yellow-800' : '' }}
+                                        ">
+                                        {{ ucfirst($opname->status->value) }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold {{ $opname->difference < 0 ? 'text-red-500' : ($opname->difference > 0 ? 'text-yellow-500' : 'text-zinc-900 dark:text-white') }}">
+                                    Rp {{ number_format($opname->difference, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="4" class="px-6 py-8 text-center text-zinc-500 dark:text-zinc-400 text-sm">
+                                    No cash opnames yet.
                                 </td>
                             </tr>
                             @endforelse

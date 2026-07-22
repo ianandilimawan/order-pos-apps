@@ -36,7 +36,10 @@ class Pos extends Component
         if (!$this->selectedOrder) return;
         
         $oldValues = $this->selectedOrder->getAttributes();
-        $this->selectedOrder->update(['status' => $status]);
+        $this->selectedOrder->update([
+            'status' => $status,
+            'user_id' => auth()->id() // Link to the kasir handling this
+        ]);
         
         ActivityLogService::logUpdate($this->selectedOrder, $oldValues, "Updated order status to {$status}");
         
@@ -55,7 +58,8 @@ class Pos extends Component
             'payment_status' => 'paid',
             'payment_method' => $paymentMethod,
             'paid_at' => now(),
-            'status' => 'completed' // usually completes when paid
+            'status' => 'completed', // usually completes when paid
+            'user_id' => auth()->id() // Link to the kasir handling the payment
         ]);
         
         ActivityLogService::logUpdate($this->selectedOrder, $oldValues, "Processed {$paymentMethod} payment for order");

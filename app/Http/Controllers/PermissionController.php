@@ -22,7 +22,7 @@ class PermissionController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:permissions',
+            'slug' => 'nullable|string|max:255|unique:permissions',
             'description' => 'nullable|string',
             'module' => 'nullable|string|max:255',
             'is_active' => 'boolean',
@@ -45,7 +45,7 @@ class PermissionController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:permissions,slug,' . $permission->id,
+            'slug' => 'nullable|string|max:255|unique:permissions,slug,' . $permission->id,
             'description' => 'nullable|string',
             'module' => 'nullable|string|max:255',
             'is_active' => 'boolean',
