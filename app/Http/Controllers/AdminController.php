@@ -11,8 +11,8 @@ class AdminController extends Controller
     public function dashboard()
     {
         $user = auth()->user();
-        
-        if ($user->hasRole('admin') || $user->hasRole('superadmin')) {
+
+        if ($user->hasRole('admin') || $user->hasRole('superadmin') || $user->hasRole('admin staff')) {
             $recentOrders = Order::with('diningTable')->orderBy('created_at', 'desc')->take(5)->get();
             $cashOpnames = \App\Models\CashOpname::with('user')->orderBy('created_at', 'desc')->take(5)->get();
 
@@ -24,15 +24,15 @@ class AdminController extends Controller
             // Simple Task-Oriented Dashboard for Kasir
             $userId = $user->id;
             $today = \Carbon\Carbon::today();
-            
+
             $myOrdersToday = Order::where('user_id', $userId)
-                                ->whereDate('created_at', $today)
-                                ->count();
+                ->whereDate('created_at', $today)
+                ->count();
             $myRevenueToday = Order::where('user_id', $userId)
-                                ->whereDate('created_at', $today)
-                                ->where('payment_status', 'paid')
-                                ->sum('total');
-                                
+                ->whereDate('created_at', $today)
+                ->where('payment_status', 'paid')
+                ->sum('total');
+
             return view('admin.pages.dashboard_kasir', compact(
                 'myOrdersToday',
                 'myRevenueToday'
