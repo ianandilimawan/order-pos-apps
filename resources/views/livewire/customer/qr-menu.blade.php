@@ -16,7 +16,7 @@
             </div>
 
             <h2 class="anim-up anim-d1" style="font-size:22px;font-weight:800;margin-top:20px;">Pesanan Berhasil!</h2>
-            <p class="anim-up anim-d1" style="font-size:13px;color:#999;margin-top:6px;">Pesananmu sedang diproses 🍳
+            <p class="anim-up anim-d1" style="font-size:13px;color:#999;margin-top:6px;">Pesananmu sedang diproses
             </p>
 
             {{-- Order card --}}
@@ -34,8 +34,12 @@
                 {{-- Items --}}
                 @foreach ($successOrderItems as $item)
                     <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;">
-                        <span style="color:#444;">{{ $item['name'] }} <span
-                                style="color:#999;">x{{ $item['quantity'] }}</span></span>
+                        <span style="color:#444;">{{ $item['name'] }}
+                            @if (!empty($item['notes']))
+                                <br><span style="font-size:11px;color:#888;">Notes: {{ $item['notes'] }}</span>
+                            @endif
+                            <br><span style="color:#999;">x{{ $item['quantity'] }}</span>
+                        </span>
                         <span style="font-weight:600;">Rp {{ number_format($item['subtotal'], 0, ',', '.') }}</span>
                     </div>
                 @endforeach
@@ -47,6 +51,14 @@
                     <span>Subtotal</span>
                     <span>Rp {{ number_format($successOrderSubtotal, 0, ',', '.') }}</span>
                 </div>
+
+                @if ($successDiscountAmount > 0)
+                    <div
+                        style="display:flex;justify-content:space-between;padding:3px 0;font-size:13px;color:#ef4444;font-weight:600;">
+                        <span>Diskon Promo</span>
+                        <span>- Rp {{ number_format($successDiscountAmount, 0, ',', '.') }}</span>
+                    </div>
+                @endif
 
                 {{-- Charges --}}
                 @foreach ($successOrderCharges as $charge)
@@ -173,7 +185,8 @@
                                         wire:click="updateQuantity({{ collect($cart)->search(fn($i) => $i['product_id'] == $product->id) }}, -1)">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2.5">
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12">
+                                            </line>
                                         </svg>
                                     </button>
                                     <span>{{ $inCart['quantity'] }}</span>
@@ -257,9 +270,9 @@
                     {{-- Type toggle --}}
                     <div class="type-toggle">
                         <button wire:click="$set('orderType', 'dine_in')"
-                            class="{{ $orderType === 'dine_in' ? 'active' : '' }}">🍽️ Dine In</button>
+                            class="{{ $orderType === 'dine_in' ? 'active' : '' }}">Dine In</button>
                         <button wire:click="$set('orderType', 'take_away')"
-                            class="{{ $orderType === 'take_away' ? 'active' : '' }}">🥡 Take Away</button>
+                            class="{{ $orderType === 'take_away' ? 'active' : '' }}">Take Away</button>
                     </div>
 
                     @if ($orderType === 'dine_in' && !$dining_table)
@@ -278,60 +291,97 @@
                         </div>
                     @endif
 
-                    <div style="margin-top:14px;">
-                        <label class="field-label">Nama Kamu</label>
-                        <input type="text" wire:model="customerName" class="field-input"
-                            placeholder="Masukkan nama (opsional)">
+                    <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px;">
+                        <div>
+                            <label class="field-label">Nama Kamu</label>
+                            <input type="text" wire:model="customerName" class="field-input"
+                                placeholder="Masukkan nama (opsional)">
+                        </div>
+                        <div>
+                            <label class="field-label">Email</label>
+                            <input type="email" wire:model="customerEmail" class="field-input"
+                                placeholder="Email (opsional)">
+                        </div>
+                        <div>
+                            <label class="field-label">No Whatsapp / Telp</label>
+                            <input type="text" wire:model="customerPhone" class="field-input"
+                                placeholder="Nomor Telp (opsional)">
+                        </div>
                     </div>
 
                     <div style="height:1px;background:#eee;margin:18px 0;"></div>
 
                     <label class="field-label">Item Pesanan</label>
-                    <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+                    <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;">
                         @foreach ($cart as $index => $item)
-                            <div style="display:flex;align-items:center;gap:10px;">
-                                <div style="flex:1;">
-                                    <p style="font-size:13px;font-weight:600;">{{ $item['name'] }}</p>
-                                    <p style="font-size:12px;font-weight:700;color:#666;margin-top:2px;">Rp
-                                        {{ number_format($item['price'], 0, ',', '.') }}</p>
+                            <div style="background:#f9f9f9;padding:12px;border-radius:12px;border:1px solid #eee;">
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    <div style="flex:1;">
+                                        <p style="font-size:13px;font-weight:600;">{{ $item['name'] }}</p>
+                                        <p style="font-size:12px;font-weight:700;color:#666;margin-top:2px;">Rp
+                                            {{ number_format($item['price'], 0, ',', '.') }}</p>
+                                    </div>
+                                    <div class="qty-stepper">
+                                        <button wire:click="updateQuantity({{ $index }}, -1)">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.5">
+                                                <line x1="5" y1="12" x2="19" y2="12">
+                                                </line>
+                                            </svg>
+                                        </button>
+                                        <span>{{ $item['quantity'] }}</span>
+                                        <button wire:click="updateQuantity({{ $index }}, 1)">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.5">
+                                                <line x1="12" y1="5" x2="12" y2="19">
+                                                </line>
+                                                <line x1="5" y1="12" x2="19" y2="12">
+                                                </line>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="qty-stepper">
-                                    <button wire:click="updateQuantity({{ $index }}, -1)">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.5">
-                                            <line x1="5" y1="12" x2="19" y2="12">
-                                            </line>
-                                        </svg>
-                                    </button>
-                                    <span>{{ $item['quantity'] }}</span>
-                                    <button wire:click="updateQuantity({{ $index }}, 1)">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.5">
-                                            <line x1="12" y1="5" x2="12" y2="19">
-                                            </line>
-                                            <line x1="5" y1="12" x2="19" y2="12">
-                                            </line>
-                                        </svg>
-                                    </button>
+                                <div style="margin-top:10px;">
+                                    <input type="text" wire:model.blur="cart.{{ $index }}.notes"
+                                        placeholder="Catatan item (opsional)..."
+                                        style="width:100%;font-size:12px;padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff;outline:none;">
                                 </div>
                             </div>
                         @endforeach
                     </div>
 
+                    <div style="height:1px;background:#eee;margin:18px 0;"></div>
+
                     <div style="margin-top:14px;">
-                        <label class="field-label">Catatan</label>
-                        <textarea wire:model="notes" rows="2" class="field-input" placeholder="Contoh: kurang gula, extra pedas..."
-                            style="resize:none;"></textarea>
+                        <label class="field-label">Kode Promo (Opsional)</label>
+                        <div style="display:flex;gap:8px;margin-top:4px;">
+                            <input type="text" wire:model="promoCode" class="field-input"
+                                placeholder="Masukkan kode promo" @if ($appliedPromo) disabled @endif
+                                style="flex:1;">
+                            @if ($appliedPromo)
+                                <button wire:click="removePromo"
+                                    style="padding:0 16px;border-radius:10px;background:#fee2e2;color:#ef4444;font-weight:700;border:none;cursor:pointer;font-size:13px;">Hapus</button>
+                            @else
+                                <button wire:click="applyPromo"
+                                    style="padding:0 16px;border-radius:10px;background:#1a1a1a;color:#fff;font-weight:700;border:none;cursor:pointer;font-size:13px;">Pakai</button>
+                            @endif
+                        </div>
                     </div>
 
                     <div style="height:1px;background:#eee;margin:18px 0;"></div>
 
-                    {{-- Summary --}}
                     <div style="display:flex;flex-direction:column;gap:6px;">
                         <div style="display:flex;justify-content:space-between;font-size:13px;color:#999;">
                             <span>Subtotal</span>
                             <span>Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                         </div>
+                        @if ($discountAmount > 0)
+                            <div
+                                style="display:flex;justify-content:space-between;font-size:13px;color:#ef4444;font-weight:600;">
+                                <span>Diskon Promo</span>
+                                <span>- Rp {{ number_format($discountAmount, 0, ',', '.') }}</span>
+                            </div>
+                        @endif
                         @foreach ($this->charges as $charge)
                             <div style="display:flex;justify-content:space-between;font-size:13px;color:#999;">
                                 <span>{{ $charge['name'] }} @if ($charge['type'] == 'percentage')

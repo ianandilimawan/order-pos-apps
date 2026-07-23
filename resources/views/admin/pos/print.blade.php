@@ -86,6 +86,15 @@
         <h1>{{ config('app.name', 'CAFE POS') }}</h1>
         <p>{{ $order->created_at->format('d/m/Y H:i') }}</p>
         <p>NO: {{ $order->order_number }}</p>
+        @if($order->customer_name)
+            <p>NAMA: <span class="font-bold">{{ strtoupper($order->customer_name) }}</span></p>
+        @endif
+        @if($order->customer_phone)
+            <p>TELP: {{ $order->customer_phone }}</p>
+        @endif
+        @if($order->customer_email)
+            <p>EMAIL: {{ $order->customer_email }}</p>
+        @endif
         <p>TIPE: {{ $order->order_type == 'dine_in' ? 'DINE IN' : 'TAKE AWAY' }} 
             @if($order->diningTable)
                 - MEJA {{ $order->diningTable->number }}
@@ -99,7 +108,12 @@
         @foreach($order->items as $item)
         <tr>
             <td class="qty">{{ $item->quantity }}x</td>
-            <td class="name">{{ $item->product ? $item->product->name : 'Product' }}</td>
+            <td class="name">
+                {{ $item->product ? $item->product->name : 'Product' }}
+                @if($item->notes)
+                    <br><span style="font-size: 10px;">Notes: {{ $item->notes }}</span>
+                @endif
+            </td>
             <td class="price">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
         </tr>
         @endforeach
@@ -140,6 +154,15 @@
         <h2>ARSIP KASIR</h2>
         <p>{{ $order->created_at->format('d/m/Y H:i') }}</p>
         <p class="font-bold">NO: {{ $order->order_number }}</p>
+        @if($order->customer_name)
+            <p>NAMA: <span class="font-bold">{{ strtoupper($order->customer_name) }}</span></p>
+        @endif
+        @if($order->customer_phone)
+            <p>TELP: {{ $order->customer_phone }}</p>
+        @endif
+        @if($order->customer_email)
+            <p>EMAIL: {{ $order->customer_email }}</p>
+        @endif
         <p>TIPE: {{ $order->order_type == 'dine_in' ? 'DINE IN' : 'TAKE AWAY' }} 
             @if($order->diningTable)
                 <br><span style="font-size: 14px; font-weight: bold;">MEJA {{ $order->diningTable->number }}</span>
@@ -153,7 +176,12 @@
         @foreach($order->items as $item)
         <tr>
             <td class="qty">{{ $item->quantity }}x</td>
-            <td class="name">{{ $item->product ? $item->product->name : 'Product' }}</td>
+            <td class="name">
+                {{ $item->product ? $item->product->name : 'Product' }}
+                @if($item->notes)
+                    <br><span style="font-size: 10px;">Notes: {{ $item->notes }}</span>
+                @endif
+            </td>
             <td class="price">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
         </tr>
         @endforeach
@@ -185,6 +213,15 @@
         <h2>TIKET DAPUR</h2>
         <p>{{ $order->created_at->format('d/m/Y H:i') }}</p>
         <p class="font-bold">NO: {{ $order->order_number }}</p>
+        @if($order->customer_name)
+            <p style="font-size: 12px; font-weight: bold; margin-top: 5px;">NAMA: {{ strtoupper($order->customer_name) }}</p>
+        @endif
+        @if($order->customer_phone)
+            <p style="font-size: 10px;">TELP: {{ $order->customer_phone }}</p>
+        @endif
+        @if($order->customer_email)
+            <p style="font-size: 10px;">EMAIL: {{ $order->customer_email }}</p>
+        @endif
         <p style="font-size: 12px; font-weight: bold; margin-top: 5px;">
             {{ $order->order_type == 'dine_in' ? 'DINE IN' : 'TAKE AWAY' }} 
             @if($order->diningTable)
@@ -202,7 +239,7 @@
             <td class="k-name">
                 {{ $item->product ? $item->product->name : 'Product' }}
                 @if($item->notes)
-                    <br><span style="font-weight: normal; font-size: 10px;">Catatan: {{ $item->notes }}</span>
+                    <br><span style="font-weight: normal; font-size: 10px;">Notes: {{ $item->notes }}</span>
                 @endif
             </td>
         </tr>

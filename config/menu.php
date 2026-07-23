@@ -104,6 +104,12 @@ return [
             'icon' => 'folder',
             'permission' => 'view-categories',
         ],
+        [
+            'name' => 'Promos',
+            'route' => 'admin.promos.index',
+            'icon' => 'tag',
+            'permission' => 'view-promos',
+        ],
     ],
 
     'Transaksi' => [
@@ -122,6 +128,12 @@ return [
     ],
 
     'Laporan' => [
+        [
+            'name' => 'Sales Report',
+            'route' => 'admin.reports.index',
+            'icon' => 'chart-bar',
+            'permission' => 'view-reports',
+        ],
         [
             'name' => 'Cash Opnames',
             'route' => 'admin.cash_opnames.index',

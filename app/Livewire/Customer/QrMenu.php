@@ -30,6 +30,11 @@ class QrMenu extends Component
     public $orderType = 'dine_in'; // dine_in, take_away
     public $notes = '';
 
+    // Promo state
+    public $promoCode = '';
+    public $appliedPromo = null;
+    public $discountAmount = 0;
+    
     // Order success state
     public $orderSuccess = false;
     public $successOrderNumber = '';
@@ -37,7 +42,10 @@ class QrMenu extends Component
     public $successOrderSubtotal = 0;
     public $successOrderItems = [];
     public $successOrderCharges = [];
+    public $successDiscountAmount = 0;
     public $customerName = '';
+    public $customerEmail = '';
+    public $customerPhone = '';
 
     public function mount()
     {
@@ -78,6 +86,8 @@ class QrMenu extends Component
 
         $found = false;
         foreach ($this->cart as $key => $item) {
+            // If they have the exact same product and no special notes yet, we could just group them.
+            // But since they might want different notes for different items, we still group by default.
             if ($item['product_id'] == $productId) {
                 $this->cart[$key]['quantity']++;
                 $this->cart[$key]['subtotal'] = $this->cart[$key]['quantity'] * $this->cart[$key]['price'];
@@ -94,6 +104,7 @@ class QrMenu extends Component
                 'quantity' => 1,
                 'subtotal' => $product->price,
                 'image' => $product->image,
+                'notes' => '',
             ];
         }
 
@@ -116,9 +127,71 @@ class QrMenu extends Component
         $this->calculateCart();
     }
 
+    public function updateItemNote($index, $note)
+    {
+        if (isset($this->cart[$index])) {
+            $this->cart[$index]['notes'] = $note;
+        }
+    }
+
+    public function applyPromo()
+    {
+        if (empty($this->promoCode)) {
+            $this->removePromo();
+            return;
+        }
+
+        $promo = \App\Models\Promo::where('code', $this->promoCode)
+            ->where('is_active', true)
+            ->where(function($q) {
+                $q->whereNull('valid_until')->orWhere('valid_until', '>', now());
+            })->first();
+
+        if (!$promo) {
+            $this->dispatch('notify', type: 'error', message: 'Kode promo tidak valid atau sudah kadaluarsa.');
+            $this->removePromo();
+            return;
+        }
+
+        if ($this->subtotal < $promo->min_purchase) {
+            $this->dispatch('notify', type: 'error', message: 'Minimum pembelian untuk promo ini adalah Rp ' . number_format($promo->min_purchase, 0, ',', '.'));
+            $this->removePromo();
+            return;
+        }
+
+        $this->appliedPromo = $promo;
+        $this->calculateCart();
+        $this->dispatch('notify', type: 'success', message: 'Promo berhasil digunakan!');
+    }
+
+    public function removePromo()
+    {
+        $this->appliedPromo = null;
+        $this->promoCode = '';
+        $this->calculateCart();
+    }
+
     public function calculateCart()
     {
         $this->subtotal = collect($this->cart)->sum('subtotal');
+        
+        // Calculate Discount
+        $this->discountAmount = 0;
+        if ($this->appliedPromo) {
+            if ($this->subtotal < $this->appliedPromo->min_purchase) {
+                $this->removePromo(); // invalidates if subtotal drops
+            } else {
+                if ($this->appliedPromo->type == 'percentage') {
+                    $discount = ($this->subtotal * $this->appliedPromo->value) / 100;
+                    if ($this->appliedPromo->max_discount && $discount > $this->appliedPromo->max_discount) {
+                        $discount = $this->appliedPromo->max_discount;
+                    }
+                    $this->discountAmount = $discount;
+                } else {
+                    $this->discountAmount = $this->appliedPromo->value;
+                }
+            }
+        }
     }
 
     public function getChargesProperty()
@@ -129,7 +202,8 @@ class QrMenu extends Component
             ->get();
             
         $charges = [];
-        $runningTotal = $this->subtotal;
+        // Charges apply on subtotal minus discount
+        $runningTotal = max(0, $this->subtotal - $this->discountAmount);
         
         foreach ($applicableSettings as $setting) {
             $amount = 0;
@@ -153,7 +227,7 @@ class QrMenu extends Component
 
     public function getTotalProperty()
     {
-        return $this->subtotal + $this->charges->sum('amount');
+        return max(0, $this->subtotal - $this->discountAmount) + $this->charges->sum('amount');
     }
 
     public function submitOrder()
@@ -163,7 +237,7 @@ class QrMenu extends Component
         // Validation
         if ($this->orderType === 'dine_in' && !$this->dining_table) {
             // Need a table for dine-in
-            $this->dispatch('notify', type: 'error', message: 'Please scan the QR code on your table for Dine In.');
+            $this->dispatch('notify', type: 'error', message: 'Silakan scan QR Code di meja Anda untuk Dine In.');
             return;
         }
 
@@ -177,7 +251,12 @@ class QrMenu extends Component
                 'payment_status' => 'unpaid',
                 'subtotal' => $this->subtotal,
                 'total' => $this->total,
-                'notes' => $this->notes . ($this->customerName ? "\nName: " . $this->customerName : ''),
+                'promo_id' => $this->appliedPromo ? $this->appliedPromo->id : null,
+                'discount_amount' => $this->discountAmount,
+                'customer_name' => $this->customerName,
+                'customer_email' => $this->customerEmail,
+                'customer_phone' => $this->customerPhone,
+                'notes' => '',
             ]);
 
             foreach ($this->cart as $item) {
@@ -187,6 +266,7 @@ class QrMenu extends Component
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
                     'subtotal' => $item['subtotal'],
+                    'notes' => $item['notes'] ?? null,
                 ]);
             }
             
@@ -207,17 +287,21 @@ class QrMenu extends Component
             $this->successOrderNumber = $order->order_number;
             $this->successOrderSubtotal = $this->subtotal;
             $this->successOrderTotal = $this->total;
+            $this->successDiscountAmount = $this->discountAmount;
             $this->successOrderItems = $this->cart;
             $this->successOrderCharges = $this->charges->toArray();
 
             $this->cart = [];
+            $this->appliedPromo = null;
+            $this->promoCode = '';
+            $this->discountAmount = 0;
             $this->showCheckout = false;
             $this->calculateCart();
             $this->orderSuccess = true;
             
         } catch (\Exception $e) {
             DB::rollBack();
-            $this->dispatch('notify', type: 'error', message: 'Failed to submit order.');
+            $this->dispatch('notify', type: 'error', message: 'Gagal membuat pesanan. Silakan coba lagi.');
         }
     }
 
@@ -227,10 +311,12 @@ class QrMenu extends Component
         $this->successOrderNumber = '';
         $this->successOrderTotal = 0;
         $this->successOrderSubtotal = 0;
+        $this->successDiscountAmount = 0;
         $this->successOrderItems = [];
         $this->successOrderCharges = [];
-        $this->notes = '';
         $this->customerName = '';
+        $this->customerEmail = '';
+        $this->customerPhone = '';
     }
 
     public function render()

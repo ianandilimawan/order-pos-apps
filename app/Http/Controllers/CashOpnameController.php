@@ -13,7 +13,7 @@ use App\Traits\HasFileUpload;
 
 class CashOpnameController extends Controller
 {
-        use HasFileUpload;
+    use HasFileUpload;
 
 
     public function __construct()
@@ -37,13 +37,13 @@ class CashOpnameController extends Controller
 
         $today = \Carbon\Carbon::today();
         $user_id = auth()->id();
-        
+
         // Calculate expected values based on today's orders
         $orders = \App\Models\Order::where('user_id', $user_id)
-                    ->whereDate('created_at', $today)
-                    ->where('payment_status', 'paid')
-                    ->get();
-                    
+            ->whereDate('created_at', $today)
+            ->where('payment_status', 'paid')
+            ->get();
+
         $cashOpname->user_id = $user_id;
         $cashOpname->opname_date = $today->format('Y-m-d');
         $cashOpname->expected_cash = $orders->where('payment_method', 'cash')->sum('total');
@@ -55,9 +55,8 @@ class CashOpnameController extends Controller
 
     public function store(CreateCashOpnameRequest $request)
     {
-        \Log::info('CashOpname Store Request Data:', $request->all());
         $data = $request->validated();
-        
+
         // Remove commas from autoNumeric inputs
         $data['expected_cash'] = (int) str_replace(',', '', $data['expected_cash'] ?? 0);
         $data['actual_cash'] = (int) str_replace(',', '', $data['actual_cash'] ?? 0);
@@ -70,7 +69,7 @@ class CashOpnameController extends Controller
         $expectedTotal = $data['expected_cash'] + $data['expected_qris'] + $data['expected_transfer'];
         $actualTotal = $data['actual_cash'] + $data['actual_qris'] + $data['actual_transfer'];
         $data['difference'] = $actualTotal - $expectedTotal;
-        
+
         if ($data['difference'] == 0) {
             $data['status'] = 'matched';
         } elseif ($data['difference'] > 0) {
@@ -131,6 +130,4 @@ class CashOpnameController extends Controller
         $cashOpname->delete();
         return redirect()->route('admin.cash_opnames.index')->with('success', 'CashOpname deleted successfully.');
     }
-
-
 }

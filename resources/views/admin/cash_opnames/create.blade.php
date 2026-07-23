@@ -7,21 +7,39 @@
     <div class="space-y-6">
         <!-- Page Header & Breadcrumbs -->
         <div class="flex items-center gap-4 mb-6">
-            <a href="{{ route('admin.cash_opnames.index') }}" class="p-2 bg-white dark:bg-gray-800 rounded-full shadow-sm border border-gray-100 dark:border-gray-700 text-gray-500 hover:text-indigo-600 hover:bg-gray-50 transition-all duration-200">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-            </a>
+            @if (auth()->user()->can('view-cash_opname'))
+                <a href="{{ route('admin.cash_opnames.index') }}"
+                    class="p-2 bg-white dark:bg-gray-800 rounded-full shadow-sm border border-gray-100 dark:border-gray-700 text-gray-500 hover:text-indigo-600 hover:bg-gray-50 transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
+                        </path>
+                    </svg>
+                </a>
+            @else
+                <a href="{{ route('admin.pos') }}"
+                    class="p-2 bg-white dark:bg-gray-800 rounded-full shadow-sm border border-gray-100 dark:border-gray-700 text-gray-500 hover:text-indigo-600 hover:bg-gray-50 transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                </a>
+            @endif
             <div>
                 <nav class="flex text-sm text-gray-500 font-medium mb-1" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-2">
                         <li class="inline-flex items-center">
+                        @can('view-cash_opname')
                             <a href="{{ route('admin.cash_opnames.index') }}" class="hover:text-indigo-600 transition-colors">Cash Opnames</a>
+                        @else
+                            <span class="text-gray-400">Cash Opnames</span>
+                        @endcan
                         </li>
                         <li>
                             <div class="flex items-center">
-                                <svg class="w-4 h-4 text-gray-400 mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                <svg class="w-4 h-4 text-gray-400 mx-1" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
                                 </svg>
                                 <span class="text-gray-400">Create</span>
                             </div>
@@ -33,25 +51,36 @@
         </div>
 
         <!-- Form -->
-        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 dark:border-gray-800 overflow-hidden">
-            <form action="{{ route('admin.cash_opnames.store') }}" method="POST" enctype="multipart/form-data" class="lg:p-8 px-4 py-4 space-y-6 overflow-x-hidden">
+        <div
+            class="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 dark:border-gray-800 overflow-hidden">
+            <form action="{{ route('admin.cash_opnames.store') }}" method="POST" enctype="multipart/form-data"
+                class="lg:p-8 px-4 py-4 space-y-6 overflow-x-hidden">
                 @csrf
 
-@include('admin.cash_opnames.fields')
+                @include('admin.cash_opnames.fields')
 
                 <!-- Actions -->
                 <div class="flex items-center justify-end gap-4 pt-8 border-t border-gray-100 dark:border-gray-800 mt-8">
-                    <a href="{{ route('admin.cash_opnames.index') }}"
-                        class="lg:px-8 px-3 py-3 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-semibold shadow-sm lg:text-base text-sm">
-                        Cancel
-                    </a>
+                        @can('view-cash_opname')
+                        <a href="{{ route('admin.cash_opnames.index') }}" class="px-5 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-sm">
+                            Batal
+                        </a>
+                        @else
+                        <a href="{{ route('admin.dashboard') }}" class="px-5 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-sm">
+                            Batal
+                        </a>
+                        @endcan
                     <button type="submit" id="submit-btn"
                         class="lg:px-8 px-3 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors font-semibold shadow-sm hover:shadow-md lg:text-base text-sm disabled:opacity-50">
                         <span id="submit-text">Create Cash Opname</span>
                         <span id="submit-loader" class="hidden">
-                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
                             </svg>
                             Creating...
                         </span>

@@ -13,7 +13,7 @@
         @endif
         <select name="{{ $name }}{{ $multiple ? '[]' : '' }}" id="{{ $name }}"
             {{ $multiple ? 'multiple' : '' }}
-            {{ $attributes->merge(['class' => 'block w-full rounded-xl border border-transparent bg-gray-50 dark:bg-gray-800/80 text-gray-900 dark:text-white shadow-sm focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 py-3.5 transition-all duration-200 ' . (isset($iconSlot) ? 'pl-11 pr-4' : 'px-4')]) }}>
+            {{ $attributes->merge(['class' => 'block w-full appearance-none']) }}>
             @if (!$multiple)
                 <option value="">Select {{ $label }}</option>
             @endif

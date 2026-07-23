@@ -3,7 +3,7 @@
 @section('title', 'Order Details')
 
 @section('content')
-<div class="space-y-6">
+<div class="max-w-3xl mx-auto space-y-6">
     <!-- Page Header & Breadcrumbs -->
     <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-4">
@@ -43,135 +43,137 @@
         </div>
     </div>
 
-    <!-- Content Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Left Side: Basic Info & Payment -->
-        <div class="lg:col-span-1 space-y-6">
-            <!-- Order Info Card -->
-            <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 dark:border-gray-800 overflow-hidden">
-                <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Order Info</h3>
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold
-                        @if($order->status == 'completed') bg-green-100 text-green-800
-                        @elseif($order->status == 'pending') bg-yellow-100 text-yellow-800
-                        @elseif($order->status == 'cancelled') bg-red-100 text-red-800
-                        @else bg-gray-100 text-gray-800 @endif
-                    ">
-                        {{ ucfirst($order->status ?? 'N/A') }}
-                    </span>
+    <!-- Receipt Style Card -->
+    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 dark:border-gray-800 overflow-hidden flex flex-col">
+        <!-- Header -->
+        <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-start bg-gray-50 dark:bg-gray-800/30">
+            <div class="flex-1">
+                <div class="flex items-center gap-2.5">
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ $order->order_number }}</h2>
+                    @php
+                        $statusColors = [
+                            'pending' => 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400',
+                            'confirmed' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
+                            'preparing' => 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400',
+                            'ready' => 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400',
+                            'completed' => 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400',
+                            'cancelled' => 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400',
+                        ];
+                        $sc = $statusColors[$order->status] ?? 'bg-gray-100 text-gray-600';
+                    @endphp
+                    <span class="px-2 py-0.5 text-[10px] font-bold uppercase rounded-md {{ $sc }}">{{ $order->status }}</span>
                 </div>
-                <div class="p-6 space-y-4">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                     <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Order Number</p>
-                        <p class="font-semibold text-gray-900 dark:text-white">{{ $order->order_number ?? 'N/A' }}</p>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Customer Info</p>
+                        <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $order->customer_name ?? 'Guest' }}</p>
+                        @if($order->customer_email || $order->customer_phone)
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                                {{ $order->customer_phone }}
+                                {{ $order->customer_phone && $order->customer_email ? ' • ' : '' }}
+                                {{ $order->customer_email }}
+                            </p>
+                        @endif
                     </div>
                     <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Order Type</p>
-                        <p class="font-medium text-gray-900 dark:text-white">{{ ucfirst($order->order_type ?? 'N/A') }}</p>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Order Info</p>
+                        <p class="text-sm font-semibold text-gray-900 dark:text-white">
+                            {{ $order->order_type == 'dine_in' ? 'Dine In' : 'Take Away' }}
+                            @if($order->order_type == 'dine_in' && $order->diningTable)
+                                - Table {{ $order->diningTable->number }}
+                            @endif
+                        </p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ $order->created_at->format('d M Y, H:i') }}</p>
                     </div>
-                    @if($order->dining_table_id)
-                    <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Table</p>
-                        <p class="font-medium text-gray-900 dark:text-white">{{ $order->diningTable->number ?? $order->dining_table_id }}</p>
-                    </div>
-                    @endif
-                    <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Date</p>
-                        <p class="font-medium text-gray-900 dark:text-white">{{ $order->created_at->format('d M Y, H:i') }}</p>
-                    </div>
-                    @if($order->notes)
-                    <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Notes</p>
-                        <p class="font-medium text-gray-900 dark:text-white">{{ $order->notes }}</p>
-                    </div>
-                    @endif
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">TOTAL</p>
+                <p class="text-2xl font-extrabold text-gray-900 dark:text-white mt-0.5">Rp {{ number_format($order->total, 0, ',', '.') }}</p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-6 space-y-6">
+            <!-- Items -->
+            <div>
+                <h3 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">Detail Item</h3>
+                <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800 divide-y divide-gray-100 dark:divide-gray-800">
+                    @foreach($order->items as $item)
+                        <div class="flex justify-between items-center px-4 py-3">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-200">{{ $item->quantity }}x</span>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-900 dark:text-white">{{ $item->product->name ?? 'Unknown' }}</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">@ Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                    @if($item->notes)
+                                    <p class="text-xs text-amber-600 dark:text-amber-500 mt-0.5">Notes: {{ $item->notes }}</p>
+                                    @endif
+                                </div>
+                            </div>
+                            <span class="font-semibold text-sm text-gray-900 dark:text-white">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
-            <!-- Payment Info Card -->
-            <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 dark:border-gray-800 overflow-hidden">
-                <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Payment</h3>
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold
-                        @if($order->payment_status == 'paid') bg-green-100 text-green-800
-                        @elseif($order->payment_status == 'unpaid') bg-red-100 text-red-800
-                        @else bg-gray-100 text-gray-800 @endif
-                    ">
-                        {{ ucfirst($order->payment_status ?? 'N/A') }}
-                    </span>
+            <!-- Notes -->
+            @if($order->notes)
+            <div class="flex items-start gap-2.5 p-4 bg-amber-50 dark:bg-amber-950/20 rounded-xl border border-amber-100 dark:border-amber-900/30">
+                <span class="text-lg">Notes: </span>
+                <div>
+                    <p class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1">Catatan Pesanan</p>
+                    <p class="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">{!! nl2br(e($order->notes)) !!}</p>
                 </div>
-                <div class="p-6 space-y-4">
-                    <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Method</p>
-                        <p class="font-medium text-gray-900 dark:text-white">{{ strtoupper($order->payment_method ?? 'N/A') }}</p>
+            </div>
+            @endif
+
+            <!-- Summary -->
+            <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800 p-5 space-y-2.5">
+                <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+                    <span>Subtotal</span>
+                    <span>Rp {{ number_format($order->subtotal, 0, ',', '.') }}</span>
+                </div>
+                @if($order->discount_amount > 0)
+                <div class="flex justify-between text-sm text-red-500 dark:text-red-400">
+                    <span>Diskon {{ $order->promo ? '('.$order->promo->code.')' : '' }}</span>
+                    <span>-Rp {{ number_format($order->discount_amount, 0, ',', '.') }}</span>
+                </div>
+                @endif
+                @foreach($order->charges as $charge)
+                    <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+                        <span>{{ $charge->charge_name }}</span>
+                        <span>Rp {{ number_format($charge->charge_amount, 0, ',', '.') }}</span>
                     </div>
-                    <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Paid At</p>
-                        <p class="font-medium text-gray-900 dark:text-white">{{ $order->paid_at ? \Carbon\Carbon::parse($order->paid_at)->format('d M Y, H:i') : '-' }}</p>
-                    </div>
+                @endforeach
+                <div class="flex justify-between font-extrabold text-lg text-gray-900 dark:text-white pt-3 border-t border-gray-200 dark:border-gray-700 mt-2">
+                    <span>Total Akhir</span>
+                    <span>Rp {{ number_format($order->total, 0, ',', '.') }}</span>
                 </div>
             </div>
         </div>
 
-        <!-- Right Side: Order Items -->
-        <div class="lg:col-span-2">
-            <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 dark:border-gray-800 overflow-hidden">
-                <div class="p-6 border-b border-gray-100 dark:border-gray-800">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Order Details</h3>
-                </div>
-                
-                <div class="p-6">
-                    <!-- Items List -->
-                    <div class="space-y-4">
-                        @foreach($order->items ?? [] as $item)
-                        <div class="flex justify-between items-start pb-4 border-b border-gray-100 dark:border-gray-800 last:border-0 last:pb-0">
-                            <div class="flex gap-4">
-                                @if($item->product && $item->product->image)
-                                <img src="{{ Storage::url($item->product->image) }}" class="w-12 h-12 rounded-lg object-cover bg-gray-100" alt="{{ $item->product->name }}">
-                                @else
-                                <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                </div>
-                                @endif
-                                <div>
-                                    <h4 class="font-semibold text-gray-900 dark:text-white">{{ $item->product->name ?? 'Product Not Found' }}</h4>
-                                    <p class="text-sm text-gray-500">Rp {{ number_format($item->price, 0, ',', '.') }} x {{ $item->quantity }}</p>
-                                    @if($item->notes)
-                                    <p class="text-xs text-gray-500 mt-1">Note: {{ $item->notes }}</p>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="font-semibold text-gray-900 dark:text-white">
-                                Rp {{ number_format($item->subtotal, 0, ',', '.') }}
-                            </div>
-                        </div>
-                        @endforeach
+        <!-- Footer Payment Status -->
+        <div class="p-6 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/30">
+            @if($order->payment_status == 'paid')
+                <div class="flex items-center justify-center gap-2">
+                    <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center">
+                        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                     </div>
-
-                    <!-- Summary -->
-                    <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                        <div class="space-y-3">
-                            <div class="flex justify-between text-gray-500 dark:text-gray-400">
-                                <span>Subtotal</span>
-                                <span>Rp {{ number_format($order->subtotal, 0, ',', '.') }}</span>
-                            </div>
-                            
-                            @foreach($order->charges ?? [] as $charge)
-                            <div class="flex justify-between text-gray-500 dark:text-gray-400">
-                                <span>{{ $charge->charge_name }} ({{ $charge->charge_type == 'percentage' ? $charge->charge_rate.'%' : 'Fixed' }})</span>
-                                <span>Rp {{ number_format($charge->charge_amount, 0, ',', '.') }}</span>
-                            </div>
-                            @endforeach
-                            
-                            <div class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
-                                <span class="font-semibold text-lg text-gray-900 dark:text-white">Total</span>
-                                <span class="font-bold text-xl text-indigo-600 dark:text-indigo-400">Rp {{ number_format($order->total, 0, ',', '.') }}</span>
-                            </div>
-                        </div>
-                    </div>
+                    <span class="font-bold text-sm text-emerald-700 dark:text-emerald-400">Paid in Full — {{ strtoupper($order->payment_method ?? 'CASH') }}</span>
+                    @if($order->paid_at)
+                        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-500 ml-2">({{ \Carbon\Carbon::parse($order->paid_at)->format('d M Y H:i') }})</span>
+                    @endif
                 </div>
-            </div>
+            @else
+                <div class="flex items-center justify-center gap-2">
+                    <div class="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center">
+                        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </div>
+                    <span class="font-bold text-sm text-red-700 dark:text-red-400">Belum Dibayar</span>
+                </div>
+            @endif
         </div>
     </div>
 </div>

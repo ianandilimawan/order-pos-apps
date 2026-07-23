@@ -253,11 +253,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
+            // Determine plugins based on whether it's a multiple select
+            var plugins = ['clear_button'];
+            if (select.hasAttribute('multiple')) {
+                plugins.push('remove_button');
+            }
+
             // Initialize TomSelect with default options
             window.tomSelectInstances[select.id || select.name] = new TomSelect(select, {
                 placeholder: placeholder,
-                allowEmptyOption: true,
-                plugins: ['clear_button']
+                plugins: plugins
             });
         });
 
@@ -269,10 +274,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 @endphp
                 var selectEl_{{ $fieldId }} = document.getElementById('{{ $fieldId }}');
                 if (selectEl_{{ $fieldId }} && !selectEl_{{ $fieldId }}.tomselect) {
+                    var plugins = ['clear_button'];
+                    if (selectEl_{{ $fieldId }}.hasAttribute('multiple')) {
+                        plugins.push('remove_button');
+                    }
+                    
                     window.tomSelectInstances['{{ $fieldId }}'] = new TomSelect(selectEl_{{ $fieldId }}, {
                         placeholder: 'Select {{ $fieldLabel }}',
-                        allowEmptyOption: true,
-                        plugins: ['clear_button']
+                        plugins: plugins
                     });
                 }
             @endforeach

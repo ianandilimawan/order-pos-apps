@@ -45,7 +45,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // POS Kasir Route
         Route::middleware(['permission:view-pos'])->group(function () {
             Route::get('/pos', \App\Livewire\Admin\Pos::class)->name('pos');
-            Route::get('/pos/{order}/print', [\App\Http\Controllers\AdminController::class, 'printPos'])->name('pos.print');
+            Route::get('/pos/print/{id}', [AdminController::class, 'printPos'])->name('pos.print');
+        });
+        Route::middleware(['permission:view-reports'])->group(function () {
+            Route::get('/reports', App\Livewire\Admin\Report::class)->name('reports.index');
         });
 
         // Activity Logs routes
@@ -83,6 +86,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'web'])->group(function () {
     // Category routes
     Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+    Route::resource('promos', \App\Http\Controllers\PromoController::class);
     // Product routes
     Route::resource('products', \App\Http\Controllers\ProductController::class);
     // Charge Setting routes
@@ -101,3 +105,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'web'])->group(funct
         Route::resource('cash_opnames', \App\Http\Controllers\CashOpnameController::class);
         // [ADMIN_ROUTES_MARKER]
 });
+require __DIR__.'/test.php';
+
+require __DIR__.'/test.php';

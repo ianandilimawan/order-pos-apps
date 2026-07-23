@@ -17,6 +17,9 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
+        'customer_name',
+        'customer_email',
+        'customer_phone',
         'order_number',
         'dining_table_id',
         'order_type',
@@ -26,7 +29,9 @@ class Order extends Model
         'subtotal',
         'total',
         'notes',
-        'paid_at'
+        'paid_at',
+        'promo_id',
+        'discount_amount'
     ];
     protected $casts = [
         'deleted_at' => 'datetime',
@@ -57,5 +62,10 @@ class Order extends Model
     public function charges()
     {
         return $this->hasMany(\App\Models\OrderCharge::class, 'order_id');
+    }
+
+    public function promo()
+    {
+        return $this->belongsTo(\App\Models\Promo::class, 'promo_id');
     }
 }
