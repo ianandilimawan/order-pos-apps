@@ -546,7 +546,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Update Cash Opnames',
-                'name' => 'update-cash_opname',
+                'name' => 'edit-cash_opname',
                 'description' => 'Can update cashopname',
                 'module' => 'cash_opnames',
                 'is_active' => true,
