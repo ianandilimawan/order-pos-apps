@@ -415,6 +415,14 @@
                             <div wire:click="addToCart({{ $prod->id }})"
                                 class="group cursor-pointer bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-lg hover:border-indigo-300 dark:hover:border-indigo-700 transition-all">
                                 <div class="aspect-w-1 aspect-h-1 bg-gray-100 dark:bg-gray-900 relative">
+                                    @if($prod->best_seller)
+                                        <div class="absolute top-2 left-2 bg-orange-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded flex items-center gap-1 z-10 shadow-sm">
+                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            </svg>
+                                            BEST
+                                        </div>
+                                    @endif
                                     @if ($prod->image)
                                         <img src="{{ Storage::url($prod->image) }}" class="w-full h-32 object-cover"
                                             alt="{{ $prod->name }}">
@@ -631,11 +639,6 @@
                     <div class="mt-4 space-y-2" x-data="{
                         paymentMethod: @entangle('paymentMethod'),
                         cashAmount: '',
-                        get change() {
-                            const val = String(this.cashAmount || '0').replace(/\D/g, '');
-                            const amount = parseInt(val) || 0;
-                            return Math.max(0, amount - {{ $calc['total'] }});
-                        },
                         formatRupiah(number) {
                             return new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0 }).format(number);
                         }
@@ -667,7 +670,7 @@
                                 class="flex justify-between items-center pt-2 border-t border-gray-100 dark:border-gray-700">
                                 <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Kembalian</span>
                                 <span class="text-base font-extrabold text-emerald-600 dark:text-emerald-400"
-                                    x-text="'Rp ' + formatRupiah(change)">Rp 0</span>
+                                    x-text="'Rp ' + formatRupiah(Math.max(0, (parseInt(String(cashAmount || '0').replace(/\D/g, '')) || 0) - {{ $calc['total'] }}))">Rp 0</span>
                             </div>
                         </div>
 
@@ -691,6 +694,24 @@
             </div>
         </div>
     @endif
+    @push('scripts')
+        <script>
+            document.addEventListener('livewire:initialized', () => {
+                Livewire.on('promo-alert', (event) => {
+                    let data = event[0];
+                    if (window.Swal) {
+                        Swal.fire({
+                            icon: data.type,
+                            title: data.type === 'success' ? 'Berhasil' : 'Gagal',
+                            text: data.message,
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: data.type === 'success' ? '#10b981' : '#ef4444'
+                        });
+                    }
+                });
+            });
+        </script>
+    @endpush
 </div>
 
 @push('styles')

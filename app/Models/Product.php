@@ -16,7 +16,7 @@ class Product extends Model
     const UPDATED_AT = 'updated_at';
 
     protected $fillable = [
-        'category_id', 'name', 'slug', 'description', 'price', 'image', 'is_available', 'sort', 'show'
+        'category_id', 'name', 'slug', 'description', 'price', 'image', 'is_available', 'best_seller', 'sort', 'show'
     ];
     protected $casts = [
         'deleted_at' => 'datetime',

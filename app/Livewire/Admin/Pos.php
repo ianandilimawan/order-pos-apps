@@ -196,18 +196,18 @@ class Pos extends Component
             })->first();
 
         if (!$promo) {
-            $this->dispatch('notify', type: 'error', message: 'Promo tidak valid atau kedaluwarsa');
+            $this->dispatch('promo-alert', type: 'error', message: 'Promo tidak valid atau kedaluwarsa');
             return;
         }
 
         $subtotal = collect($this->cart)->sum(fn($item) => $item['price'] * $item['quantity']);
         if ($promo->min_purchase && $subtotal < $promo->min_purchase) {
-            $this->dispatch('notify', type: 'error', message: 'Minimum pembelian tidak terpenuhi (Rp ' . number_format($promo->min_purchase, 0, ',', '.') . ')');
+            $this->dispatch('promo-alert', type: 'error', message: 'Minimum pembelian tidak terpenuhi (Rp ' . number_format($promo->min_purchase, 0, ',', '.') . ')');
             return;
         }
 
         $this->appliedPromo = $promo->toArray();
-        $this->dispatch('notify', type: 'success', message: 'Promo berhasil digunakan');
+        $this->dispatch('promo-alert', type: 'success', message: 'Promo berhasil digunakan');
     }
 
     public function removePromo()
@@ -227,6 +227,9 @@ class Pos extends Component
             } else {
                 if ($this->appliedPromo['type'] === 'percentage') {
                     $discountAmount = $subtotal * ($this->appliedPromo['value'] / 100);
+                    if (!empty($this->appliedPromo['max_discount']) && $discountAmount > $this->appliedPromo['max_discount']) {
+                        $discountAmount = $this->appliedPromo['max_discount'];
+                    }
                 } else {
                     $discountAmount = $this->appliedPromo['value'];
                 }
@@ -285,7 +288,7 @@ class Pos extends Component
 
             // Create Order
             $order = Order::create([
-                'order_number' => 'ORD-' . strtoupper(uniqid()),
+                'order_number' => 'ORD-' . date('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(5)),
                 'order_type' => $this->orderType,
                 'customer_name' => $this->customerName,
                 'customer_email' => $this->customerEmail,

@@ -16,9 +16,12 @@
     <x-input-floating type="text" name="value" label="Value" value="{{ old('value', $promo->value ?? '') }}" :isCurrency="true" required />
 </div>
 
-<!-- Min Purchase Field -->
-<div class="mt-6">
+<!-- Min Purchase & Max Discount Field -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
     <x-input-floating type="text" name="min_purchase" label="Minimum Purchase (Rp)" value="{{ old('min_purchase', $promo->min_purchase ?? '') }}" :isCurrency="true" />
+    <div id="max_discount_container" style="display: none;">
+        <x-input-floating type="text" name="max_discount" label="Max Discount (Rp)" value="{{ old('max_discount', $promo->max_discount ?? '') }}" :isCurrency="true" />
+    </div>
 </div>
 
 @php
@@ -44,7 +47,7 @@
 @push('scripts')
     @include('admin.partials.form-styles')
     @php
-        $currencyFields = ['value', 'min_purchase'];
+        $currencyFields = ['value', 'min_purchase', 'max_discount'];
         // Clear selectFields to prevent TomSelect from breaking the floating style
         $selectFields = [];
         $datetimeFields = [];
@@ -55,8 +58,24 @@
         document.addEventListener('DOMContentLoaded', function() {
             const typeSelect = document.getElementById('type');
             const valueInput = document.getElementById('value');
+            const maxDiscountContainer = document.getElementById('max_discount_container');
+            const maxDiscountInput = document.getElementById('max_discount');
             
             function updateValueFormat() {
+                if (typeSelect.value === 'percentage') {
+                    maxDiscountContainer.style.display = 'block';
+                } else {
+                    maxDiscountContainer.style.display = 'none';
+                    if (typeof AutoNumeric !== 'undefined' && maxDiscountInput) {
+                        const anMax = AutoNumeric.getAutoNumericElement(maxDiscountInput);
+                        if (anMax) {
+                            anMax.set('');
+                        }
+                    } else if (maxDiscountInput) {
+                        maxDiscountInput.value = '';
+                    }
+                }
+
                 if (typeof AutoNumeric !== 'undefined' && valueInput) {
                     const anInstance = AutoNumeric.getAutoNumericElement(valueInput);
                     if (anInstance) {

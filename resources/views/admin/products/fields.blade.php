@@ -12,6 +12,7 @@
 
 <x-filepond name="image" label="Image" :defaultFile="isset($fileUrls['image']) ? $fileUrls['image'] : null" />
 <x-toggle name="is_available" label="Is available" :checked="$product->is_available ?? false" />
+<x-toggle name="best_seller" label="Best seller" :checked="$product->best_seller ?? false" />
 
 <x-input-floating type="number" name="sort" label="Sort" value="{{ $product->sort ?? '' }}" />
 

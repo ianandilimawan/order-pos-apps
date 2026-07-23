@@ -21,18 +21,20 @@ class CreatePromoRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         if ($this->valid_until) {
+            // Replace slashes with hyphens so PHP/Carbon parses it as d-m-Y instead of m/d/Y
+            $formatted = str_replace('/', '-', $this->valid_until);
+            
             try {
-                \Carbon\Carbon::parse($this->valid_until);
+                // Ensure it's fully parsable and converted to standard DB format
+                $parsed = \Carbon\Carbon::parse($formatted);
+                $this->merge([
+                    'valid_until' => $parsed->format('Y-m-d H:i:s'),
+                ]);
             } catch (\Exception $e) {
-                try {
-                    // Attempt to parse d/m/Y H:i (often sent by fallback text inputs on Safari)
-                    $parsed = \Carbon\Carbon::createFromFormat('d/m/Y H:i', $this->valid_until);
-                    $this->merge([
-                        'valid_until' => $parsed->format('Y-m-d H:i:s'),
-                    ]);
-                } catch (\Exception $e2) {
-                    // Let it fail validation if it can't be parsed
-                }
+                // If it still fails, just merge the replaced string and let the validator handle it
+                $this->merge([
+                    'valid_until' => $formatted,
+                ]);
             }
         }
     }
@@ -49,6 +51,7 @@ class CreatePromoRequest extends FormRequest
             'type' => ['required', 'in:percentage,fixed'],
             'value' => ['required', 'numeric', 'min:0'],
             'min_purchase' => ['nullable', 'numeric', 'min:0'],
+            'max_discount' => ['nullable', 'numeric', 'min:0'],
             'valid_until' => ['nullable', 'date'],
         ];
     }

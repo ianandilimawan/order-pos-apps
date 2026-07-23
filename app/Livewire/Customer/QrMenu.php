@@ -148,20 +148,30 @@ class QrMenu extends Component
             })->first();
 
         if (!$promo) {
-            $this->dispatch('notify', type: 'error', message: 'Kode promo tidak valid atau sudah kadaluarsa.');
+            $this->dispatch('promo-alert', ['type' => 'error', 'message' => 'Yah, kode promonya nggak valid atau udah kadaluarsa nih.']);
             $this->removePromo();
             return;
         }
 
         if ($this->subtotal < $promo->min_purchase) {
-            $this->dispatch('notify', type: 'error', message: 'Minimum pembelian untuk promo ini adalah Rp ' . number_format($promo->min_purchase, 0, ',', '.'));
+            $this->dispatch('promo-alert', ['type' => 'error', 'message' => 'Ups, buat pakai promo ini minimal pesananmu harus Rp ' . number_format($promo->min_purchase, 0, ',', '.') . ' ya.']);
             $this->removePromo();
             return;
         }
 
         $this->appliedPromo = $promo;
         $this->calculateCart();
-        $this->dispatch('notify', type: 'success', message: 'Promo berhasil digunakan!');
+
+        $discountText = '';
+        if ($promo->type == 'percentage') {
+            $discountText = 'potongan ' . (float)$promo->value . '%';
+            if ($promo->max_discount) {
+                $discountText .= ' (maks. Rp ' . number_format($promo->max_discount, 0, ',', '.') . ')';
+            }
+        } else {
+            $discountText = 'potongan Rp ' . number_format($promo->value, 0, ',', '.');
+        }
+        $this->dispatch('promo-alert', ['type' => 'success', 'message' => 'Kamu dapet ' . $discountText . '. Lumayan hemat Rp ' . number_format($this->discountAmount, 0, ',', '.') . ' nih!']);
     }
 
     public function removePromo()

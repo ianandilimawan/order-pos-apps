@@ -13,25 +13,11 @@ class AdminController extends Controller
         $user = auth()->user();
         
         if ($user->hasRole('admin') || $user->hasRole('superadmin')) {
-            // Advanced Analytics for Admin
-            $totalOrders = Order::count();
-            $totalRevenue = Order::where('payment_status', 'paid')->sum('total');
-            $activeOrders = Order::whereNotIn('status', ['completed', 'cancelled'])->count();
-            $totalProducts = Product::count();
-            
             $recentOrders = Order::with('diningTable')->orderBy('created_at', 'desc')->take(5)->get();
-            $dailyRevenue = Order::where('payment_status', 'paid')
-                                ->whereDate('created_at', \Carbon\Carbon::today())
-                                ->sum('total');
             $cashOpnames = \App\Models\CashOpname::with('user')->orderBy('created_at', 'desc')->take(5)->get();
 
             return view('admin.pages.dashboard', compact(
-                'totalOrders', 
-                'totalRevenue', 
-                'activeOrders', 
-                'totalProducts',
                 'recentOrders',
-                'dailyRevenue',
                 'cashOpnames'
             ));
         } else {

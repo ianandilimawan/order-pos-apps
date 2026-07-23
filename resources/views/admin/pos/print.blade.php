@@ -127,6 +127,12 @@
                 <td>Subtotal</td>
                 <td class="text-right">{{ number_format($order->subtotal, 0, ',', '.') }}</td>
             </tr>
+            @if($order->discount_amount > 0)
+            <tr>
+                <td>Discount @if($order->promo) ({{ $order->promo->code }}) @endif</td>
+                <td class="text-right">-{{ number_format($order->discount_amount, 0, ',', '.') }}</td>
+            </tr>
+            @endif
             @foreach($order->charges as $charge)
             <tr>
                 <td>{{ $charge->charge_name }}</td>
@@ -191,6 +197,22 @@
 
     <div class="totals">
         <table>
+            <tr>
+                <td>Subtotal</td>
+                <td class="text-right">{{ number_format($order->subtotal, 0, ',', '.') }}</td>
+            </tr>
+            @if($order->discount_amount > 0)
+            <tr>
+                <td>Discount @if($order->promo) ({{ $order->promo->code }}) @endif</td>
+                <td class="text-right">-{{ number_format($order->discount_amount, 0, ',', '.') }}</td>
+            </tr>
+            @endif
+            @foreach($order->charges as $charge)
+            <tr>
+                <td>{{ $charge->charge_name }}</td>
+                <td class="text-right">{{ number_format($charge->charge_amount, 0, ',', '.') }}</td>
+            </tr>
+            @endforeach
             <tr>
                 <td class="font-bold">TOTAL</td>
                 <td class="font-bold text-right">{{ number_format($order->total, 0, ',', '.') }}</td>

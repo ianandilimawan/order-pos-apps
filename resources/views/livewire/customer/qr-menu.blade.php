@@ -111,7 +111,7 @@
                         {{ config('app.name', 'Cafe Menu') }}</h1>
                     @if ($dining_table)
                         <span
-                            style="display:inline-flex;align-items:center;gap:5px;margin-top:3px;padding:2px 10px;background:#f0fdf4;border:1px solid #dcfce7;border-radius:100px;font-size:11px;font-weight:700;color:#16a34a;">
+                            style="display:inline-flex;align-items:center;gap:5px;margin-top:4px;padding:3px 10px;background:#f0fdf4;border:1px solid #dcfce7;border-radius:100px;font-size:11px;font-weight:700;color:#16a34a;">
                             <span style="width:5px;height:5px;border-radius:50%;background:#22c55e;"></span>
                             Meja {{ $dining_table->number }}
                         </span>
@@ -128,17 +128,17 @@
                             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                         </svg>
                         <span
-                            style="position:absolute;top:0;right:0;width:16px;height:16px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ collect($cart)->sum('quantity') }}</span>
+                            style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#ef4444;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(239,68,68,0.3);">{{ collect($cart)->sum('quantity') }}</span>
                     </div>
                 @endif
             </div>
         </header>
 
         {{-- Categories --}}
-        <div class="sticky top-[54px] z-30" style="background:#f5f5f0;border-bottom:1px solid #eee;">
+        <div class="sticky top-[54px] z-30" style="background:rgba(250,250,247,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06);">
             <div class="cat-scroll hide-scrollbar">
                 @foreach ($categories as $category)
-                    <button wire:click="selectCategory({{ $category->id }})"
+                    <button type="button" wire:click="selectCategory({{ $category->id }})"
                         class="cat-pill {{ $activeCategoryId == $category->id ? 'active' : '' }}">
                         {{ $category->name }}
                     </button>
@@ -147,10 +147,18 @@
         </div>
 
         {{-- Products --}}
-        <div class="product-grid">
+        <div class="product-grid" style="padding-bottom:100px;">
             @forelse($products as $product)
                 <div class="product-card">
                     <div class="img-wrap">
+                        @if($product->best_seller)
+                            <div class="best-badge">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                BEST
+                            </div>
+                        @endif
                         @if ($product->image)
                             <img src="{{ \App\Services\FileUploadService::getFileUrl($product->image) }}"
                                 alt="{{ $product->name }}">
@@ -171,38 +179,33 @@
                             {{ $product->name }}</h3>
                         @if ($product->description)
                             <p
-                                style="font-size:11px;color:#aaa;margin-top:3px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">
+                                style="font-size:11px;color:#aaa;margin-top:2px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">
                                 {{ $product->description }}</p>
                         @endif
-                        <div
-                            style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:10px;">
-                            <span style="font-size:13px;font-weight:800;color:#1a1a1a;">Rp
-                                {{ number_format($product->price, 0, ',', '.') }}</span>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;">
+                            <span style="font-size:13px;font-weight:800;color:#1a1a1a;">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                             @php $inCart = collect($cart)->firstWhere('product_id', $product->id); @endphp
                             @if ($inCart)
                                 <div class="qty-stepper">
-                                    <button
+                                    <button type="button"
                                         wire:click="updateQuantity({{ collect($cart)->search(fn($i) => $i['product_id'] == $product->id) }}, -1)">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                        <svg style="pointer-events:none;" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2.5">
-                                            <line x1="5" y1="12" x2="19" y2="12">
-                                            </line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
                                         </svg>
                                     </button>
-                                    <span>{{ $inCart['quantity'] }}</span>
-                                    <button wire:click="addToCart({{ $product->id }})">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                    <span class="qty-val">{{ $inCart['quantity'] }}</span>
+                                    <button type="button" wire:click="addToCart({{ $product->id }})">
+                                        <svg style="pointer-events:none;" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2.5">
-                                            <line x1="12" y1="5" x2="12" y2="19">
-                                            </line>
-                                            <line x1="5" y1="12" x2="19" y2="12">
-                                            </line>
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
                                         </svg>
                                     </button>
                                 </div>
                             @else
-                                <button wire:click="addToCart({{ $product->id }})" class="add-btn">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                <button type="button" wire:click="addToCart({{ $product->id }})" class="add-btn">
+                                    <svg style="pointer-events:none;" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                         stroke="currentColor" stroke-width="2.5">
                                         <line x1="12" y1="5" x2="12" y2="19"></line>
                                         <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -228,13 +231,13 @@
         {{-- ============================== --}}
         {{-- FLOATING CART --}}
         {{-- ============================== --}}
-        @if (count($cart) > 0 && !$showCheckout)
+        @if (count($cart) > 0)
             <div class="cart-wrap"
-                style="position:fixed;bottom:0;left:0;right:0;padding:14px 16px;z-index:40;background:linear-gradient(to top, #f5f5f0, #f5f5f0ee, transparent);padding-top:36px;">
-                <button wire:click="$set('showCheckout', true)" class="cart-btn">
+                style="position:fixed;bottom:0;left:0;right:0;padding:14px 16px;z-index:40;background:linear-gradient(to top, #fafaf7, #fafaf7ee, transparent);padding-top:36px;">
+                <button type="button" wire:click="$set('showCheckout', true)" class="cart-btn">
                     <div style="display:flex;align-items:center;gap:10px;">
                         <span
-                            style="background:rgba(255,255,255,0.15);padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700;">{{ collect($cart)->sum('quantity') }}</span>
+                            style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:8px;font-size:12px;font-weight:700;">{{ collect($cart)->sum('quantity') }}</span>
                         <span style="font-size:14px;font-weight:600;">Lihat Pesanan</span>
                     </div>
                     <span style="font-size:14px;font-weight:800;">Rp
@@ -246,17 +249,34 @@
         {{-- ============================== --}}
         {{-- CHECKOUT SHEET --}}
         {{-- ============================== --}}
-        @if ($showCheckout)
-            <div wire:click="$set('showCheckout', false)" class="sheet-backdrop"></div>
-            <div class="sheet">
+        <div x-data="{ open: @entangle('showCheckout') }">
+            {{-- Backdrop --}}
+            <div x-show="open" x-cloak
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="open = false"
+                class="sheet-backdrop"></div>
+            {{-- Sheet --}}
+            <div x-show="open" x-cloak
+                x-transition:enter="transition ease-out duration-[400ms]"
+                x-transition:enter-start="translate-y-full"
+                x-transition:enter-end="translate-y-0"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="translate-y-0"
+                x-transition:leave-end="translate-y-full"
+                class="sheet">
                 <div class="sheet-handle"></div>
 
-                {{-- Header --}}
-                <div style="padding:14px 20px 10px;display:flex;align-items:center;justify-content:space-between;">
-                    <h2 style="font-size:17px;font-weight:800;">Pesananmu</h2>
-                    <button wire:click="$set('showCheckout', false)"
-                        style="width:30px;height:30px;border-radius:8px;border:1.5px solid #eee;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999"
+                {{-- Sheet Header --}}
+                <div style="padding:16px 20px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+                    <h2 style="font-size:18px;font-weight:800;">Pesananmu</h2>
+                    <button type="button" @click="open = false"
+                        style="width:32px;height:32px;border-radius:50%;border:none;background:#f3f3ee;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.15s;">
+                        <svg style="pointer-events:none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666"
                             stroke-width="2.5" stroke-linecap="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -264,20 +284,20 @@
                     </button>
                 </div>
 
-                {{-- Body --}}
-                <div style="overflow-y:auto;padding:0 20px 20px;flex:1;">
+                {{-- Sheet Body (scrollable) --}}
+                <div style="overflow-y:auto;padding:0 20px 20px;flex:1;-webkit-overflow-scrolling:touch;">
 
                     {{-- Type toggle --}}
                     <div class="type-toggle">
-                        <button wire:click="$set('orderType', 'dine_in')"
+                        <button type="button" wire:click="$set('orderType', 'dine_in')"
                             class="{{ $orderType === 'dine_in' ? 'active' : '' }}">Dine In</button>
-                        <button wire:click="$set('orderType', 'take_away')"
+                        <button type="button" wire:click="$set('orderType', 'take_away')"
                             class="{{ $orderType === 'take_away' ? 'active' : '' }}">Take Away</button>
                     </div>
 
                     @if ($orderType === 'dine_in' && !$dining_table)
                         <div
-                            style="margin-top:10px;padding:10px 12px;background:#fffbeb;border:1px solid #fef3c7;border-radius:10px;display:flex;align-items:center;gap:8px;">
+                            style="margin-top:12px;padding:10px 14px;background:#fffbeb;border:1px solid #fef3c7;border-radius:12px;display:flex;align-items:center;gap:8px;">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706"
                                 stroke-width="2" style="flex-shrink:0;">
                                 <path
@@ -291,7 +311,8 @@
                         </div>
                     @endif
 
-                    <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px;">
+                    {{-- Customer info --}}
+                    <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;">
                         <div>
                             <label class="field-label">Nama Kamu</label>
                             <input type="text" wire:model="customerName" class="field-input"
@@ -309,68 +330,69 @@
                         </div>
                     </div>
 
-                    <div style="height:1px;background:#eee;margin:18px 0;"></div>
+                    <div style="height:1px;background:#eee;margin:20px 0;"></div>
 
+                    {{-- Cart items --}}
                     <label class="field-label">Item Pesanan</label>
-                    <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;">
+                    <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
                         @foreach ($cart as $index => $item)
-                            <div style="background:#f9f9f9;padding:12px;border-radius:12px;border:1px solid #eee;">
-                                <div style="display:flex;align-items:center;gap:10px;">
-                                    <div style="flex:1;">
-                                        <p style="font-size:13px;font-weight:600;">{{ $item['name'] }}</p>
-                                        <p style="font-size:12px;font-weight:700;color:#666;margin-top:2px;">Rp
+                            <div style="background:#f9f9f6;padding:14px;border-radius:14px;border:1px solid rgba(0,0,0,0.06);">
+                                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+                                    <div style="flex:1;min-width:0;">
+                                        <p style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $item['name'] }}</p>
+                                        <p style="font-size:12px;font-weight:600;color:#888;margin-top:2px;">Rp
                                             {{ number_format($item['price'], 0, ',', '.') }}</p>
                                     </div>
                                     <div class="qty-stepper">
-                                        <button wire:click="updateQuantity({{ $index }}, -1)">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                        <button type="button" wire:click="updateQuantity({{ $index }}, -1)">
+                                            <svg style="pointer-events:none;" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" stroke-width="2.5">
-                                                <line x1="5" y1="12" x2="19" y2="12">
-                                                </line>
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
                                             </svg>
                                         </button>
-                                        <span>{{ $item['quantity'] }}</span>
-                                        <button wire:click="updateQuantity({{ $index }}, 1)">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                        <span class="qty-val">{{ $item['quantity'] }}</span>
+                                        <button type="button" wire:click="updateQuantity({{ $index }}, 1)">
+                                            <svg style="pointer-events:none;" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" stroke-width="2.5">
-                                                <line x1="12" y1="5" x2="12" y2="19">
-                                                </line>
-                                                <line x1="5" y1="12" x2="19" y2="12">
-                                                </line>
+                                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
                                             </svg>
                                         </button>
                                     </div>
                                 </div>
-                                <div style="margin-top:10px;">
+                                <div style="margin-top:8px;">
                                     <input type="text" wire:model.blur="cart.{{ $index }}.notes"
                                         placeholder="Catatan item (opsional)..."
-                                        style="width:100%;font-size:12px;padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff;outline:none;">
+                                        style="width:100%;font-size:12px;padding:8px 12px;border:1px solid #e5e5e0;border-radius:10px;background:#fff;outline:none;font-family:inherit;transition:border-color 0.2s;"
+                                        onfocus="this.style.borderColor='#1a1a1a'" onblur="this.style.borderColor='#e5e5e0'">
                                 </div>
                             </div>
                         @endforeach
                     </div>
 
-                    <div style="height:1px;background:#eee;margin:18px 0;"></div>
+                    <div style="height:1px;background:#eee;margin:20px 0;"></div>
 
-                    <div style="margin-top:14px;">
+                    {{-- Promo code --}}
+                    <div>
                         <label class="field-label">Kode Promo (Opsional)</label>
                         <div style="display:flex;gap:8px;margin-top:4px;">
                             <input type="text" wire:model="promoCode" class="field-input"
                                 placeholder="Masukkan kode promo" @if ($appliedPromo) disabled @endif
                                 style="flex:1;">
                             @if ($appliedPromo)
-                                <button wire:click="removePromo"
-                                    style="padding:0 16px;border-radius:10px;background:#fee2e2;color:#ef4444;font-weight:700;border:none;cursor:pointer;font-size:13px;">Hapus</button>
+                                <button type="button" wire:click="removePromo"
+                                    style="padding:0 16px;border-radius:12px;background:#fee2e2;color:#ef4444;font-weight:700;border:none;cursor:pointer;font-size:13px;font-family:inherit;transition:opacity 0.15s;">Hapus</button>
                             @else
-                                <button wire:click="applyPromo"
-                                    style="padding:0 16px;border-radius:10px;background:#1a1a1a;color:#fff;font-weight:700;border:none;cursor:pointer;font-size:13px;">Pakai</button>
+                                <button type="button" wire:click="applyPromo"
+                                    style="padding:0 16px;border-radius:12px;background:#1a1a1a;color:#fff;font-weight:700;border:none;cursor:pointer;font-size:13px;font-family:inherit;transition:opacity 0.15s;">Pakai</button>
                             @endif
                         </div>
                     </div>
 
-                    <div style="height:1px;background:#eee;margin:18px 0;"></div>
+                    <div style="height:1px;background:#eee;margin:20px 0;"></div>
 
-                    <div style="display:flex;flex-direction:column;gap:6px;">
+                    {{-- Order summary --}}
+                    <div style="display:flex;flex-direction:column;gap:8px;background:#f9f9f6;padding:16px;border-radius:14px;border:1px solid rgba(0,0,0,0.05);">
                         <div style="display:flex;justify-content:space-between;font-size:13px;color:#999;">
                             <span>Subtotal</span>
                             <span>Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
@@ -391,17 +413,17 @@
                                 <span>Rp {{ number_format($charge['amount'], 0, ',', '.') }}</span>
                             </div>
                         @endforeach
-                        <div style="height:1px;background:#eee;margin:6px 0;"></div>
-                        <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:800;">
+                        <div style="height:1px;background:#e5e5e0;margin:4px 0;"></div>
+                        <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:800;">
                             <span>Total</span>
                             <span>Rp {{ number_format($this->total, 0, ',', '.') }}</span>
                         </div>
                     </div>
                 </div>
 
-                {{-- Footer --}}
-                <div style="padding:14px 20px 24px;border-top:1px solid #eee;">
-                    <button wire:click="submitOrder" wire:loading.attr="disabled" class="cta-btn">
+                {{-- Sheet Footer --}}
+                <div style="padding:14px 20px;padding-bottom:max(20px, env(safe-area-inset-bottom, 20px));border-top:1px solid #eee;flex-shrink:0;background:#fff;">
+                    <button type="button" wire:click="submitOrder" wire:loading.attr="disabled" class="cta-btn">
                         <span wire:loading.remove wire:target="submitOrder">Pesan Sekarang</span>
                         <span wire:loading wire:target="submitOrder">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -414,7 +436,7 @@
                     </button>
                 </div>
             </div>
-        @endif
+        </div>
 
     @endif
 </div>

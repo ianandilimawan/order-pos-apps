@@ -77,6 +77,16 @@
                         {{ $promo->min_purchase ? 'Rp ' . number_format($promo->min_purchase, 0, ',', '.') : 'N/A' }}
                         </dd>
                     </div>
+                    @if($promo->type === 'percentage')
+                    <div class="lg:px-6 px-4 lg:py-4 py-3 flex flex-col lg:flex-row lg:items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                        <dt class="lg:w-1/3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                            Max Discount
+                        </dt>
+                        <dd class="mt-1 lg:mt-0 lg:w-2/3 text-sm text-gray-900 dark:text-white font-medium">
+                        {{ $promo->max_discount ? 'Rp ' . number_format($promo->max_discount, 0, ',', '.') : 'No Limit' }}
+                        </dd>
+                    </div>
+                    @endif
                     <div class="lg:px-6 px-4 lg:py-4 py-3 flex flex-col lg:flex-row lg:items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                         <dt class="lg:w-1/3 text-sm font-medium text-gray-500 dark:text-gray-400">
                             Valid Until
@@ -112,6 +122,10 @@
                     </div>
                 </dl>
             </div>
+
+            <!-- Usage Report via Livewire -->
+            <livewire:admin.promo-report :promo="$promo" />
+            
         </div>
     </div>
 </div>

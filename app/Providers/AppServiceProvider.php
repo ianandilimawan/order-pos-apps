@@ -30,6 +30,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useTailwind();
 
+        if (request()->header('x-forwarded-proto') === 'https' || str_contains(request()->header('host', ''), 'ngrok')) {
+            $this->app['request']->server->set('HTTPS', true);
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         try {
             $settings = Setting::first();
             if ($settings && $settings->smtp_host) {

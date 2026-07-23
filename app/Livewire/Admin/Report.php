@@ -12,9 +12,11 @@ class Report extends Component
 {
     public $startDate;
     public $endDate;
+    public $hideTitle = false;
 
-    public function mount()
+    public function mount($hideTitle = false)
     {
+        $this->hideTitle = $hideTitle;
         $this->startDate = Carbon::today()->format('Y-m-d');
         $this->endDate = Carbon::today()->format('Y-m-d');
     }
@@ -51,11 +53,29 @@ class Report extends Component
             ->take(5)
             ->get();
 
+        // Promo metrics
+        $totalDiscounts = $orders->sum('discount_amount');
+        $promoUsageCount = $orders->whereNotNull('promo_id')->count();
+
+        // Promo details
+        $promoDetails = $orders->whereNotNull('promo_id')
+            ->groupBy('promo_id')
+            ->map(function ($row) {
+                return [
+                    'promo' => $row->first()->promo,
+                    'usage_count' => $row->count(),
+                    'total_discount' => $row->sum('discount_amount')
+                ];
+            })->sortByDesc('usage_count')->values();
+
         return [
             'totalSales' => $totalSales,
             'orderCount' => $orderCount,
             'paymentMethods' => $paymentMethods,
             'topProducts' => $topProducts,
+            'totalDiscounts' => $totalDiscounts,
+            'promoUsageCount' => $promoUsageCount,
+            'promoDetails' => $promoDetails,
         ];
     }
 

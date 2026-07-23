@@ -42,7 +42,7 @@ class OrderTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        $query = Order::query();
+        $query = Order::query()->with('diningTable');
 
         if (Schema::hasColumn('orders', 'sort')) {
             $query->orderBy('sort', 'asc');
@@ -56,14 +56,46 @@ class OrderTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('order_number')
-            ->add('dining_table_id')
-            ->add('order_type')
-            ->add('status')
-            ->add('payment_status')
-            ->add('payment_method')
-            ->add('subtotal')
-            ->add('total')
-            ->add('notes')
+            ->add('table_number', fn($model) => $model->diningTable ? $model->diningTable->number : '-')
+            ->add('order_type', function ($model) {
+                $type = $model->order_type;
+                $color = $type === 'dine_in' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800';
+                $label = $type === 'dine_in' ? 'Dine In' : 'Take Away';
+                return '<span class="px-2 py-0.5 text-xs font-semibold rounded-full ' . $color . '">' . $label . '</span>';
+            })
+            ->add('status', function ($model) {
+                $status = $model->status;
+                $colors = [
+                    'pending' => 'bg-yellow-100 text-yellow-800',
+                    'processing' => 'bg-blue-100 text-blue-800',
+                    'completed' => 'bg-green-100 text-green-800',
+                    'cancelled' => 'bg-red-100 text-red-800',
+                ];
+                $color = $colors[$status] ?? 'bg-gray-100 text-gray-800';
+                return '<span class="px-2 py-0.5 text-xs font-semibold rounded-full capitalize ' . $color . '">' . $status . '</span>';
+            })
+            ->add('payment_status', function ($model) {
+                $status = $model->payment_status;
+                $colors = [
+                    'unpaid' => 'bg-yellow-100 text-yellow-800',
+                    'paid' => 'bg-green-100 text-green-800',
+                    'refunded' => 'bg-gray-100 text-gray-800',
+                ];
+                $color = $colors[$status] ?? 'bg-gray-100 text-gray-800';
+                return '<span class="px-2 py-0.5 text-xs font-semibold rounded-full capitalize ' . $color . '">' . $status . '</span>';
+            })
+            ->add('payment_method', function ($model) {
+                $method = $model->payment_method;
+                if (!$method) return '-';
+                $colors = [
+                    'cash' => 'bg-green-100 text-green-800',
+                    'qris' => 'bg-blue-100 text-blue-800',
+                    'transfer' => 'bg-purple-100 text-purple-800',
+                ];
+                $color = $colors[$method] ?? 'bg-gray-100 text-gray-800';
+                return '<span class="px-2 py-0.5 text-xs font-semibold rounded-full uppercase ' . $color . '">' . $method . '</span>';
+            })
+            ->add('total', fn($model) => 'Rp ' . number_format($model->total, 0, ',', '.'))
             ->add('paid_at_formatted', fn ($model) => $model->paid_at ? \Carbon\Carbon::parse($model->paid_at)->format('d/m/Y') : '-')
             ->add('action', function (Order $row) {
                 $actions = '<div class="flex items-center justify-center gap-1">';
@@ -96,14 +128,12 @@ class OrderTable extends PowerGridComponent
                 ->bodyAttribute('text-center'),
 
             Column::make('Order Number', 'order_number')->sortable()->searchable(),
-            Column::make('Dining Table Id', 'dining_table_id')->sortable()->searchable(),
-            Column::make('Order Type', 'order_type')->sortable()->searchable(),
+            Column::make('Table', 'table_number', 'dining_table_id')->sortable()->searchable(),
+            Column::make('Type', 'order_type')->sortable()->searchable(),
             Column::make('Status', 'status')->sortable()->searchable(),
-            Column::make('Payment Status', 'payment_status')->sortable()->searchable(),
-            Column::make('Payment Method', 'payment_method')->sortable()->searchable(),
-            Column::make('Subtotal', 'subtotal')->sortable()->searchable(),
+            Column::make('Payment', 'payment_status')->sortable()->searchable(),
+            Column::make('Method', 'payment_method')->sortable()->searchable(),
             Column::make('Total', 'total')->sortable()->searchable(),
-            Column::make('Notes', 'notes')->sortable()->searchable(),
             Column::make('Paid At', 'paid_at_formatted', 'paid_at')->sortable()->searchable(),
             Column::make('Actions', 'action')
                 ->headerAttribute('text-center')

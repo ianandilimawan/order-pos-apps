@@ -29,6 +29,7 @@ class CreateProductRequest extends FormRequest
             'price' => 'required',
             'image' => 'nullable',
             'is_available' => 'required',
+            'best_seller' => 'nullable|boolean',
             'sort' => 'required',
             'show' => 'required',
         ];

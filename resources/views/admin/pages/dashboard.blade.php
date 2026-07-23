@@ -5,7 +5,7 @@
         <!-- Page Header -->
         <div class="flex justify-between items-end animate-fade-in-up">
             <div>
-                <h1 class="text-xl font-bold tracking-tight text-zinc-900 dark:text-white tracking-tight">Cafe Dashboard</h1>
+                <h1 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white tracking-tight">Cafe Dashboard</h1>
                 <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Overview of your cafe's daily performance.</p>
             </div>
             <div class="hidden sm:flex space-x-2">
@@ -16,82 +16,9 @@
             </div>
         </div>
 
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 animate-fade-in-up delay-100">
-            <!-- Stat Card 1 -->
-            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 p-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Total Orders</p>
-                        <p class="mt-2 text-xl font-bold tracking-tight tracking-tight text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{{ number_format($totalOrders) }}</p>
-                    </div>
-                    <div class="p-3 bg-blue-50 dark:bg-blue-900/40 rounded-xl group-hover:bg-blue-100 dark:group-hover:bg-blue-900/60 transition-colors">
-                        <svg class="w-7 h-7 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stat Card 2 -->
-            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 p-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Total Revenue</p>
-                        <p class="mt-2 text-xl font-bold tracking-tight tracking-tight text-zinc-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
-                    </div>
-                    <div class="p-3 bg-green-50 dark:bg-green-900/40 rounded-xl group-hover:bg-green-100 dark:group-hover:bg-green-900/60 transition-colors">
-                        <svg class="w-7 h-7 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Stat Card 5 (New Daily) -->
-            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 p-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Daily Revenue</p>
-                        <p class="mt-2 text-xl font-bold tracking-tight tracking-tight text-zinc-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">Rp {{ number_format($dailyRevenue ?? 0, 0, ',', '.') }}</p>
-                    </div>
-                    <div class="p-3 bg-teal-50 dark:bg-teal-900/40 rounded-xl group-hover:bg-teal-100 dark:group-hover:bg-teal-900/60 transition-colors">
-                        <svg class="w-7 h-7 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stat Card 3 -->
-            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 p-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Active Orders</p>
-                        <p class="mt-2 text-xl font-bold tracking-tight tracking-tight text-zinc-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">{{ number_format($activeOrders) }}</p>
-                    </div>
-                    <div class="p-3 bg-orange-50 dark:bg-orange-900/40 rounded-xl group-hover:bg-orange-100 dark:group-hover:bg-orange-900/60 transition-colors">
-                        <svg class="w-7 h-7 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stat Card 4 -->
-            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 p-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Total Products</p>
-                        <p class="mt-2 text-xl font-bold tracking-tight tracking-tight text-zinc-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">{{ number_format($totalProducts) }}</p>
-                    </div>
-                    <div class="p-3 bg-purple-50 dark:bg-purple-900/40 rounded-xl group-hover:bg-purple-100 dark:group-hover:bg-purple-900/60 transition-colors">
-                        <svg class="w-7 h-7 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
+        <!-- Embedded Sales Report -->
+        <div class="animate-fade-in-up delay-100">
+            @livewire('admin.report', ['hideTitle' => true])
         </div>
 
         <!-- Tables Grid -->
@@ -118,7 +45,7 @@
                                     {{ $order->order_number }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
                                         {{ $order->status == 'completed' ? 'bg-green-100 text-green-800' : '' }}
                                         {{ $order->status == 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
                                         {{ $order->status == 'cancelled' ? 'bg-red-100 text-red-800' : '' }}
@@ -142,7 +69,7 @@
                     </table>
                 </div>
             </div>
-            
+
             <!-- Cash Opnames -->
             <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700">
                 <div class="p-6 border-b border-zinc-100 dark:border-zinc-700 flex justify-between items-center">
@@ -169,7 +96,7 @@
                                     {{ $opname->user->name ?? '-' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
                                         {{ $opname->status->value == 'matched' ? 'bg-green-100 text-green-800' : '' }}
                                         {{ $opname->status->value == 'shortage' ? 'bg-red-100 text-red-800' : '' }}
                                         {{ $opname->status->value == 'overage' ? 'bg-yellow-100 text-yellow-800' : '' }}
