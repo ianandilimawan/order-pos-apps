@@ -2,26 +2,32 @@
 
 A lightning-fast, modern Point of Sale (POS) and Self-Service QR ordering system designed for **F&B businesses, restaurants, cafes, retail stores, food courts, and pop-up shops**. Built with the powerful **TALL stack** (Tailwind CSS, Alpine.js, Laravel 11, Livewire 3), InPOS delivers an uncompromisingly fast, responsive, and beautiful experience for both customers and staff.
 
-## ✨ Key Features
+## ✨ Comprehensive Key Features
 
-### 🌐 Global & Modern UI
-- **Bilingual Support (ID / EN)**: Fully localized interface supporting English and Indonesian, easily extensible via simple JSON language files.
-- **Dark & Light Mode**: Sleek, instant theme toggle with persistent preferences and glassmorphic design aesthetics.
-- **SaaS-Style Landing Page**: Built-in responsive marketing landing page with smooth Framer Motion animations.
+### 🌐 Global & Modern Design Architecture
+- **Bilingual Localization (ID / EN)**: Fully localized interface supporting seamless real-time switching between English and Indonesian. Built with modular JSON language files (`lang/en.json`, `lang/id.json`) to allow effortless extension to additional languages.
+- **Persistent Dark & Light Mode**: Sleek, instant theme switching with persistent user preference storage in localStorage and system color scheme auto-detection. Designed with curated HSL color palettes and glassmorphic aesthetics.
+- **SaaS-Style Landing Page**: Built-in responsive marketing landing page featuring Framer Motion scroll animations, modern typography, and responsive navbar/footer layouts.
 
-### 📱 For Customers (QR Menu)
-- **Self-Service Ordering**: Scan QR codes at tables or counters to instantly browse digital menus without waiting in line.
-- **Interactive Mobile Cart**: Responsive bottom-sheet cart with smooth animations, customized modifiers, and special notes.
-- **Smart Promo & Discount System**: Automatic discount calculation, minimum spend validation, and maximum discount caps.
-- **Mobile-First Experience**: Heavy mobile optimization with safe-area awareness for a native app-like feel.
+### 📱 For Customers — Self-Service QR Menu
+- **Table-Based QR Ordering**: Customers scan dynamic table QR codes to open an app-like digital menu directly in their mobile browser—no app download required.
+- **Interactive Mobile Cart**: Slide-up interactive bottom-sheet cart featuring real-time price calculations, item modifiers (sizes, add-ons, sugar/ice levels), and custom kitchen notes.
+- **Smart Promo & Voucher Engine**: Automatically applies promo codes and calculates discounts in real-time, enforcing rules such as minimum order spend, maximum discount caps, and promotion validity periods.
+- **Live Order Status Tracking**: Real-time order progress indicators allowing customers to monitor whether their order is Pending, Processing, or Completed.
+- **Mobile-First Ergonomics**: Designed with safe-area awareness, optimized touch targets, and smooth micro-animations for an intuitive self-ordering experience.
 
-### 💻 For Staff & Admins (POS Dashboard)
-- **Lightning-Fast POS Interface**: Built with Livewire 3 and Alpine.js for a zero-reload, high-speed cashier checkout workflow.
-- **Lost Revenue & Sales Analytics**: Comprehensive sales dashboard tracking actual revenue, cash opname shifts, and potential revenue lost from abandoned orders.
-- **Table & QR Management**: Easily generate, download, and manage QR codes for tables and ordering areas.
-- **Order Management & Kitchen Display**: Real-time order status updates (Pending, Processing, Completed, Cancelled).
-- **Automated Cron & Backups**: Automated midnight cleanup for abandoned orders and scheduled daily `.sql` backups with a dedicated Backup Manager UI.
-- **Role-Based Access Control (RBAC)**: Fine-grained permissions for Admins, Cashiers, and Kitchen staff with OTP login support.
+### 💻 For Cashiers & Staff — High-Speed POS Interface
+- **Zero-Reload POS Checkout**: Powered by Livewire 3 and Alpine.js for instantaneous product searching, category filtering, cart manipulation, and receipt generation without full page refreshes.
+- **Order Management & Kitchen Workflow**: Real-time dashboard to monitor incoming QR orders, update kitchen preparation statuses, and manage dine-in, takeaway, or self-pickup workflows.
+- **Cash Opname & Shift Accountability**: Shift management system to record starting cash drawers, monitor expected revenue, reconcile actual cash on hand, and log cash discrepancies.
+- **Table & QR Code Manager**: Dedicated admin utility to generate, manage, and download print-ready QR code standees for dining tables or ordering kiosks.
+
+### 📊 For Management — Analytics, Security & Automation
+- **Lost Revenue & Sales Analytics**: Advanced analytical dashboard tracking actual sales performance alongside potential revenue lost from abandoned or unpaid customer orders.
+- **Exportable Financial Reports**: Granular sales reporting powered by Livewire PowerGrid, supporting multi-dimensional date filtering and DataTables exports.
+- **Role-Based Access Control (RBAC)**: Fine-grained permission management for diverse operational roles (Super Admin, Store Manager, Cashier, Kitchen Staff) with secure OTP login support.
+- **Automated Midnight Order Cleanup (Cron)**: Built-in scheduled task that automatically sweeps and cancels stale or abandoned pending orders every midnight to maintain clean financial records.
+- **Automated Database Backups & Manager UI**: Integrated automated daily `.sql` database backups coupled with a visual Backup Manager interface for easy archive downloading and management.
 
 ## 🛠️ Tech Stack
 - **Framework**: Laravel 11
