@@ -240,9 +240,7 @@
                 <div class="absolute -right-4 md:-right-8 -bottom-10 md:-bottom-16 w-32 md:w-56 shadow-2xl z-20 group">
                     <div
                         class="overflow-hidden rounded-[2rem] border-[6px] border-slate-900 bg-slate-900 transition-transform duration-700 ease-out group-hover:-translate-y-2 group-hover:rotate-2">
-                        <img src="{{ asset('images/mockup-menu.png') }}" alt="Customer QR Menu Light" class="w-full h-auto dark:hidden"
-                            loading="lazy">
-                        <img src="{{ asset('images/mockup-menu-dark.png') }}" alt="Customer QR Menu Dark" class="hidden w-full h-auto dark:block"
+                        <img src="{{ asset('images/mockup-menu.png') }}" alt="Customer QR Menu" class="w-full h-auto"
                             loading="lazy">
                     </div>
                 </div>
