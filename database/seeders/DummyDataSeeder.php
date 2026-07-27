@@ -46,34 +46,34 @@ class DummyDataSeeder extends Seeder
         // 2. Products
         $products = [
             // Signature Coffee
-            ['category_id' => $catIds['Signature Coffee'], 'name' => 'Es Kopi Susu Aren', 'description' => 'Kopi susu dengan gula aren murni', 'price' => 22000, 'is_available' => true, 'show' => true, 'sort' => 1],
-            ['category_id' => $catIds['Signature Coffee'], 'name' => 'Caramel Macchiato', 'description' => 'Espresso, susu, dan sirup caramel premium', 'price' => 32000, 'is_available' => true, 'show' => true, 'sort' => 2],
-            ['category_id' => $catIds['Signature Coffee'], 'name' => 'Pandan Coffee Latte', 'description' => 'Kopi susu dengan aroma pandan wangi', 'price' => 25000, 'is_available' => true, 'show' => true, 'sort' => 3],
-            ['category_id' => $catIds['Signature Coffee'], 'name' => 'Avocado Coffee', 'description' => 'Jus alpukat dicampur dengan espresso dan es krim', 'price' => 35000, 'is_available' => true, 'show' => true, 'sort' => 4],
+            ['category_id' => $catIds['Signature Coffee'], 'name' => 'Es Kopi Susu Aren', 'description' => 'Kopi susu dengan gula aren murni', 'price' => 22000, 'image' => 'product/65d8e2ad58d9e_1785131622_Bq55z4sr.webp', 'is_available' => true, 'show' => true, 'sort' => 1],
+            ['category_id' => $catIds['Signature Coffee'], 'name' => 'Caramel Macchiato', 'description' => 'Espresso, susu, dan sirup caramel premium', 'price' => 32000, 'image' => 'product/caramel-macchiato-10_1785131631_vLy8EoSo.webp', 'is_available' => true, 'show' => true, 'sort' => 2],
+            ['category_id' => $catIds['Signature Coffee'], 'name' => 'Pandan Coffee Latte', 'description' => 'Kopi susu dengan aroma pandan wangi', 'price' => 25000, 'image' => 'product/pandan-coffee-2-2a353486-da98-4635-beb6-27800000c4c6_1784778985_Od2uoDEl.webp', 'is_available' => true, 'show' => true, 'sort' => 3],
+            ['category_id' => $catIds['Signature Coffee'], 'name' => 'Avocado Coffee', 'description' => 'Jus alpukat dicampur dengan espresso dan es krim', 'price' => 35000, 'image' => 'product/resep-coffee-alpukat_1785131691_rrgLjpJo.webp', 'is_available' => true, 'show' => true, 'sort' => 4],
             
             // Classic Coffee
-            ['category_id' => $catIds['Classic Coffee'], 'name' => 'Americano (Hot/Ice)', 'description' => 'Double shot espresso dengan air', 'price' => 18000, 'is_available' => true, 'show' => true, 'sort' => 5],
-            ['category_id' => $catIds['Classic Coffee'], 'name' => 'Caffe Latte (Hot/Ice)', 'description' => 'Espresso dengan susu segar', 'price' => 24000, 'is_available' => true, 'show' => true, 'sort' => 6],
-            ['category_id' => $catIds['Classic Coffee'], 'name' => 'Cappuccino (Hot/Ice)', 'description' => 'Espresso dengan busa susu tebal', 'price' => 24000, 'is_available' => true, 'show' => true, 'sort' => 7],
-            ['category_id' => $catIds['Classic Coffee'], 'name' => 'Mochaccino (Hot/Ice)', 'description' => 'Campuran kopi, susu, dan cokelat murni', 'price' => 28000, 'is_available' => true, 'show' => true, 'sort' => 8],
+            ['category_id' => $catIds['Classic Coffee'], 'name' => 'Americano (Hot/Ice)', 'description' => 'Double shot espresso dengan air', 'price' => 18000, 'image' => 'product/img-0054_1785131702_Kkvq4QPg.webp', 'is_available' => true, 'show' => true, 'sort' => 5],
+            ['category_id' => $catIds['Classic Coffee'], 'name' => 'Caffe Latte (Hot/Ice)', 'description' => 'Espresso dengan susu segar', 'price' => 24000, 'image' => 'product/img-0055_1785131718_fyclUX5R.webp', 'is_available' => true, 'show' => true, 'sort' => 6],
+            ['category_id' => $catIds['Classic Coffee'], 'name' => 'Cappuccino (Hot/Ice)', 'description' => 'Espresso dengan busa susu tebal', 'price' => 24000, 'image' => 'product/img-0056-2_1785131735_G8DsU0XX.webp', 'is_available' => true, 'show' => true, 'sort' => 7],
+            ['category_id' => $catIds['Classic Coffee'], 'name' => 'Mochaccino (Hot/Ice)', 'description' => 'Campuran kopi, susu, dan cokelat murni', 'price' => 28000, 'image' => 'product/img-0057-2_1785131748_1a6FHqUp.webp', 'is_available' => true, 'show' => true, 'sort' => 8],
             
             // Non-Coffee
-            ['category_id' => $catIds['Non-Coffee'], 'name' => 'Matcha Latte', 'description' => 'Premium Japanese matcha dengan susu', 'price' => 26000, 'is_available' => true, 'show' => true, 'sort' => 9],
-            ['category_id' => $catIds['Non-Coffee'], 'name' => 'Taro Latte', 'description' => 'Susu segar dengan rasa taro', 'price' => 24000, 'is_available' => true, 'show' => true, 'sort' => 10],
-            ['category_id' => $catIds['Non-Coffee'], 'name' => 'Lychee Yakult', 'description' => 'Minuman segar yakult dengan sirup leci dan selasih', 'price' => 22000, 'is_available' => true, 'show' => true, 'sort' => 11],
-            ['category_id' => $catIds['Non-Coffee'], 'name' => 'Strawberry Mojito', 'description' => 'Mojito segar tanpa alkohol rasa strawberry', 'price' => 25000, 'is_available' => true, 'show' => true, 'sort' => 12],
+            ['category_id' => $catIds['Non-Coffee'], 'name' => 'Matcha Latte', 'description' => 'Premium Japanese matcha dengan susu', 'price' => 26000, 'image' => 'product/img-0058-2_1785131759_UZDrr6LV.webp', 'is_available' => true, 'show' => true, 'sort' => 9],
+            ['category_id' => $catIds['Non-Coffee'], 'name' => 'Taro Latte', 'description' => 'Susu segar dengan rasa taro', 'price' => 24000, 'image' => 'product/img-0060_1785131766_19BuxI4Z.webp', 'is_available' => true, 'show' => true, 'sort' => 10],
+            ['category_id' => $catIds['Non-Coffee'], 'name' => 'Lychee Yakult', 'description' => 'Minuman segar yakult dengan sirup leci dan selasih', 'price' => 22000, 'image' => 'product/img-0061_1785131775_yEgUejXb.webp', 'is_available' => true, 'show' => true, 'sort' => 11],
+            ['category_id' => $catIds['Non-Coffee'], 'name' => 'Strawberry Mojito', 'description' => 'Mojito segar tanpa alkohol rasa strawberry', 'price' => 25000, 'image' => 'product/img-0062_1785131785_7SqwGttU.webp', 'is_available' => true, 'show' => true, 'sort' => 12],
             
             // Main Course
-            ['category_id' => $catIds['Main Course'], 'name' => 'Nasi Goreng Spesial Cafe', 'description' => 'Nasi goreng dengan telur, sosis, dan ayam suwir', 'price' => 30000, 'is_available' => true, 'show' => true, 'sort' => 13],
-            ['category_id' => $catIds['Main Course'], 'name' => 'Chicken Katsu Curry', 'description' => 'Nasi kari khas Jepang dengan ayam katsu krispi', 'price' => 42000, 'is_available' => true, 'show' => true, 'sort' => 14],
-            ['category_id' => $catIds['Main Course'], 'name' => 'Spaghetti Aglio Olio', 'description' => 'Pasta pedas gurih dengan topping smoked beef', 'price' => 38000, 'is_available' => true, 'show' => true, 'sort' => 15],
-            ['category_id' => $catIds['Main Course'], 'name' => 'Beef Teriyaki Rice Bowl', 'description' => 'Daging sapi tumis teriyaki dengan telur mata sapi', 'price' => 45000, 'is_available' => true, 'show' => true, 'sort' => 16],
+            ['category_id' => $catIds['Main Course'], 'name' => 'Nasi Goreng Spesial Cafe', 'description' => 'Nasi goreng dengan telur, sosis, dan ayam suwir', 'price' => 30000, 'image' => 'product/img-0063_1785131797_v5UZpA6r.webp', 'is_available' => true, 'show' => true, 'sort' => 13],
+            ['category_id' => $catIds['Main Course'], 'name' => 'Chicken Katsu Curry', 'description' => 'Nasi kari khas Jepang dengan ayam katsu krispi', 'price' => 42000, 'image' => 'product/img-0064_1785131814_6lucNtd3.webp', 'is_available' => true, 'show' => true, 'sort' => 14],
+            ['category_id' => $catIds['Main Course'], 'name' => 'Spaghetti Aglio Olio', 'description' => 'Pasta pedas gurih dengan topping smoked beef', 'price' => 38000, 'image' => 'product/img-0066_1785131830_OnEE3som.webp', 'is_available' => true, 'show' => true, 'sort' => 15],
+            ['category_id' => $catIds['Main Course'], 'name' => 'Beef Teriyaki Rice Bowl', 'description' => 'Daging sapi tumis teriyaki dengan telur mata sapi', 'price' => 45000, 'image' => 'product/img-0067_1785131897_2p4tGRap.webp', 'is_available' => true, 'show' => true, 'sort' => 16],
             
             // Snacks & Pastry
-            ['category_id' => $catIds['Snacks & Pastry'], 'name' => 'French Fries', 'description' => 'Kentang goreng gurih porsi besar', 'price' => 18000, 'is_available' => true, 'show' => true, 'sort' => 17],
-            ['category_id' => $catIds['Snacks & Pastry'], 'name' => 'Mix Platter', 'description' => 'Sosis, kentang, chicken nugget, dan onion ring', 'price' => 35000, 'is_available' => true, 'show' => true, 'sort' => 18],
-            ['category_id' => $catIds['Snacks & Pastry'], 'name' => 'Butter Croissant', 'description' => 'Croissant mentega klasik yang renyah', 'price' => 22000, 'is_available' => true, 'show' => true, 'sort' => 19],
-            ['category_id' => $catIds['Snacks & Pastry'], 'name' => 'Cireng Bumbu Rujak', 'description' => 'Cireng krispi dengan cocolan bumbu rujak manis pedas', 'price' => 20000, 'is_available' => true, 'show' => true, 'sort' => 20],
+            ['category_id' => $catIds['Snacks & Pastry'], 'name' => 'French Fries', 'description' => 'Kentang goreng gurih porsi besar', 'price' => 18000, 'image' => 'product/img-0068_1785131858_wWq76QFy.webp', 'is_available' => true, 'show' => true, 'sort' => 17],
+            ['category_id' => $catIds['Snacks & Pastry'], 'name' => 'Mix Platter', 'description' => 'Sosis, kentang, chicken nugget, dan onion ring', 'price' => 35000, 'image' => 'product/img-0069_1785131871_KoldJkDO.webp', 'is_available' => true, 'show' => true, 'sort' => 18],
+            ['category_id' => $catIds['Snacks & Pastry'], 'name' => 'Butter Croissant', 'description' => 'Croissant mentega klasik yang renyah', 'price' => 22000, 'image' => 'product/img-0070_1785131846_JxOIdTGm.webp', 'is_available' => true, 'show' => true, 'sort' => 19],
+            ['category_id' => $catIds['Snacks & Pastry'], 'name' => 'Cireng Bumbu Rujak', 'description' => 'Cireng krispi dengan cocolan bumbu rujak manis pedas', 'price' => 20000, 'image' => 'product/img-0071_1785131888_rQJdhPxt.webp', 'is_available' => true, 'show' => true, 'sort' => 20],
         ];
         
         $prodModels = [];
