@@ -28,9 +28,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useTailwind();
 
-        if (request()->header('x-forwarded-proto') === 'https' || str_contains(request()->header('host', ''), 'ngrok')) {
-            $this->app['request']->server->set('HTTPS', true);
-            \Illuminate\Support\Facades\URL::forceScheme('https');
+        if (!app()->runningInConsole()) {
+            $host = request()->getHost();
+            if (request()->header('x-forwarded-proto') === 'https' || str_contains($host, 'ngrok') || str_contains(request()->header('host', ''), 'ngrok') || !in_array($host, ['127.0.0.1', 'localhost', '::1'])) {
+                $this->app['request']->server->set('HTTPS', true);
+                \Illuminate\Support\Facades\URL::forceScheme('https');
+                \Illuminate\Support\Facades\Vite::useHotFile(storage_path('vite.hot.ignore'));
+            }
         }
 
         try {
