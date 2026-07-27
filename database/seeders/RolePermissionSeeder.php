@@ -194,7 +194,7 @@ class RolePermissionSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-                    [
+            [
                 'display_name' => 'View Promos',
                 'name' => 'view-promos',
                 'description' => null,
@@ -274,7 +274,7 @@ class RolePermissionSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-                    [
+            [
                 'display_name' => 'View Products',
                 'name' => 'view-products',
                 'description' => 'Can view products list',
@@ -314,7 +314,7 @@ class RolePermissionSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-                    [
+            [
                 'display_name' => 'View Charge Settings',
                 'name' => 'view-charge_settings',
                 'description' => 'Can view chargesettings list',
@@ -354,7 +354,7 @@ class RolePermissionSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-                    [
+            [
                 'display_name' => 'View Orders',
                 'name' => 'view-orders',
                 'description' => 'Can view orders list',
@@ -394,7 +394,7 @@ class RolePermissionSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-                    [
+            [
                 'display_name' => 'View Order Items',
                 'name' => 'view-order_items',
                 'description' => 'Can view orderitems list',
@@ -434,7 +434,7 @@ class RolePermissionSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-                    [
+            [
                 'display_name' => 'View Order Charges',
                 'name' => 'view-order_charges',
                 'description' => 'Can view ordercharges list',
@@ -474,7 +474,7 @@ class RolePermissionSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-                    [
+            [
                 'display_name' => 'View Dining Tables',
                 'name' => 'view-dining_tables',
                 'description' => 'Can view diningtables list',
@@ -524,7 +524,7 @@ class RolePermissionSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-                    [
+            [
                 'display_name' => 'View Cash Opnames',
                 'name' => 'view-cash_opname',
                 'description' => 'Can view cashopnames list',
@@ -559,6 +559,46 @@ class RolePermissionSeeder extends Seeder
                 'name' => 'delete-cash_opname',
                 'description' => 'Can delete cashopname',
                 'module' => 'cash_opnames',
+                'is_active' => true,
+                'guard_name' => 'web',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'display_name' => 'View Backups',
+                'name' => 'view-backups',
+                'description' => 'Can view database backups',
+                'module' => 'system',
+                'is_active' => true,
+                'guard_name' => 'web',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'display_name' => 'Create Backup',
+                'name' => 'create-backup',
+                'description' => 'Can create and upload backups',
+                'module' => 'system',
+                'is_active' => true,
+                'guard_name' => 'web',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'display_name' => 'Restore Backup',
+                'name' => 'restore-backup',
+                'description' => 'Can restore database from backups',
+                'module' => 'system',
+                'is_active' => true,
+                'guard_name' => 'web',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'display_name' => 'Delete Backup',
+                'name' => 'delete-backup',
+                'description' => 'Can delete backups',
+                'module' => 'system',
                 'is_active' => true,
                 'guard_name' => 'web',
                 'created_at' => $now,

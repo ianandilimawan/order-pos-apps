@@ -68,6 +68,14 @@ class Report extends Component
                 ];
             })->sortByDesc('usage_count')->values();
 
+        // Abandoned / Cancelled unpaid orders (Lost Revenue)
+        $abandonedOrders = Order::whereBetween('created_at', [$start, $end])
+            ->where('status', 'Cancelled')
+            ->where('payment_status', 'Unpaid')
+            ->get();
+        $abandonedOrdersCount = $abandonedOrders->count();
+        $lostRevenue = $abandonedOrders->sum('total');
+
         return [
             'totalSales' => $totalSales,
             'orderCount' => $orderCount,
@@ -76,6 +84,8 @@ class Report extends Component
             'totalDiscounts' => $totalDiscounts,
             'promoUsageCount' => $promoUsageCount,
             'promoDetails' => $promoDetails,
+            'abandonedOrdersCount' => $abandonedOrdersCount,
+            'lostRevenue' => $lostRevenue,
         ];
     }
 

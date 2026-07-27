@@ -12,7 +12,7 @@ class AdminController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->hasRole('admin') || $user->hasRole('superadmin') || $user->hasRole('admin staff')) {
+        if ($user->hasRole(['admin', 'administrator', 'administator', 'superadmin', 'admin staff'])) {
             $recentOrders = Order::with('diningTable')->orderBy('created_at', 'desc')->take(5)->get();
             $cashOpnames = \App\Models\CashOpname::with('user')->orderBy('created_at', 'desc')->take(5)->get();
 

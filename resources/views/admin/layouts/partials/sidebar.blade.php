@@ -8,7 +8,7 @@
                             alt="{{ $settings->app_name }}" class="h-10 max-w-full object-contain">
                     @else
                         <h1 class="text-lg font-semibold text-zinc-900 dark:text-white tracking-tight">
-                            {{ isset($settings) && $settings->logo_text ? $settings->logo_text : (isset($settings) ? $settings->app_name : 'Admin Panel') }}
+                            {{ isset($settings) && $settings->logo_text ? $settings->logo_text : (isset($settings) ? $settings->app_name : config('app.name', 'InPOS')) }}
                         </h1>
                     @endif
                     <button id="closeSidebar"

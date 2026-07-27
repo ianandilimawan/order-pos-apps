@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Order POS">
+    <meta name="apple-mobile-web-app-title" content="InPOS">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ isset($settings) ? $settings->app_name : config('app.name', 'Laravel') }} - Admin</title>
 
@@ -42,9 +42,9 @@
     <script>
         // Initialize theme and sidebar state before body loads to prevent flash
         (function() {
-            const dbTheme = '{{ \App\Models\Setting::getSettings()->theme_default ?? "light" }}';
+            const dbTheme = '{{ \App\Models\Setting::getSettings()->theme_default ?? 'light' }}';
             let savedTheme = localStorage.getItem('adminTheme');
-            
+
             if (!savedTheme) {
                 if (dbTheme === 'system') {
                     savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -63,14 +63,14 @@
             }
 
             // Apply sidebar state
-            const dbSidebarSetting = '{{ \App\Models\Setting::getSettings()->sidebar_style ?? "full" }}';
+            const dbSidebarSetting = '{{ \App\Models\Setting::getSettings()->sidebar_style ?? 'full' }}';
             const dbSidebar = dbSidebarSetting === 'collapsed' ? 'closed' : 'open';
-            
+
             let savedSidebarState = localStorage.getItem('desktopSidebarState');
             if (!savedSidebarState) {
                 savedSidebarState = dbSidebar;
             }
-            
+
             if (savedSidebarState === 'closed') {
                 html.classList.add('sidebar-closed');
             }
@@ -223,7 +223,7 @@
             const html = document.getElementById('adminHtml');
 
             // Get saved theme or default to DB setting
-            const dbTheme = '{{ \App\Models\Setting::getSettings()->theme_default ?? "light" }}';
+            const dbTheme = '{{ \App\Models\Setting::getSettings()->theme_default ?? 'light' }}';
             let savedTheme = localStorage.getItem('adminTheme');
             if (!savedTheme) {
                 if (dbTheme === 'system') {

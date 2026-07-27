@@ -12,9 +12,16 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\MemberController;
 
 // Public routes
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'id'])) {
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 // Customer QR Menu Route
 Route::get('/menu', \App\Livewire\Customer\QrMenu::class)->name('customer.menu');
@@ -63,6 +70,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Settings routes
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+
+        // Backups route
+        Route::get('backups', \App\Livewire\Admin\BackupManager::class)->name('backups.index');
 
         // Profile routes
         Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');

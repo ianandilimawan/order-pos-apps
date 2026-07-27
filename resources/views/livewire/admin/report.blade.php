@@ -29,7 +29,7 @@
         $metrics = $this->metrics;
     @endphp
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Main Stats -->
         <div
             class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col justify-center relative overflow-hidden">
@@ -57,6 +57,20 @@
                     - Rp {{ number_format($metrics['totalDiscounts'], 0, ',', '.') }} Disc
                 </span>
                 @endif
+            </div>
+        </div>
+
+        <!-- Abandoned / Cancelled Orders (Lost Revenue) -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col justify-center relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 w-32 h-32 bg-red-50 dark:bg-red-900/20 rounded-full blur-3xl opacity-60">
+            </div>
+            <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1">Lost Revenue (Abandoned)</p>
+            <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white">Rp
+                {{ number_format($metrics['lostRevenue'], 0, ',', '.') }}</h2>
+            <div class="mt-4 flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center gap-1 bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-2 py-1 rounded-md text-xs font-bold">
+                    {{ $metrics['abandonedOrdersCount'] }} Abandoned Orders
+                </span>
             </div>
         </div>
 

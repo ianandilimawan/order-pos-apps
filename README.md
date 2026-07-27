@@ -11,7 +11,11 @@ A comprehensive, modern Point of Sale (POS) and Self-Service ordering system des
 - **Mobile First**: UI optimized heavily for mobile devices (Safe-area aware, app-like feel).
 
 ### 💻 For Staff & Admins (POS Dashboard)
-- **Cashier POS**: Quick order entry system with receipt printing capabilities.
+- **Modern POS Interface**: Built with Livewire and Alpine.js for a seamless cashier experience.
+- **Auto-Cancel Orders (Cron)**: Automatically sweeps and cancels abandoned orders at midnight.
+- **Lost Revenue Analytics**: Smart dashboard tracking potential revenue lost from pending orders.
+- **Automated Database Backups**: Scheduled daily `.sql` backups with a beautiful Backup Manager UI.
+- **Promotional Landing Page**: Built-in SaaS-style landing page for marketing the POS application.
 - **Order Management**: Real-time order tracking with status badges (Pending, Processing, Completed).
 - **Table Management**: Generate and print QR codes for each dining table easily.
 - **Cash Opname**: Shift management to track starting cash, expected revenue, and actual cash on hand.

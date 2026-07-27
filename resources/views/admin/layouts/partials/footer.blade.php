@@ -8,8 +8,7 @@
                 {{ isset($settings) ? $settings->app_name : config('app.name', 'Admin Panel') }}
             </a>.
             <span class="hidden sm:inline-block ml-0.5">
-                Created by <a href="#"
-                    class="font-bold text-zinc-800 dark:text-zinc-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">Redtech</a>
+                Powered by <span class="font-bold text-zinc-800 dark:text-zinc-200">InTech Studio</span>
             </span>
         </div>
 

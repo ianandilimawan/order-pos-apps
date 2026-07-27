@@ -44,6 +44,10 @@ class OrderTable extends PowerGridComponent
     {
         $query = Order::query()->with('diningTable');
 
+        if (auth()->check() && !auth()->user()->hasRole(['admin', 'administrator', 'administator', 'superadmin', 'admin staff'])) {
+            $query->whereDate('created_at', \Carbon\Carbon::today());
+        }
+
         if (Schema::hasColumn('orders', 'sort')) {
             $query->orderBy('sort', 'asc');
         }

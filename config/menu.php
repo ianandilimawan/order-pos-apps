@@ -70,6 +70,12 @@ return [
             'icon' => 'cog',
             'permission' => 'view-settings',
         ],
+        [
+            'name' => 'Backups',
+            'route' => 'admin.backups.index',
+            'icon' => 'fa fa-database',
+            'permission' => 'view-backups',
+        ],
     ],
 
     'App Settings' => [],
@@ -81,14 +87,14 @@ return [
         [
             'name' => ' Tables',
             'route' => 'admin.dining_tables.index',
-            'icon' => 'circle',
+            'icon' => 'fas fa-table',
             'permission' => 'view-dining_tables',
         ],
 
         [
             'name' => 'Charge  Settings',
             'route' => 'admin.charge_settings.index',
-            'icon' => 'circle',
+            'icon' => 'fas fa-receipt',
             'permission' => 'view-charge_settings',
         ],
 
@@ -137,7 +143,7 @@ return [
         [
             'name' => 'Cash Opnames',
             'route' => 'admin.cash_opnames.index',
-            'icon' => 'circle',
+            'icon' => 'fas fa-wallet',
             'permission' => 'view-cash_opname',
         ],
     ],
