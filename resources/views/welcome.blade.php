@@ -227,8 +227,11 @@
                     </div>
                     <!-- Transition effect to smoothly scale up on hover -->
                     <div class="overflow-hidden">
-                        <img src="{{ asset('images/mockup-pos.png') }}" alt="POS Dashboard"
-                            class="w-full h-auto object-cover object-top border-b border-slate-200 transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                        <img src="{{ asset('images/mockup-pos.png') }}" alt="POS Dashboard Light"
+                            class="w-full h-auto object-cover object-top border-b border-slate-200 transition-transform duration-700 ease-out group-hover:scale-[1.02] dark:hidden"
+                            loading="lazy">
+                        <img src="{{ asset('images/mockup-pos-dark.png') }}" alt="POS Dashboard Dark"
+                            class="hidden w-full h-auto object-cover object-top border-b border-slate-800 transition-transform duration-700 ease-out group-hover:scale-[1.02] dark:block"
                             loading="lazy">
                     </div>
                 </div>
@@ -237,7 +240,9 @@
                 <div class="absolute -right-4 md:-right-8 -bottom-10 md:-bottom-16 w-32 md:w-56 shadow-2xl z-20 group">
                     <div
                         class="overflow-hidden rounded-[2rem] border-[6px] border-slate-900 bg-slate-900 transition-transform duration-700 ease-out group-hover:-translate-y-2 group-hover:rotate-2">
-                        <img src="{{ asset('images/mockup-menu.png') }}" alt="Customer QR Menu" class="w-full h-auto"
+                        <img src="{{ asset('images/mockup-menu.png') }}" alt="Customer QR Menu Light" class="w-full h-auto dark:hidden"
+                            loading="lazy">
+                        <img src="{{ asset('images/mockup-menu-dark.png') }}" alt="Customer QR Menu Dark" class="hidden w-full h-auto dark:block"
                             loading="lazy">
                     </div>
                 </div>
@@ -323,8 +328,10 @@
                     <div
                         class="absolute inset-0 bg-slate-100 dark:bg-slate-800 rounded-2xl transform translate-x-4 translate-y-4">
                     </div>
-                    <img src="{{ asset('images/mockup-pos-list.png') }}" alt="POS Interface"
-                        class="relative z-10 w-full h-auto feature-image-shadow transition-transform duration-500 hover:-translate-y-1 rounded-lg">
+                    <img src="{{ asset('images/mockup-pos-list.png') }}" alt="POS Interface Light"
+                        class="relative z-10 w-full h-auto feature-image-shadow transition-transform duration-500 hover:-translate-y-1 rounded-lg dark:hidden">
+                    <img src="{{ asset('images/mockup-pos-list-dark.png') }}" alt="POS Interface Dark"
+                        class="hidden relative z-10 w-full h-auto feature-image-shadow transition-transform duration-500 hover:-translate-y-1 rounded-lg dark:block">
                 </div>
             </div>
 
@@ -376,8 +383,10 @@
                     <div
                         class="absolute inset-0 bg-slate-100 dark:bg-slate-800 rounded-2xl transform -translate-x-4 translate-y-4">
                     </div>
-                    <img src="{{ asset('images/mockup-orders.png') }}" alt="Order Management"
-                        class="relative z-10 w-full h-auto feature-image-shadow transition-transform duration-500 hover:-translate-y-1 rounded-lg">
+                    <img src="{{ asset('images/mockup-orders.png') }}" alt="Order Management Light"
+                        class="relative z-10 w-full h-auto feature-image-shadow transition-transform duration-500 hover:-translate-y-1 rounded-lg dark:hidden">
+                    <img src="{{ asset('images/mockup-orders-dark.png') }}" alt="Order Management Dark"
+                        class="hidden relative z-10 w-full h-auto feature-image-shadow transition-transform duration-500 hover:-translate-y-1 rounded-lg dark:block">
                 </div>
             </div>
 
@@ -410,8 +419,10 @@
                     <div
                         class="absolute inset-0 bg-slate-100 dark:bg-slate-800 rounded-2xl transform translate-x-4 translate-y-4">
                     </div>
-                    <img src="{{ asset('images/mockup-reports.png') }}" alt="Sales Analytics"
-                        class="relative z-10 w-full h-auto feature-image-shadow transition-transform duration-500 hover:-translate-y-1 rounded-lg">
+                    <img src="{{ asset('images/mockup-reports.png') }}" alt="Sales Analytics Light"
+                        class="relative z-10 w-full h-auto feature-image-shadow transition-transform duration-500 hover:-translate-y-1 rounded-lg dark:hidden">
+                    <img src="{{ asset('images/mockup-reports-dark.png') }}" alt="Sales Analytics Dark"
+                        class="hidden relative z-10 w-full h-auto feature-image-shadow transition-transform duration-500 hover:-translate-y-1 rounded-lg dark:block">
                 </div>
             </div>
 
