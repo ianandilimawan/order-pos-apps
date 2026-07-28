@@ -326,6 +326,11 @@
             Alpine.data('ajaxForm', () => ({
                 loading: false,
                 async submit(e) {
+                    // Sync TinyMCE editors to textareas
+                    if (typeof tinymce !== 'undefined') {
+                        tinymce.triggerSave();
+                    }
+
                     const form = e.target;
                     if (!form.checkValidity()) {
                         form.reportValidity();
