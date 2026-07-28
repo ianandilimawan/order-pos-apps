@@ -51,7 +51,7 @@ class DiningTableController extends Controller
 
         ActivityLogService::logCreate($diningTable);
 
-        return redirect()->route('admin.dining_tables.index')->with('success', 'DiningTable created successfully.');
+        return redirect()->route('admin.dining_tables.index')->with('success', 'Dining Table created successfully.');
     }
 
     public function show(DiningTable $diningTable)
@@ -78,7 +78,7 @@ class DiningTableController extends Controller
 
         ActivityLogService::logUpdate($diningTable, $oldValues);
 
-        return redirect()->route('admin.dining_tables.index')->with('success', 'DiningTable updated successfully.');
+        return redirect()->route('admin.dining_tables.index')->with('success', 'Dining Table updated successfully.');
     }
 
     public function destroy(DiningTable $diningTable)
@@ -88,7 +88,7 @@ class DiningTableController extends Controller
         ActivityLogService::logDelete($diningTable);
 
         $diningTable->delete();
-        return redirect()->route('admin.dining_tables.index')->with('success', 'DiningTable deleted successfully.');
+        return redirect()->route('admin.dining_tables.index')->with('success', 'Dining Table deleted successfully.');
     }
 
     public function printQr(DiningTable $diningTable)

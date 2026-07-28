@@ -115,7 +115,6 @@
 
     <script src="{{ asset('js/powergrid.js') }}"></script>
     @livewireScripts
-    @stack('scripts')
 
     <!-- Sidebar Overlay for Mobile -->
     <div id="sidebarOverlay" class="fixed inset-0 z-40 bg-zinc-950/50 backdrop-blur-sm hidden lg:hidden"></div>
@@ -144,7 +143,7 @@
             const toast = document.createElement('div');
             toast.id = toastId;
             toast.className =
-                `${colors[type] || colors.info} border rounded-xl p-4 shadow-lg min-w-[300px] max-w-md transform transition-all duration-300 ease-in-out translate-x-full`;
+                `${colors[type] || colors.info} rounded-xl p-4 shadow-lg min-w-[300px] max-w-md transform transition-all duration-300 ease-in-out opacity-0 translate-x-8`;
 
             const messageLines = message.split('\n');
             toast.innerHTML = `
@@ -163,10 +162,13 @@
 
             container.appendChild(toast);
 
-            // Trigger animation
-            setTimeout(() => {
-                toast.classList.remove('translate-x-full');
-            }, 10);
+            // Force reflow for reliable CSS transition
+            void toast.offsetWidth;
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('opacity-0', 'translate-x-8');
+                toast.classList.add('opacity-100', 'translate-x-0');
+            });
 
             // Auto remove
             if (duration > 0) {
@@ -179,7 +181,8 @@
         function closeToast(toastId) {
             const toast = document.getElementById(toastId);
             if (toast) {
-                toast.classList.add('translate-x-full');
+                toast.classList.remove('opacity-100', 'translate-x-0');
+                toast.classList.add('opacity-0', 'translate-x-8');
                 setTimeout(() => {
                     toast.remove();
                 }, 300);
@@ -318,8 +321,66 @@
             });
         }
     </script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('ajaxForm', () => ({
+                loading: false,
+                async submit(e) {
+                    const form = e.target;
+                    if (!form.checkValidity()) {
+                        form.reportValidity();
+                        return;
+                    }
+                    this.loading = true;
+                    // Remove old errors
+                    document.querySelectorAll('.text-red-500.ajax-error').forEach(el => el.remove());
+                    
+                    try {
+                        const formData = new FormData(form);
+                        const response = await fetch(form.action, {
+                            method: 'POST',
+                            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' },
+                            body: formData,
+                        });
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            if (typeof showToast === 'function') showToast(data.message, 'success');
+                            if (data.redirect) {
+                                setTimeout(() => {
+                                    const url = new URL(data.redirect, window.location.origin);
+                                    url.searchParams.set('_t', Date.now());
+                                    window.location.href = url.toString();
+                                }, 1000);
+                            } else {
+                                this.loading = false;
+                            }
+                        } else if (response.status === 422 && data.errors) {
+                            Object.keys(data.errors).forEach(field => {
+                                const input = form.querySelector(`[name="${field}"]`);
+                                if (input) {
+                                    const errorEl = document.createElement('p');
+                                    errorEl.className = 'text-red-500 text-xs mt-1 ajax-error';
+                                    errorEl.textContent = data.errors[field][0];
+                                    input.parentNode.appendChild(errorEl);
+                                }
+                            });
+                            if (typeof showToast === 'function') showToast(data.message || 'Please fix the validation errors.', 'error');
+                            this.loading = false;
+                        } else {
+                            throw new Error(data.message || 'Something went wrong');
+                        }
+                    } catch (error) {
+                        if (typeof showToast === 'function') showToast(error.message || 'Failed to submit form.', 'error');
+                        this.loading = false;
+                    }
+                }
+            }));
+        });
+    </script>
     <x-toast />
     <x-confirm-delete-modal />
+    @stack('scripts')
 </body>
 
 </html>

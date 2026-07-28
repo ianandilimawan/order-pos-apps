@@ -34,7 +34,7 @@
 
         <!-- Form -->
         <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 dark:border-gray-800 overflow-hidden">
-            <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data" class="lg:p-8 px-4 py-4 space-y-6 overflow-x-hidden">
+            <form x-data="ajaxForm" @submit.prevent="submit" action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data" class="lg:p-8 px-4 py-4 space-y-6 overflow-x-hidden">
                 @csrf
                 @method('PUT')
 
@@ -46,10 +46,10 @@
                         class="lg:px-8 px-3 py-3 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-semibold shadow-sm lg:text-base text-sm">
                         Cancel
                     </a>
-                    <button type="submit" id="submit-btn"
+                    <button type="submit" x-bind:disabled="loading"
                         class="lg:px-8 px-3 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors font-semibold shadow-sm hover:shadow-md lg:text-base text-sm disabled:opacity-50">
-                        <span id="submit-text">Update Product</span>
-                        <span id="submit-loader" class="hidden">
+                        <span x-show="!loading">Update Product</span>
+                        <span x-show="loading" style="display: none;">
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -62,35 +62,4 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const form = document.querySelector('form');
-                if (!form) return;
-
-                const submitBtn = document.getElementById('submit-btn');
-                const submitText = document.getElementById('submit-text');
-                const submitLoader = document.getElementById('submit-loader');
-
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault(); // Prevent immediate submission to show the spinner
-
-                    if (!form.checkValidity()) {
-                        form.reportValidity();
-                        return;
-                    }
-
-                    // Disable submit button and show loader
-                    if (submitBtn) submitBtn.disabled = true;
-                    if (submitText) submitText.classList.add('hidden');
-                    if (submitLoader) submitLoader.classList.remove('hidden');
-
-                    // Add a slight delay before actual submission
-                    setTimeout(() => {
-                        form.submit();
-                    }, 800);
-                });
-            });
-        </script>
-    @endpush
 @endsection

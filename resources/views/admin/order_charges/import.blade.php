@@ -32,7 +32,7 @@
 
         <!-- Import Form -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-            <form action="{{ route('admin.order_charges.import') }}" method="POST" enctype="multipart/form-data" class="lg:p-8 px-4 py-4 space-y-6">
+            <form x-data="ajaxForm" @submit.prevent="submit" action="{{ route('admin.order_charges.import') }}" method="POST" enctype="multipart/form-data" class="lg:p-8 px-4 py-4 space-y-6">
                 @csrf
 
                 <!-- File Upload -->
@@ -102,15 +102,15 @@
                         class="lg:px-8 px-3 py-3 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors font-semibold shadow-md hover:shadow-lg border-2 border-gray-200 dark:border-gray-600 lg:text-base text-sm">
                         Cancel
                     </a>
-                    <button type="submit" id="submit-btn"
+                    <button type="submit" x-bind:disabled="loading"
                         class="lg:px-8 px-3 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-semibold shadow-md hover:shadow-lg hover:scale-105 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 lg:text-base text-sm">
-                        <span id="submit-text">
+                        <span x-show="!loading">
                             <svg class="lg:w-5 w-4 lg:h-5 h-4 inline lg:mr-2 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                             </svg>
                             Import Data
                         </span>
-                        <span id="submit-loader" class="hidden">
+                        <span x-show="loading" style="display: none;">
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -123,39 +123,4 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const form = document.querySelector('form');
-                if (!form) return;
-
-                const submitBtn = document.getElementById('submit-btn');
-                const submitText = document.getElementById('submit-text');
-                const submitLoader = document.getElementById('submit-loader');
-
-                form.addEventListener('submit', function(e) {
-                    if (!form.checkValidity()) {
-                        return;
-                    }
-
-                    // Disable submit button and show loader
-                    if (submitBtn) submitBtn.disabled = true;
-                    if (submitText) submitText.classList.add('hidden');
-                    if (submitLoader) submitLoader.classList.remove('hidden');
-
-                    // Show processing message
-                    const fileInput = document.getElementById('file');
-                    const file = fileInput.files[0];
-                    if (file) {
-                        const fileName = file.name;
-                        const fileSize = (file.size / 1024 / 1024).toFixed(2);
-                        if (submitText) {
-                            submitText.innerHTML = `Uploading ${fileName} (${fileSize} MB)...`;
-                            submitText.classList.remove('hidden');
-                        }
-                    }
-                });
-            });
-        </script>
-    @endpush
 @endsection

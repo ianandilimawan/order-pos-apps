@@ -20,7 +20,7 @@
 
         <!-- Filters -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <form method="GET" action="{{ route('admin.laravel-logs.show', $fileName) }}" class="flex flex-wrap gap-2">
+            <form x-data="ajaxForm" @submit.prevent="submit" method="GET" action="{{ route('admin.laravel-logs.show', $fileName) }}" class="flex flex-wrap gap-2">
                 <select name="level"
                     class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     <option value="">All Levels</option>
@@ -34,10 +34,16 @@
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Search logs..."
                     class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[200px]">
 
-                <button type="submit"
-                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors text-sm font-medium">
-                    Filter
-                </button>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors text-sm font-medium" x-bind:disabled="loading">
+<span x-show="!loading">Filter</span>
+                        <span x-show="loading" style="display: none;">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Saving...
+                        </span>
+</button>
 
                 @if (request()->anyFilled(['level', 'search']))
                     <a href="{{ route('admin.laravel-logs.show', $fileName) }}"
