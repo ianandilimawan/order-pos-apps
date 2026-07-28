@@ -95,7 +95,7 @@
                     </div>
                 </form>
                 
-                <form action="{{ route('admin.login.otp.resend') }}" method="POST" class="text-center mt-6" id="resendForm">
+                <form x-data="ajaxForm" @submit.prevent="submit" action="{{ route('admin.login.otp.resend') }}" method="POST" class="text-center mt-6" id="resendForm">
                     @csrf
                     <button type="submit" id="resendBtn" disabled class="text-sm font-medium text-zinc-400 dark:text-zinc-500 transition-colors cursor-not-allowed">
                         Didn't receive the code? Resend OTP <span id="countdown"></span>

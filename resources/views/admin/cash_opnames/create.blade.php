@@ -53,7 +53,7 @@
         <!-- Form -->
         <div
             class="bg-white dark:bg-gray-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 dark:border-gray-800 overflow-hidden">
-            <form action="{{ route('admin.cash_opnames.store') }}" method="POST" enctype="multipart/form-data"
+            <form x-data="ajaxForm" @submit.prevent="submit" action="{{ route('admin.cash_opnames.store') }}" method="POST" enctype="multipart/form-data"
                 class="lg:p-8 px-4 py-4 space-y-6 overflow-x-hidden">
                 @csrf
 
@@ -70,10 +70,10 @@
                             Batal
                         </a>
                         @endcan
-                    <button type="submit" id="submit-btn"
+                    <button type="submit" x-bind:disabled="loading"
                         class="lg:px-8 px-3 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors font-semibold shadow-sm hover:shadow-md lg:text-base text-sm disabled:opacity-50">
-                        <span id="submit-text">Create Cash Opname</span>
-                        <span id="submit-loader" class="hidden">
+                        <span x-show="!loading">Create Cash Opname</span>
+                        <span x-show="loading" style="display: none;">
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
@@ -90,47 +90,4 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const form = document.querySelector('form');
-                if (!form) return;
-
-                const submitBtn = document.getElementById('submit-btn');
-                const submitText = document.getElementById('submit-text');
-                const submitLoader = document.getElementById('submit-loader');
-
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault(); // Prevent immediate submission to show the spinner
-
-                    if (!form.checkValidity()) {
-                        form.reportValidity();
-                        return;
-                    }
-
-                    // Disable submit button and show loader
-                    if (submitBtn) submitBtn.disabled = true;
-                    if (submitText) submitText.classList.add('hidden');
-                    if (submitLoader) submitLoader.classList.remove('hidden');
-
-                    // Unformat currency inputs
-                    document.querySelectorAll('input[data-currency]').forEach(function(input) {
-                        if (typeof AutoNumeric !== 'undefined') {
-                            var autoNumericInstance = AutoNumeric.getAutoNumericElement(input);
-                            if (autoNumericInstance) {
-                                var rawValue = autoNumericInstance.getNumber();
-                                autoNumericInstance.remove();
-                                input.value = (rawValue === null || rawValue === '') ? 0 : rawValue;
-                            }
-                        }
-                    });
-
-                    // Add a slight delay before actual submission
-                    setTimeout(() => {
-                        form.submit();
-                    }, 800);
-                });
-            });
-        </script>
-    @endpush
 @endsection
