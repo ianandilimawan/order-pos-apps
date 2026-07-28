@@ -16,10 +16,10 @@ class {{CONTROLLER_NAME}} extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:view-{{MODEL_NAME_SNAKE}}')->only(['index', 'show']);
-        $this->middleware('permission:create-{{MODEL_NAME_SNAKE}}')->only(['create', 'store'{{IMPORT_PERMISSIONS}}]);
-        $this->middleware('permission:update-{{MODEL_NAME_SNAKE}}')->only(['edit', 'update']);
-        $this->middleware('permission:delete-{{MODEL_NAME_SNAKE}}')->only('destroy');
+        $this->middleware('permission:view-{{MODEL_NAME_SNAKE_PLURAL}}')->only(['index', 'show']);
+        $this->middleware('permission:create-{{MODEL_NAME_SNAKE_PLURAL}}')->only(['create', 'store'{{IMPORT_PERMISSIONS}}]);
+        $this->middleware('permission:edit-{{MODEL_NAME_SNAKE_PLURAL}}')->only(['edit', 'update']);
+        $this->middleware('permission:delete-{{MODEL_NAME_SNAKE_PLURAL}}')->only('destroy');
     }
 
     public function index()
@@ -45,7 +45,15 @@ class {{CONTROLLER_NAME}} extends Controller
 
         ActivityLogService::logCreate(${{MODEL_VARIABLE}});
 
-        return redirect()->route('{{ROUTE_NAME}}.index')->with('success', '{{MODEL_NAME}} created successfully.');
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => '{{MODEL_NAME_TITLE}} created successfully.',
+                'redirect' => route('{{ROUTE_NAME}}.index')
+            ]);
+        }
+
+        return redirect()->route('{{ROUTE_NAME}}.index')->with('success', '{{MODEL_NAME_TITLE}} created successfully.');
     }
 
     public function show({{MODEL_NAME}} ${{MODEL_VARIABLE}})
@@ -72,7 +80,15 @@ class {{CONTROLLER_NAME}} extends Controller
 
         ActivityLogService::logUpdate(${{MODEL_VARIABLE}}, $oldValues);
 
-        return redirect()->route('{{ROUTE_NAME}}.index')->with('success', '{{MODEL_NAME}} updated successfully.');
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => '{{MODEL_NAME_TITLE}} updated successfully.',
+                'redirect' => route('{{ROUTE_NAME}}.index')
+            ]);
+        }
+
+        return redirect()->route('{{ROUTE_NAME}}.index')->with('success', '{{MODEL_NAME_TITLE}} updated successfully.');
     }
 
     public function destroy({{MODEL_NAME}} ${{MODEL_VARIABLE}})
@@ -82,7 +98,7 @@ class {{CONTROLLER_NAME}} extends Controller
         ActivityLogService::logDelete(${{MODEL_VARIABLE}});
 
         ${{MODEL_VARIABLE}}->delete();
-        return redirect()->route('{{ROUTE_NAME}}.index')->with('success', '{{MODEL_NAME}} deleted successfully.');
+        return redirect()->route('{{ROUTE_NAME}}.index')->with('success', '{{MODEL_NAME_TITLE}} deleted successfully.');
     }
 
 {{IMPORT_EXPORT_ABSTRACT_METHODS}}

@@ -58,7 +58,7 @@ class PermissionGenerator extends BaseGenerator
         return [
             [
                 'display_name' => "View {$this->commandData->modelNamePlural}",
-                'name' => "view-{$this->commandData->modelNameSnake}",
+                'name' => "view-{$this->commandData->modelNameSnakePlural}",
                 'description' => "Can view {$this->commandData->modelNameLowerPlural} list",
                 'module' => $module,
                 'guard_name' => 'web',
@@ -66,23 +66,23 @@ class PermissionGenerator extends BaseGenerator
             ],
             [
                 'display_name' => "Create {$this->commandData->modelNamePlural}",
-                'name' => "create-{$this->commandData->modelNameSnake}",
+                'name' => "create-{$this->commandData->modelNameSnakePlural}",
                 'description' => "Can create new {$this->commandData->modelNameLower}",
                 'module' => $module,
                 'guard_name' => 'web',
                 'is_active' => true
             ],
             [
-                'display_name' => "Update {$this->commandData->modelNamePlural}",
-                'name' => "update-{$this->commandData->modelNameSnake}",
-                'description' => "Can update {$this->commandData->modelNameLower}",
+                'display_name' => "Edit {$this->commandData->modelNamePlural}",
+                'name' => "edit-{$this->commandData->modelNameSnakePlural}",
+                'description' => "Can edit {$this->commandData->modelNameLower}",
                 'module' => $module,
                 'guard_name' => 'web',
                 'is_active' => true
             ],
             [
                 'display_name' => "Delete {$this->commandData->modelNamePlural}",
-                'name' => "delete-{$this->commandData->modelNameSnake}",
+                'name' => "delete-{$this->commandData->modelNameSnakePlural}",
                 'description' => "Can delete {$this->commandData->modelNameLower}",
                 'module' => $module,
                 'guard_name' => 'web',
@@ -125,7 +125,7 @@ class PermissionGenerator extends BaseGenerator
         }
 
         $content = file_get_contents($seederPath);
-        
+
         $seederStub = "";
         foreach ($permissions as $perm) {
             // Skip if permission already exists in seeder
@@ -152,7 +152,7 @@ class PermissionGenerator extends BaseGenerator
         // Find the array closing bracket for $permissions = [ ... ];
         // This is a bit tricky, but we can look for the end of the basic permissions
         $search = "        ];";
-        
+
         // Find the first occurrence of "];" after "$permissions = ["
         $permissionsStart = strpos($content, '$permissions = [');
         if ($permissionsStart !== false) {
@@ -160,7 +160,7 @@ class PermissionGenerator extends BaseGenerator
             if ($arrayEnd !== false) {
                 $before = substr($content, 0, $arrayEnd);
                 $after = substr($content, $arrayEnd);
-                
+
                 $newContent = $before . $seederStub . "        " . $after;
                 file_put_contents($seederPath, $newContent);
             }
