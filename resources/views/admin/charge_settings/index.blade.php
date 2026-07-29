@@ -12,7 +12,7 @@
                 <p class="mt-1 lg:text-sm text-xs text-gray-600 dark:text-gray-400">Manage your chargesettings here</p>
             </div>
             <div class="flex flex-wrap gap-3">
-                @if(auth()->user() && auth()->user()->hasPermission('create-charge_setting'))
+                @if(auth()->user() && auth()->user()->hasPermission('create-charge_settings'))
                 
                 <a href="{{ route('admin.charge_settings.create') }}"
                     class="lg:px-4 px-3 lg:py-2 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors lg:text-base text-sm">

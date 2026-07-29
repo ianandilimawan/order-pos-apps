@@ -18,10 +18,10 @@ class CashOpnameController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:view-cash_opname')->only(['index', 'show']);
-        $this->middleware('permission:create-cash_opname')->only(['create', 'store']);
-        $this->middleware('permission:update-cash_opname')->only(['edit', 'update']);
-        $this->middleware('permission:delete-cash_opname')->only('destroy');
+        $this->middleware('permission:view-cash_opnames')->only(['index', 'show']);
+        $this->middleware('permission:create-cash_opnames')->only(['create', 'store']);
+        $this->middleware('permission:edit-cash_opnames')->only(['edit', 'update']);
+        $this->middleware('permission:delete-cash_opnames')->only('destroy');
     }
 
     public function index()
@@ -84,7 +84,7 @@ class CashOpnameController extends Controller
 
         ActivityLogService::logCreate($cashOpname);
 
-        if (auth()->user()->can('view-cash_opname')) {
+        if (auth()->user()->can('view-cash_opnames')) {
             return redirect()->route('admin.cash_opnames.index')
                 ->with('success', 'CashOpname created successfully.');
         } else {

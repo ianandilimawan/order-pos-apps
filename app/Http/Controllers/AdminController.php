@@ -13,10 +13,20 @@ class AdminController extends Controller
         $user = auth()->user();
 
         if ($user->hasRole(['admin', 'administrator', 'administator', 'superadmin', 'admin staff'])) {
+            $today = \Carbon\Carbon::today();
+
+            $todayOrders = Order::whereDate('created_at', $today)->count();
+            
+            $todayRevenue = Order::whereDate('created_at', $today)
+                ->where('payment_status', 'paid')
+                ->sum('total');
+
             $recentOrders = Order::with('diningTable')->orderBy('created_at', 'desc')->take(5)->get();
             $cashOpnames = \App\Models\CashOpname::with('user')->orderBy('created_at', 'desc')->take(5)->get();
 
             return view('admin.pages.dashboard', compact(
+                'todayOrders',
+                'todayRevenue',
                 'recentOrders',
                 'cashOpnames'
             ));

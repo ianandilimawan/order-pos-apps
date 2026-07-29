@@ -7,7 +7,7 @@
     <div class="space-y-6">
         <!-- Page Header & Breadcrumbs -->
         <div class="flex items-center gap-4 mb-6">
-            @if (auth()->user()->can('view-cash_opname'))
+            @if (auth()->user()->can('view-cash_opnames'))
                 <a href="{{ route('admin.cash_opnames.index') }}"
                     class="p-2 bg-white dark:bg-gray-800 rounded-full shadow-sm border border-gray-100 dark:border-gray-700 text-gray-500 hover:text-indigo-600 hover:bg-gray-50 transition-all duration-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@
                 <nav class="flex text-sm text-gray-500 font-medium mb-1" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-2">
                         <li class="inline-flex items-center">
-                        @can('view-cash_opname')
+                        @can('view-cash_opnames')
                             <a href="{{ route('admin.cash_opnames.index') }}" class="hover:text-indigo-600 transition-colors">Cash Opnames</a>
                         @else
                             <span class="text-gray-400">Cash Opnames</span>
@@ -61,7 +61,7 @@
 
                 <!-- Actions -->
                 <div class="flex items-center justify-end gap-4 pt-8 border-t border-gray-100 dark:border-gray-800 mt-8">
-                        @can('view-cash_opname')
+                        @can('view-cash_opnames')
                         <a href="{{ route('admin.cash_opnames.index') }}" class="px-5 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-sm">
                             Batal
                         </a>

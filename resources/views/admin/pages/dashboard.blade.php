@@ -22,9 +22,35 @@
             </div>
         </div>
 
-        <!-- Embedded Sales Report -->
-        <div class="animate-fade-in-up delay-100">
-            @livewire('admin.report', ['hideTitle' => true])
+        <!-- High-level Summary Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up delay-100">
+            
+            <!-- Revenue Card -->
+            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 p-6 flex items-center justify-between transition-transform hover:-translate-y-1">
+                <div>
+                    <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-1">Today's Revenue</p>
+                    <h3 class="text-3xl font-bold text-zinc-900 dark:text-white">Rp {{ number_format($todayRevenue, 0, ',', '.') }}</h3>
+                </div>
+                <div class="p-4 bg-green-50 dark:bg-green-500/10 rounded-full">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Orders Card -->
+            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-700 p-6 flex items-center justify-between transition-transform hover:-translate-y-1">
+                <div>
+                    <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-1">Today's Orders</p>
+                    <h3 class="text-3xl font-bold text-zinc-900 dark:text-white">{{ number_format($todayOrders) }}</h3>
+                </div>
+                <div class="p-4 bg-blue-50 dark:bg-blue-500/10 rounded-full">
+                    <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                </div>
+            </div>
+
         </div>
 
         <!-- Tables Grid -->

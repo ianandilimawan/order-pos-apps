@@ -1,7 +1,7 @@
 <div class="mb-3 flex gap-2" x-cloak
     x-show="window.pgBulkActions && window.pgBulkActions.count('{{ $tableName }}') > 0">
 
-    @if (auth()->user()->hasPermission('delete-product'))
+    @if (auth()->user()->hasPermission('delete-products'))
         <button type="button" x-on:click="$wire.triggerBulkDelete(window.pgBulkActions.get('{{ $tableName }}'))"
             class="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium shadow-sm transition-all duration-200 focus:ring-2 focus:ring-red-500/20 flex items-center justify-center">
             <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -14,7 +14,7 @@
         </button>
     @endif
 
-    @if (auth()->user()->hasPermission('edit-product'))
+    @if (auth()->user()->hasPermission('edit-products'))
         <button type="button"
             x-on:click="$wire.triggerBulkSetAvailable(window.pgBulkActions.get('{{ $tableName }}'))"
             class="px-3 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-medium shadow-sm transition-all duration-200 focus:ring-2 focus:ring-emerald-500/20 flex items-center justify-center">

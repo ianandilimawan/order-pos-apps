@@ -8,7 +8,7 @@
                 <h1 class="lg:text-2xl text-xl font-semibold text-gray-900 dark:text-white">Permissions</h1>
                 <p class="mt-1 lg:text-sm text-xs text-gray-600 dark:text-gray-400">Manage system permissions</p>
             </div>
-            @if (auth()->user() && auth()->user()->hasPermission('create-permission'))
+            @if (auth()->user() && auth()->user()->hasPermission('create-permissions'))
                 <a href="{{ route('admin.permissions.create') }}"
                     class="lg:px-4 px-3 lg:py-2 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center lg:text-base text-sm">
                     <svg class="lg:w-5 w-4 lg:h-5 h-4 inline lg:mr-2 mr-1" fill="none" stroke="currentColor"

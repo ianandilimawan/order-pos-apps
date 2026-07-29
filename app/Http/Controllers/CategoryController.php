@@ -19,9 +19,9 @@ class CategoryController extends Controller
     public function __construct()
     {
         $this->middleware('permission:view-categories')->only(['index', 'show']);
-        $this->middleware('permission:create-category')->only(['create', 'store']);
-        $this->middleware('permission:edit-category')->only(['edit', 'update']);
-        $this->middleware('permission:delete-category')->only('destroy');
+        $this->middleware('permission:create-categories')->only(['create', 'store']);
+        $this->middleware('permission:edit-categories')->only(['edit', 'update']);
+        $this->middleware('permission:delete-categories')->only('destroy');
     }
 
     public function index()

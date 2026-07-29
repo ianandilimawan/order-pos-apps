@@ -19,9 +19,9 @@ class OrderChargeController extends Controller
     public function __construct()
     {
         $this->middleware('permission:view-order_charges')->only(['index', 'show']);
-        $this->middleware('permission:create-order_charge')->only(['create', 'store']);
-        $this->middleware('permission:edit-order_charge')->only(['edit', 'update']);
-        $this->middleware('permission:delete-order_charge')->only('destroy');
+        $this->middleware('permission:create-order_charges')->only(['create', 'store']);
+        $this->middleware('permission:edit-order_charges')->only(['edit', 'update']);
+        $this->middleware('permission:delete-order_charges')->only('destroy');
     }
 
     public function index()

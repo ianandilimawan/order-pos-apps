@@ -14,9 +14,9 @@ class PromoController extends Controller
     public function __construct()
     {
         $this->middleware('permission:view-promos')->only(['index', 'show']);
-        $this->middleware('permission:create-promo')->only(['create', 'store']);
-        $this->middleware('permission:edit-promo')->only(['edit', 'update']);
-        $this->middleware('permission:delete-promo')->only('destroy');
+        $this->middleware('permission:create-promos')->only(['create', 'store']);
+        $this->middleware('permission:edit-promos')->only(['edit', 'update']);
+        $this->middleware('permission:delete-promos')->only('destroy');
     }
 
     public function index()

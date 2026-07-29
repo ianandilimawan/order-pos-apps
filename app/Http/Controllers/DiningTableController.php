@@ -19,9 +19,9 @@ class DiningTableController extends Controller
     public function __construct()
     {
         $this->middleware('permission:view-dining_tables')->only(['index', 'show']);
-        $this->middleware('permission:create-dining_table')->only(['create', 'store']);
-        $this->middleware('permission:edit-dining_table')->only(['edit', 'update']);
-        $this->middleware('permission:delete-dining_table')->only('destroy');
+        $this->middleware('permission:create-dining_tables')->only(['create', 'store']);
+        $this->middleware('permission:edit-dining_tables')->only(['edit', 'update']);
+        $this->middleware('permission:delete-dining_tables')->only('destroy');
     }
 
     public function index()

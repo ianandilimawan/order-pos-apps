@@ -19,9 +19,9 @@ class OrderItemController extends Controller
     public function __construct()
     {
         $this->middleware('permission:view-order_items')->only(['index', 'show']);
-        $this->middleware('permission:create-order_item')->only(['create', 'store']);
-        $this->middleware('permission:edit-order_item')->only(['edit', 'update']);
-        $this->middleware('permission:delete-order_item')->only('destroy');
+        $this->middleware('permission:create-order_items')->only(['create', 'store']);
+        $this->middleware('permission:edit-order_items')->only(['edit', 'update']);
+        $this->middleware('permission:delete-order_items')->only('destroy');
     }
 
     public function index()

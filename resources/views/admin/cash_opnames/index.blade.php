@@ -12,7 +12,7 @@
                 <p class="mt-1 lg:text-sm text-xs text-gray-600 dark:text-gray-400">Manage your cashopnames here</p>
             </div>
             <div class="flex flex-wrap gap-3">
-                @if (auth()->user() && auth()->user()->hasPermission('create-cash_opname'))
+                @if (auth()->user() && auth()->user()->hasPermission('create-cash_opnames'))
                     <a href="{{ route('admin.cash_opnames.create') }}"
                         class="lg:px-4 px-3 lg:py-2 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors lg:text-base text-sm">
                         <svg class="lg:w-5 w-4 lg:h-5 h-4 inline lg:mr-2 mr-1" fill="none" stroke="currentColor"

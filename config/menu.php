@@ -144,7 +144,7 @@ return [
             'name' => 'Cash Opnames',
             'route' => 'admin.cash_opnames.index',
             'icon' => 'fas fa-wallet',
-            'permission' => 'view-cash_opname',
+            'permission' => 'view-cash_opnames',
         ],
     ],
 ];

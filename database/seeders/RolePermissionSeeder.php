@@ -45,7 +45,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create User',
-                'name' => 'create-user',
+                'name' => 'create-users',
                 'description' => null,
                 'module' => 'users',
                 'is_active' => true,
@@ -55,7 +55,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit User',
-                'name' => 'edit-user',
+                'name' => 'edit-users',
                 'description' => null,
                 'module' => 'users',
                 'is_active' => true,
@@ -65,7 +65,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete User',
-                'name' => 'delete-user',
+                'name' => 'delete-users',
                 'description' => null,
                 'module' => 'users',
                 'is_active' => true,
@@ -85,7 +85,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Role',
-                'name' => 'create-role',
+                'name' => 'create-roles',
                 'description' => null,
                 'module' => 'roles',
                 'is_active' => true,
@@ -95,7 +95,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Role',
-                'name' => 'edit-role',
+                'name' => 'edit-roles',
                 'description' => null,
                 'module' => 'roles',
                 'is_active' => true,
@@ -105,7 +105,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Role',
-                'name' => 'delete-role',
+                'name' => 'delete-roles',
                 'description' => null,
                 'module' => 'roles',
                 'is_active' => true,
@@ -125,7 +125,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Permission',
-                'name' => 'create-permission',
+                'name' => 'create-permissions',
                 'description' => null,
                 'module' => 'permissions',
                 'is_active' => true,
@@ -135,7 +135,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Permission',
-                'name' => 'edit-permission',
+                'name' => 'edit-permissions',
                 'description' => null,
                 'module' => 'permissions',
                 'is_active' => true,
@@ -145,7 +145,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Permission',
-                'name' => 'delete-permission',
+                'name' => 'delete-permissions',
                 'description' => null,
                 'module' => 'permissions',
                 'is_active' => true,
@@ -186,7 +186,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Setting',
-                'name' => 'edit-setting',
+                'name' => 'edit-settings',
                 'description' => null,
                 'module' => 'settings',
                 'is_active' => true,
@@ -206,7 +206,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Promo',
-                'name' => 'create-promo',
+                'name' => 'create-promos',
                 'description' => null,
                 'module' => 'promos',
                 'is_active' => true,
@@ -216,7 +216,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Promo',
-                'name' => 'edit-promo',
+                'name' => 'edit-promos',
                 'description' => null,
                 'module' => 'promos',
                 'is_active' => true,
@@ -226,7 +226,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Promo',
-                'name' => 'delete-promo',
+                'name' => 'delete-promos',
                 'description' => null,
                 'module' => 'promos',
                 'is_active' => true,
@@ -246,7 +246,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Categories',
-                'name' => 'create-category',
+                'name' => 'create-categories',
                 'description' => 'Can create new category',
                 'module' => 'categories',
                 'is_active' => true,
@@ -256,7 +256,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Categories',
-                'name' => 'edit-category',
+                'name' => 'edit-categories',
                 'description' => 'Can edit category',
                 'module' => 'categories',
                 'is_active' => true,
@@ -266,7 +266,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Categories',
-                'name' => 'delete-category',
+                'name' => 'delete-categories',
                 'description' => 'Can delete category',
                 'module' => 'categories',
                 'is_active' => true,
@@ -286,7 +286,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Products',
-                'name' => 'create-product',
+                'name' => 'create-products',
                 'description' => 'Can create new product',
                 'module' => 'products',
                 'is_active' => true,
@@ -296,7 +296,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Products',
-                'name' => 'edit-product',
+                'name' => 'edit-products',
                 'description' => 'Can edit product',
                 'module' => 'products',
                 'is_active' => true,
@@ -306,7 +306,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Products',
-                'name' => 'delete-product',
+                'name' => 'delete-products',
                 'description' => 'Can delete product',
                 'module' => 'products',
                 'is_active' => true,
@@ -326,7 +326,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Charge Settings',
-                'name' => 'create-charge_setting',
+                'name' => 'create-charge_settings',
                 'description' => 'Can create new chargesetting',
                 'module' => 'charge_settings',
                 'is_active' => true,
@@ -336,7 +336,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Charge Settings',
-                'name' => 'edit-charge_setting',
+                'name' => 'edit-charge_settings',
                 'description' => 'Can edit chargesetting',
                 'module' => 'charge_settings',
                 'is_active' => true,
@@ -346,7 +346,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Charge Settings',
-                'name' => 'delete-charge_setting',
+                'name' => 'delete-charge_settings',
                 'description' => 'Can delete chargesetting',
                 'module' => 'charge_settings',
                 'is_active' => true,
@@ -366,7 +366,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Orders',
-                'name' => 'create-order',
+                'name' => 'create-orders',
                 'description' => 'Can create new order',
                 'module' => 'orders',
                 'is_active' => true,
@@ -376,7 +376,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Orders',
-                'name' => 'edit-order',
+                'name' => 'edit-orders',
                 'description' => 'Can edit order',
                 'module' => 'orders',
                 'is_active' => true,
@@ -386,7 +386,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Orders',
-                'name' => 'delete-order',
+                'name' => 'delete-orders',
                 'description' => 'Can delete order',
                 'module' => 'orders',
                 'is_active' => true,
@@ -406,7 +406,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Order Items',
-                'name' => 'create-order_item',
+                'name' => 'create-order_items',
                 'description' => 'Can create new orderitem',
                 'module' => 'order_items',
                 'is_active' => true,
@@ -416,7 +416,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Order Items',
-                'name' => 'edit-order_item',
+                'name' => 'edit-order_items',
                 'description' => 'Can edit orderitem',
                 'module' => 'order_items',
                 'is_active' => true,
@@ -426,7 +426,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Order Items',
-                'name' => 'delete-order_item',
+                'name' => 'delete-order_items',
                 'description' => 'Can delete orderitem',
                 'module' => 'order_items',
                 'is_active' => true,
@@ -446,7 +446,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Order Charges',
-                'name' => 'create-order_charge',
+                'name' => 'create-order_charges',
                 'description' => 'Can create new ordercharge',
                 'module' => 'order_charges',
                 'is_active' => true,
@@ -456,7 +456,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Order Charges',
-                'name' => 'edit-order_charge',
+                'name' => 'edit-order_charges',
                 'description' => 'Can edit ordercharge',
                 'module' => 'order_charges',
                 'is_active' => true,
@@ -466,7 +466,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Order Charges',
-                'name' => 'delete-order_charge',
+                'name' => 'delete-order_charges',
                 'description' => 'Can delete ordercharge',
                 'module' => 'order_charges',
                 'is_active' => true,
@@ -486,7 +486,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Dining Tables',
-                'name' => 'create-dining_table',
+                'name' => 'create-dining_tables',
                 'description' => 'Can create new diningtable',
                 'module' => 'dining_tables',
                 'is_active' => true,
@@ -496,7 +496,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Edit Dining Tables',
-                'name' => 'edit-dining_table',
+                'name' => 'edit-dining_tables',
                 'description' => 'Can edit diningtable',
                 'module' => 'dining_tables',
                 'is_active' => true,
@@ -506,7 +506,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Dining Tables',
-                'name' => 'delete-dining_table',
+                'name' => 'delete-dining_tables',
                 'description' => 'Can delete diningtable',
                 'module' => 'dining_tables',
                 'is_active' => true,
@@ -525,8 +525,18 @@ class RolePermissionSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
+                'display_name' => 'View Reports',
+                'name' => 'view-reports',
+                'description' => 'Can view detailed reports and analytics',
+                'module' => 'reports',
+                'is_active' => true,
+                'guard_name' => 'web',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
                 'display_name' => 'View Cash Opnames',
-                'name' => 'view-cash_opname',
+                'name' => 'view-cash_opnames',
                 'description' => 'Can view cashopnames list',
                 'module' => 'cash_opnames',
                 'is_active' => true,
@@ -536,7 +546,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Create Cash Opnames',
-                'name' => 'create-cash_opname',
+                'name' => 'create-cash_opnames',
                 'description' => 'Can create new cashopname',
                 'module' => 'cash_opnames',
                 'is_active' => true,
@@ -546,7 +556,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Update Cash Opnames',
-                'name' => 'edit-cash_opname',
+                'name' => 'edit-cash_opnames',
                 'description' => 'Can update cashopname',
                 'module' => 'cash_opnames',
                 'is_active' => true,
@@ -556,7 +566,7 @@ class RolePermissionSeeder extends Seeder
             ],
             [
                 'display_name' => 'Delete Cash Opnames',
-                'name' => 'delete-cash_opname',
+                'name' => 'delete-cash_opnames',
                 'description' => 'Can delete cashopname',
                 'module' => 'cash_opnames',
                 'is_active' => true,

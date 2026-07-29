@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->timestamp('deleted_at')->nullable();
             $table->string('number');
             $table->integer('capacity');
             $table->string('status');

@@ -19,9 +19,9 @@ class ChargeSettingController extends Controller
     public function __construct()
     {
         $this->middleware('permission:view-charge_settings')->only(['index', 'show']);
-        $this->middleware('permission:create-charge_setting')->only(['create', 'store']);
-        $this->middleware('permission:edit-charge_setting')->only(['edit', 'update']);
-        $this->middleware('permission:delete-charge_setting')->only('destroy');
+        $this->middleware('permission:create-charge_settings')->only(['create', 'store']);
+        $this->middleware('permission:edit-charge_settings')->only(['edit', 'update']);
+        $this->middleware('permission:delete-charge_settings')->only('destroy');
     }
 
     public function index()
