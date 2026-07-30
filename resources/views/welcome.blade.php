@@ -5,6 +5,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'InPOS') }} - Point of Sale & Self Ordering</title>
+    <meta name="description" content="InPOS adalah sistem Point of Sale (POS) modern dan Self-Ordering QR Menu untuk bisnis F&B, restoran, dan ritel.">
+    <meta name="keywords" content="sistem kasir restoran, aplikasi kasir, point of sale, qr menu, self ordering, inpos">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:title" content="InPOS - Point of Sale & Self Ordering">
+    <meta property="og:description" content="InPOS adalah sistem Point of Sale (POS) modern dan Self-Ordering QR Menu untuk bisnis F&B, restoran, dan ritel.">
+    <meta property="og:image" content="{{ asset('images/logo.png') }}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url('/') }}">
+    <meta property="twitter:title" content="InPOS - Point of Sale & Self Ordering">
+    <meta property="twitter:description" content="InPOS adalah sistem Point of Sale (POS) modern dan Self-Ordering QR Menu untuk bisnis F&B, restoran, dan ritel.">
+    <meta property="twitter:image" content="{{ asset('images/logo.png') }}">
+    
     <link rel="icon" href="{{ asset('images/favicon.ico') }}">
     <script>
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
