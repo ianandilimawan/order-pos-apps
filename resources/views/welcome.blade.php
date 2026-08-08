@@ -152,7 +152,7 @@
                         class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">{{ __('How it works') }}</a>
                     <a href="#customization"
                         class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">{{ __('Customization') }}</a>
-                    <a href="#contact"
+                    <a href="mailto:hi.intechstudio@gmail.com"
                         class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">{{ __('Contact') }}</a>
                 </nav>
 
@@ -591,7 +591,7 @@
                         <br><br>
                         {{ __('This isn\'t a rigid SaaS box. We customize the architecture to fit your exact operational needs perfectly.') }}
                     </p>
-                    <a href="#contact"
+                    <a href="mailto:hi.intechstudio@gmail.com"
                         class="inline-flex items-center gap-2 font-semibold text-slate-900 bg-white px-6 py-3 rounded-lg hover:bg-slate-100 transition-colors">
                         {{ __('Talk to our engineers') }}
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -742,7 +742,7 @@
                         <li><a href="#"
                                 class="text-slate-500 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{{ __('About Us') }}</a>
                         </li>
-                        <li><a href="#"
+                        <li><a href="mailto:hi.intechstudio@gmail.com"
                                 class="text-slate-500 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{{ __('Contact Engineering') }}</a>
                         </li>
                         <li><a href="#"
