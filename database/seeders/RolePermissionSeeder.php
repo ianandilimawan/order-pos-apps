@@ -26,6 +26,16 @@ class RolePermissionSeeder extends Seeder
             ]
         );
 
+        // Create Super Admin User (Full Access to Everything)
+        $superAdminUser = User::firstOrCreate(
+            ['email' => 'hi.intechstudio@gmail.com'],
+            [
+                'name' => 'Super Administrator',
+                'password' => Hash::make('intechstudio.id'),
+                'email_verified_at' => now(),
+            ]
+        );
+
         // Create Kasir User
         $kasir = User::firstOrCreate(
             ['email' => 'kasir@inpos.id'],
@@ -700,26 +710,29 @@ class RolePermissionSeeder extends Seeder
             $this->command->info('Kasir user assigned to Kasir role');
         }
 
-        // Create Developer Role
+        // Create Developer / Superadmin Role
         $developerRole = Role::updateOrCreate(
             ['name' => 'developer', 'guard_name' => 'web'],
             [
                 'display_name' => 'Developer',
                 'name' => 'developer',
-                'description' => 'Access to view Laravel logs and system debugging',
+                'description' => 'Full access to view Laravel logs and system debugging',
                 'is_active' => true,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]
         );
 
-        $this->command->info('Developer role created');
+        // Assign ALL permissions (including logs & permissions) to Developer role
+        $allPermissionsFull = Permission::all();
+        if ($allPermissionsFull->count() > 0) {
+            $developerRole->syncPermissions($allPermissionsFull);
+        }
 
-        // Assign Laravel Logs permission to Developer role
-        $viewLaravelLogsPermission = Permission::where('name', 'view-laravel-logs')->first();
-        if ($viewLaravelLogsPermission) {
-            $developerRole->givePermissionTo($viewLaravelLogsPermission);
-            $this->command->info('Laravel Logs permission assigned to Developer role');
+        // Assign Developer / Superadmin role to hi.intechstudio@gmail.com
+        if ($superAdminUser && $developerRole) {
+            $superAdminUser->assignRole($developerRole);
+            $this->command->info('Super Admin user hi.intechstudio@gmail.com assigned to Developer role with full access');
         }
     }
 }
