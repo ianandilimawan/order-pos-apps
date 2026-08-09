@@ -84,7 +84,7 @@
                 </div>
 
                 <!-- Demo Access Roles -->
-                <div class="my-6 p-4 bg-gradient-to-r from-blue-50/90 to-indigo-50/90 dark:from-zinc-800/80 dark:to-zinc-800/60 border border-blue-200/60 dark:border-zinc-700/70 rounded-2xl shadow-sm">
+                <div class="mt-6 mb-9 p-4 bg-gradient-to-r from-blue-50/90 to-indigo-50/90 dark:from-zinc-800/80 dark:to-zinc-800/60 border border-blue-200/60 dark:border-zinc-700/70 rounded-2xl shadow-sm">
                     <div class="flex items-center justify-between mb-3 px-0.5">
                         <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
@@ -111,7 +111,7 @@
                 </div>
 
                 <!-- Login Form -->
-                <form class="space-y-5" action="{{ route('admin.login.post') }}" method="POST" id="loginForm">
+                <form class="space-y-6 pt-1" action="{{ route('admin.login.post') }}" method="POST" id="loginForm">
                     @csrf
 
                     <!-- Email Field -->
