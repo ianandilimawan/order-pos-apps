@@ -16,8 +16,14 @@ class RolePermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        // Migrate any old admin@redtech.co.id user to admin@inpos.id
+        User::where('email', 'admin@redtech.co.id')->update([
+            'email' => 'admin@inpos.id',
+            'password' => Hash::make('admin123')
+        ]);
+
         // Create Admin User
-        $admin = User::firstOrCreate(
+        $admin = User::updateOrCreate(
             ['email' => 'admin@inpos.id'],
             [
                 'name' => 'Administrator',
@@ -27,7 +33,7 @@ class RolePermissionSeeder extends Seeder
         );
 
         // Create Super Admin User (Full Access to Everything)
-        $superAdminUser = User::firstOrCreate(
+        $superAdminUser = User::updateOrCreate(
             ['email' => 'hi.intechstudio@gmail.com'],
             [
                 'name' => 'Super Administrator',
@@ -37,7 +43,7 @@ class RolePermissionSeeder extends Seeder
         );
 
         // Create Kasir User
-        $kasir = User::firstOrCreate(
+        $kasir = User::updateOrCreate(
             ['email' => 'kasir@inpos.id'],
             [
                 'name' => 'Kasir Demo',
