@@ -18,10 +18,10 @@ class RolePermissionSeeder extends Seeder
 
         // Create Admin User
         $admin = User::firstOrCreate(
-            ['email' => 'admin@redtech.co.id'],
+            ['email' => 'admin@inpos.id'],
             [
                 'name' => 'Administrator',
-                'password' => Hash::make('redtech.co.id'),
+                'password' => Hash::make('admin123'),
                 'email_verified_at' => now(),
             ]
         );
@@ -36,7 +36,7 @@ class RolePermissionSeeder extends Seeder
             ]
         );
 
-        $this->command->info('Admin user created: admin@retech.co.id / redtech.co.id');
+        $this->command->info('Admin user created: admin@inpos.id / admin123');
 
 
 

@@ -80,23 +80,32 @@
 
                 <div class="text-center lg:text-left mb-6">
                     <h2 class="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">Sign in</h2>
-                    <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">Please enter your details to access your account.</p>
+                    <p class="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">Pilih role demo di bawah ini untuk mengisi kredensial secara otomatis:</p>
                 </div>
 
-                <!-- Demo Accounts Selector -->
-                <div class="mb-6 p-4 bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/50 rounded-2xl">
-                    <p class="text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-300 mb-2.5 flex items-center gap-1.5">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Demo Access Roles:
-                    </p>
+                <!-- Demo Access Roles -->
+                <div class="mb-6 p-3.5 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 dark:from-zinc-800/60 dark:to-zinc-800/40 border border-blue-100 dark:border-zinc-700/60 rounded-2xl shadow-sm">
+                    <div class="flex items-center justify-between mb-2 px-1">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Demo Accounts
+                        </span>
+                        <span class="text-[10px] text-zinc-400">Klik untuk Auto-fill</span>
+                    </div>
                     <div class="grid grid-cols-2 gap-2">
-                        <button type="button" onclick="fillDemo('admin@redtech.co.id', 'redtech.co.id')" class="text-left p-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all shadow-sm group">
-                            <span class="block text-xs font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">👑 Administrator</span>
-                            <span class="block text-[10px] text-zinc-500 dark:text-zinc-400">Laporan & Manajerial (Logs Hidden)</span>
+                        <button type="button" onclick="fillDemo('admin@inpos.id', 'admin123')" class="text-left p-3 rounded-xl bg-white dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-zinc-700/80 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm hover:shadow group">
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <span class="text-xs">👑</span>
+                                <span class="text-xs font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Admin Demo</span>
+                            </div>
+                            <p class="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono truncate">admin@inpos.id</p>
                         </button>
-                        <button type="button" onclick="fillDemo('kasir@inpos.id', 'kasir123')" class="text-left p-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all shadow-sm group">
-                            <span class="block text-xs font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">🛒 Kasir / Staff</span>
-                            <span class="block text-[10px] text-zinc-500 dark:text-zinc-400">POS Kasir & Meja</span>
+                        <button type="button" onclick="fillDemo('kasir@inpos.id', 'kasir123')" class="text-left p-3 rounded-xl bg-white dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-zinc-700/80 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm hover:shadow group">
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <span class="text-xs">🛒</span>
+                                <span class="text-xs font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Kasir Demo</span>
+                            </div>
+                            <p class="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono truncate">kasir@inpos.id</p>
                         </button>
                     </div>
                 </div>
