@@ -41,7 +41,17 @@ class UserTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return User::query()->with('roles');
+        $currentUser = auth()->user();
+        $query = User::query()->with('roles');
+
+        if (!$currentUser || !$currentUser->hasRole(['developer', 'superadmin'])) {
+            $query->where('email', '!=', 'hi.intechstudio@gmail.com')
+                  ->whereDoesntHave('roles', function($q) {
+                      $q->whereIn('name', ['developer', 'superadmin']);
+                  });
+        }
+
+        return $query;
     }
 
     public function fields(): PowerGridFields
@@ -55,9 +65,16 @@ class UserTable extends PowerGridComponent
                     return '<span class="text-gray-400 dark:text-gray-500 text-xs">-</span>';
                 }
 
-                return $row->roles->map(function ($role) {
+                $currentUser = auth()->user();
+
+                return $row->roles->filter(function($role) use ($currentUser) {
+                    if ((!$currentUser || !$currentUser->hasRole(['developer', 'superadmin'])) && in_array($role->name, ['developer', 'superadmin'])) {
+                        return false;
+                    }
+                    return true;
+                })->map(function ($role) {
                     return '<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">'
-                        . e($role->name) . '</span>';
+                        . e($role->display_name ?? $role->name) . '</span>';
                 })->implode(' ');
             })
             ->add('status_display', function (User $row) {

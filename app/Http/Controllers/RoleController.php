@@ -40,7 +40,14 @@ class RoleController extends Controller
     }
     public function index()
     {
-        $roles = Role::all();
+        $currentUser = auth()->user();
+        $query = Role::query();
+
+        if (!$currentUser->hasRole(['developer', 'superadmin'])) {
+            $query->whereNotIn('name', ['developer', 'superadmin']);
+        }
+
+        $roles = $query->get();
         return view('admin.pages.roles.index', compact('roles'));
     }
 

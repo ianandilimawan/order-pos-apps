@@ -7,6 +7,17 @@ use App\Models\Permission;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $user = auth()->user();
+            if (!$user || (!$user->hasRole(['developer', 'superadmin']) && !$user->hasPermissionTo('view-permissions'))) {
+                abort(403, 'Unauthorized action.');
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         $permissions = Permission::all();

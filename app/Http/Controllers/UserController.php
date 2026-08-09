@@ -42,7 +42,17 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users = User::with(['roles', 'permissions'])->get();
+        $currentUser = auth()->user();
+        $query = User::with(['roles', 'permissions']);
+
+        if (!$currentUser->hasRole(['developer', 'superadmin'])) {
+            $query->where('email', '!=', 'hi.intechstudio@gmail.com')
+                  ->whereDoesntHave('roles', function($q) {
+                      $q->whereIn('name', ['developer', 'superadmin']);
+                  });
+        }
+
+        $users = $query->get();
         return view('admin.pages.users.index', compact('users'));
     }
 
@@ -53,7 +63,14 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::active()->with('permissions')->orderBy('name')->get();
+        $currentUser = auth()->user();
+        $rolesQuery = Role::active()->with('permissions');
+
+        if (!$currentUser->hasRole(['developer', 'superadmin'])) {
+            $rolesQuery->whereNotIn('name', ['developer', 'superadmin']);
+        }
+
+        $roles = $rolesQuery->orderBy('name')->get();
         $permissions = Permission::active()->orderBy('module')->orderBy('name')->get();
         return view('admin.pages.users.create', compact('roles', 'permissions'));
     }
@@ -89,7 +106,18 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $roles = Role::active()->with('permissions')->orderBy('name')->get();
+        $currentUser = auth()->user();
+
+        if (!$currentUser->hasRole(['developer', 'superadmin']) && ($user->email === 'hi.intechstudio@gmail.com' || $user->hasRole(['developer', 'superadmin']))) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $rolesQuery = Role::active()->with('permissions');
+        if (!$currentUser->hasRole(['developer', 'superadmin'])) {
+            $rolesQuery->whereNotIn('name', ['developer', 'superadmin']);
+        }
+
+        $roles = $rolesQuery->orderBy('name')->get();
         $permissions = Permission::active()->orderBy('module')->orderBy('name')->get();
         $user->load(['roles', 'permissions']);
         return view('admin.pages.users.edit', compact('user', 'roles', 'permissions'));
@@ -97,6 +125,11 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $currentUser = auth()->user();
+
+        if (!$currentUser->hasRole(['developer', 'superadmin']) && ($user->email === 'hi.intechstudio@gmail.com' || $user->hasRole(['developer', 'superadmin']))) {
+            abort(403, 'Unauthorized action.');
+        }
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,

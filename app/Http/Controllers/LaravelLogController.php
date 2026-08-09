@@ -17,15 +17,17 @@ class LaravelLogController extends Controller
                 abort(403);
             }
 
-            // Administrator role has access to all actions
-            if ($user->hasRole('administrator') || $user->hasRole('admin')) {
+            // Developer / Superadmin role has full access
+            if ($user->hasRole(['developer', 'superadmin'])) {
                 return $next($request);
             }
 
             // Check permission for viewing logs
             $routeName = $request->route()?->getName();
             if ($routeName && (str_contains($routeName, '.index') || str_contains($routeName, '.show'))) {
-                abort_unless($user->hasPermission('view-laravel-logs'), 403);
+                abort_unless($user->hasPermissionTo('view-laravel-logs'), 403);
+            } else {
+                abort(403);
             }
 
             return $next($request);

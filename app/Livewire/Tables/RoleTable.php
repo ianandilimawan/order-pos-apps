@@ -39,7 +39,14 @@ class RoleTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Role::query();
+        $currentUser = auth()->user();
+        $query = Role::query();
+
+        if (!$currentUser || !$currentUser->hasRole(['developer', 'superadmin'])) {
+            $query->whereNotIn('name', ['developer', 'superadmin']);
+        }
+
+        return $query;
     }
 
     public function fields(): PowerGridFields

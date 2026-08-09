@@ -74,6 +74,7 @@
                         General
                     </button>
     
+                    @if (auth()->user() && auth()->user()->hasRole(['developer', 'superadmin']))
                     <button @click="activeTab = 'email'; window.history.replaceState(null, null, '?tab=email')"
                         :class="activeTab === 'email' ? 'border-blue-500 text-blue-600 dark:text-blue-400' :
                             'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
@@ -85,6 +86,7 @@
                         </svg>
                         Email / SMTP
                     </button>
+                    @endif
     
                     <button @click="activeTab = 'appearance'; window.history.replaceState(null, null, '?tab=appearance')"
                         :class="activeTab === 'appearance' ? 'border-blue-500 text-blue-600 dark:text-blue-400' :
