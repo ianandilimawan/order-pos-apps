@@ -53,14 +53,14 @@
                         {{ isset($settings) && $settings->logo_text ? $settings->logo_text : (isset($settings) ? $settings->app_name : config('app.name', 'InPOS')) }}
                     </h1>
                     <p
-                        class="text-zinc-600 dark:text-blue-100/90 text-lg max-w-sm drop-shadow-none dark:drop-shadow-sm transition-colors duration-500">
-                        Experience the powerful and seamless management dashboard tailored for your business needs.
+                        class="text-zinc-600 dark:text-blue-100/90 text-lg max-w-sm drop-shadow-none dark:drop-shadow-sm transition-colors duration-500 leading-relaxed">
+                        Sistem POS Kasir modern & Self-Ordering QR Menu untuk mengelola bisnis F&B dan retail dengan lebih efisien.
                     </p>
                 </div>
             </div>
 
             <!-- Right Side / Form -->
-            <div class="w-full lg:w-1/2 p-8 sm:p-12 lg:p-16 flex flex-col justify-center">
+            <div class="w-full lg:w-1/2 p-8 sm:p-12 lg:p-14 flex flex-col justify-center">
                 <!-- Mobile Logo -->
                 <div class="lg:hidden text-center mb-8">
                     @if (isset($settings) && $settings->logo_type === 'image' && $settings->app_logo)
@@ -80,27 +80,27 @@
 
                 <div class="text-center lg:text-left mb-6">
                     <h2 class="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">Sign in</h2>
-                    <p class="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">Pilih role demo di bawah ini untuk mengisi kredensial secara otomatis:</p>
+                    <p class="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">Pilih role demo di bawah untuk mengisi kredensial secara otomatis:</p>
                 </div>
 
                 <!-- Demo Access Roles -->
-                <div class="mb-6 p-3.5 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 dark:from-zinc-800/60 dark:to-zinc-800/40 border border-blue-100 dark:border-zinc-700/60 rounded-2xl shadow-sm">
-                    <div class="flex items-center justify-between mb-2 px-1">
+                <div class="my-6 p-4 bg-gradient-to-r from-blue-50/90 to-indigo-50/90 dark:from-zinc-800/80 dark:to-zinc-800/60 border border-blue-200/60 dark:border-zinc-700/70 rounded-2xl shadow-sm">
+                    <div class="flex items-center justify-between mb-3 px-0.5">
                         <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            Demo Accounts
+                            Demo Quick Accounts
                         </span>
-                        <span class="text-[10px] text-zinc-400">Klik untuk Auto-fill</span>
+                        <span class="text-[11px] font-medium text-blue-500/80 dark:text-zinc-400">Klik untuk Auto-fill</span>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button type="button" onclick="fillDemo('admin@inpos.id', 'admin123')" class="text-left p-3 rounded-xl bg-white dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-zinc-700/80 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm hover:shadow group">
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" onclick="fillDemo('admin@inpos.id', 'admin123')" class="text-left p-3.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-md transition-all duration-200 group">
                             <div class="flex items-center gap-1.5 mb-1">
                                 <span class="text-xs">👑</span>
                                 <span class="text-xs font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Admin Demo</span>
                             </div>
                             <p class="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono truncate">admin@inpos.id</p>
                         </button>
-                        <button type="button" onclick="fillDemo('kasir@inpos.id', 'kasir123')" class="text-left p-3 rounded-xl bg-white dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-zinc-700/80 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-200 shadow-sm hover:shadow group">
+                        <button type="button" onclick="fillDemo('kasir@inpos.id', 'kasir123')" class="text-left p-3.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-md transition-all duration-200 group">
                             <div class="flex items-center gap-1.5 mb-1">
                                 <span class="text-xs">🛒</span>
                                 <span class="text-xs font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Kasir Demo</span>
