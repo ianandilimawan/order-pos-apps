@@ -78,10 +78,27 @@
                     @endif
                 </div>
 
-                <div class="text-center lg:text-left mb-8">
+                <div class="text-center lg:text-left mb-6">
                     <h2 class="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">Sign in</h2>
-                    <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">Please enter your details to access your
-                        account.</p>
+                    <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">Please enter your details to access your account.</p>
+                </div>
+
+                <!-- Demo Accounts Selector -->
+                <div class="mb-6 p-4 bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/50 rounded-2xl">
+                    <p class="text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-300 mb-2.5 flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Demo Access Roles:
+                    </p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="fillDemo('admin@redtech.co.id', 'redtech.co.id')" class="text-left p-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all shadow-sm group">
+                            <span class="block text-xs font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">👑 Administrator</span>
+                            <span class="block text-[10px] text-zinc-500 dark:text-zinc-400">Laporan & Manajerial (Logs Hidden)</span>
+                        </button>
+                        <button type="button" onclick="fillDemo('kasir@inpos.id', 'kasir123')" class="text-left p-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all shadow-sm group">
+                            <span class="block text-xs font-bold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">🛒 Kasir / Staff</span>
+                            <span class="block text-[10px] text-zinc-500 dark:text-zinc-400">POS Kasir & Meja</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Login Form -->
@@ -203,6 +220,19 @@
     </div>
 
     <script>
+        function fillDemo(email, password) {
+            const emailInput = document.querySelector('input[name="email"]');
+            const passwordInput = document.querySelector('input[name="password"]');
+            if (emailInput) {
+                emailInput.value = email;
+                emailInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            if (passwordInput) {
+                passwordInput.value = password;
+                passwordInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const html = document.documentElement;
             // Get saved theme or default to DB setting to ensure proper rendering if head script missed it

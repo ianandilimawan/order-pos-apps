@@ -26,6 +26,16 @@ class RolePermissionSeeder extends Seeder
             ]
         );
 
+        // Create Kasir User
+        $kasir = User::firstOrCreate(
+            ['email' => 'kasir@inpos.id'],
+            [
+                'name' => 'Kasir Demo',
+                'password' => Hash::make('kasir123'),
+                'email_verified_at' => now(),
+            ]
+        );
+
         $this->command->info('Admin user created: admin@retech.co.id / redtech.co.id');
 
 
@@ -642,17 +652,52 @@ class RolePermissionSeeder extends Seeder
 
         $this->command->info('Administrator role created');
 
-        // Assign all permissions to Administrator role
-        $allPermissions = Permission::all();
+        // Assign operational permissions to Administrator role (exclude raw logs & permission management)
+        $allPermissions = Permission::whereNotIn('name', ['view-laravel-logs', 'view-permissions', 'create-permissions', 'edit-permissions', 'delete-permissions'])->get();
         if ($allPermissions->count() > 0) {
             $administratorRole->syncPermissions($allPermissions);
-            $this->command->info('All permissions assigned to Administrator role');
+            $this->command->info('Operational permissions assigned to Administrator role (sensitive permissions hidden)');
         }
 
         // Assign Administrator role to admin user
         if ($administratorRole) {
             $admin->assignRole($administratorRole);
             $this->command->info('Admin user assigned to Administrator role');
+        }
+
+        // Create Kasir Role
+        $kasirRole = Role::updateOrCreate(
+            ['name' => 'kasir', 'guard_name' => 'web'],
+            [
+                'display_name' => 'Kasir',
+                'name' => 'kasir',
+                'description' => 'Akses Kasir POS dan pemesanan',
+                'is_active' => true,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]
+        );
+
+        $kasirPermissions = Permission::whereIn('name', [
+            'view-pos',
+            'view-orders',
+            'create-orders',
+            'edit-orders',
+            'view-products',
+            'view-categories',
+            'view-dining_tables',
+            'view-cash_opnames',
+            'create-cash_opnames',
+        ])->get();
+        
+        if ($kasirPermissions->count() > 0) {
+            $kasirRole->syncPermissions($kasirPermissions);
+            $this->command->info('Kasir permissions assigned');
+        }
+
+        if ($kasir && $kasirRole) {
+            $kasir->assignRole($kasirRole);
+            $this->command->info('Kasir user assigned to Kasir role');
         }
 
         // Create Developer Role

@@ -47,7 +47,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Resource routes
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
-        Route::resource('permissions', PermissionController::class);
+        Route::middleware(['permission:view-permissions'])->group(function () {
+            Route::resource('permissions', PermissionController::class);
+        });
 
         // POS Kasir Route
         Route::middleware(['permission:view-pos'])->group(function () {
@@ -61,11 +63,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Activity Logs routes
         Route::resource('activity-logs', ActivityLogController::class)->only(['index', 'show']);
 
-        // Laravel Logs routes
-        Route::get('laravel-logs', [LaravelLogController::class, 'index'])->name('laravel-logs.index');
-        Route::get('laravel-logs/{fileName}', [LaravelLogController::class, 'show'])->name('laravel-logs.show');
-        Route::delete('laravel-logs/{fileName}/clear', [LaravelLogController::class, 'clear'])->name('laravel-logs.clear');
-        Route::delete('laravel-logs/{fileName}', [LaravelLogController::class, 'destroy'])->name('laravel-logs.destroy');
+        // Laravel Logs routes (Developer / Superadmin only)
+        Route::middleware(['permission:view-laravel-logs'])->group(function () {
+            Route::get('laravel-logs', [LaravelLogController::class, 'index'])->name('laravel-logs.index');
+            Route::get('laravel-logs/{fileName}', [LaravelLogController::class, 'show'])->name('laravel-logs.show');
+            Route::delete('laravel-logs/{fileName}/clear', [LaravelLogController::class, 'clear'])->name('laravel-logs.clear');
+            Route::delete('laravel-logs/{fileName}', [LaravelLogController::class, 'destroy'])->name('laravel-logs.destroy');
+        });
 
         // Settings routes
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
