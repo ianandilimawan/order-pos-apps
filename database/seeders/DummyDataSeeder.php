@@ -87,7 +87,8 @@ class DummyDataSeeder extends Seeder
             DiningTable::create([
                 'number' => strval($i),
                 'capacity' => $i <= 5 ? 2 : ($i <= 12 ? 4 : 8), // VIP/Large tables for 13,14,15
-                'status' => 'available'
+                'status' => 'available',
+                'show' => true,
             ]);
         }
         
