@@ -12,7 +12,7 @@ class AdminController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->hasRole(['admin', 'administrator', 'administator', 'superadmin', 'admin staff'])) {
+        if ($user->hasRole(['admin', 'administrator', 'administator', 'superadmin', 'developer', 'admin staff'])) {
             $today = \Carbon\Carbon::today();
 
             $todayOrders = Order::whereDate('created_at', $today)->count();
