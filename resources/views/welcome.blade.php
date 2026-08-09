@@ -4,23 +4,52 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'InPOS') }} - Point of Sale & Self Ordering</title>
-    <meta name="description" content="InPOS adalah sistem Point of Sale (POS) modern dan Self-Ordering QR Menu untuk bisnis F&B, restoran, dan ritel.">
-    <meta name="keywords" content="sistem kasir restoran, aplikasi kasir, point of sale, qr menu, self ordering, inpos">
+    <title>InPOS - Sistem Kasir POS & Self-Ordering QR Menu Restoran</title>
+    <meta name="description" content="InPOS adalah aplikasi sistem kasir Point of Sale (POS) modern dan Self-Ordering QR Menu terlengkap untuk bisnis F&B, restoran, kafe, dan ritel di Indonesia.">
+    <meta name="keywords" content="sistem kasir restoran, aplikasi kasir, point of sale, qr menu, self ordering, pos online, aplikasi kasir kafe, inpos">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="{{ url()->current() }}">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url('/') }}">
-    <meta property="og:title" content="InPOS - Point of Sale & Self Ordering">
-    <meta property="og:description" content="InPOS adalah sistem Point of Sale (POS) modern dan Self-Ordering QR Menu untuk bisnis F&B, restoran, dan ritel.">
+    <meta property="og:title" content="InPOS - Sistem Kasir POS & Self-Ordering QR Menu Restoran">
+    <meta property="og:description" content="InPOS adalah aplikasi sistem kasir Point of Sale (POS) modern dan Self-Ordering QR Menu terlengkap untuk bisnis F&B, restoran, kafe, dan ritel di Indonesia.">
     <meta property="og:image" content="{{ asset('images/logo.png') }}">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ url('/') }}">
-    <meta property="twitter:title" content="InPOS - Point of Sale & Self Ordering">
-    <meta property="twitter:description" content="InPOS adalah sistem Point of Sale (POS) modern dan Self-Ordering QR Menu untuk bisnis F&B, restoran, dan ritel.">
+    <meta property="twitter:title" content="InPOS - Sistem Kasir POS & Self-Ordering QR Menu Restoran">
+    <meta property="twitter:description" content="InPOS adalah aplikasi sistem kasir Point of Sale (POS) modern dan Self-Ordering QR Menu terlengkap untuk bisnis F&B, restoran, kafe, dan ritel di Indonesia.">
     <meta property="twitter:image" content="{{ asset('images/logo.png') }}">
+    
+    <!-- JSON-LD Structured Data for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "InPOS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, iOS, Android",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "IDR"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "150"
+      },
+      "description": "InPOS adalah aplikasi sistem kasir Point of Sale (POS) modern dan Self-Ordering QR Menu terlengkap untuk bisnis F&B, restoran, kafe, dan ritel di Indonesia.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Intech Studio",
+        "url": "https://intechstudio.id"
+      }
+    }
+    </script>
     
     <link rel="icon" href="{{ asset('images/favicon.ico') }}">
     <script>

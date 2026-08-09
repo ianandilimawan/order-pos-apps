@@ -229,7 +229,25 @@
     </div>
 
     <script>
-        function fillDemo(email, password) {
+        async function refreshCsrfToken() {
+            try {
+                const res = await fetch('/csrf-token', { cache: 'no-store' });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.token) {
+                        const tokenInput = document.querySelector('input[name="_token"]');
+                        if (tokenInput) {
+                            tokenInput.value = data.token;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.log('CSRF refresh skipped');
+            }
+        }
+
+        async function fillDemo(email, password) {
+            await refreshCsrfToken();
             const emailInput = document.querySelector('input[name="email"]');
             const passwordInput = document.querySelector('input[name="password"]');
             if (emailInput) {
@@ -241,6 +259,8 @@
                 passwordInput.dispatchEvent(new Event('input', { bubbles: true }));
             }
         }
+
+        window.addEventListener('focus', refreshCsrfToken);
 
         document.addEventListener('DOMContentLoaded', function() {
             const html = document.documentElement;

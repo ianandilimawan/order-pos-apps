@@ -16,6 +16,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Dynamic CSRF Token Refresh endpoint
+Route::get('/csrf-token', function () {
+    return response()->json(['token' => csrf_token()]);
+})->name('csrf.token');
+
+// SEO XML Sitemap for Google Indexing
+Route::get('/sitemap.xml', function () {
+    $baseUrl = config('app.url', 'https://inpos.intechstudio.id');
+    $content = '<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>' . $baseUrl . '/</loc>
+        <lastmod>' . date('Y-m-d') . '</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>' . $baseUrl . '/menu</loc>
+        <lastmod>' . date('Y-m-d') . '</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+</urlset>';
+    return response($content, 200)->header('Content-Type', 'text/xml');
+})->name('sitemap');
+
 Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'id'])) {
         session()->put('locale', $locale);
