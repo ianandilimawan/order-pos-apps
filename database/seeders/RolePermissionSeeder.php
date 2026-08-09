@@ -16,11 +16,15 @@ class RolePermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Migrate any old admin@redtech.co.id user to admin@inpos.id
-        User::where('email', 'admin@redtech.co.id')->update([
-            'email' => 'admin@inpos.id',
-            'password' => Hash::make('admin123')
-        ]);
+        // Clean up or migrate old admin@redtech.co.id user safely
+        if (User::where('email', 'admin@inpos.id')->exists()) {
+            User::where('email', 'admin@redtech.co.id')->delete();
+        } else {
+            User::where('email', 'admin@redtech.co.id')->update([
+                'email' => 'admin@inpos.id',
+                'password' => Hash::make('admin123')
+            ]);
+        }
 
         // Create Admin User
         $admin = User::updateOrCreate(
